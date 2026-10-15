@@ -485,6 +485,7 @@ namespace Direct3D
 
 
     //三角形と線分の衝突判定（衝突判定に使用）
+    // TODO:Intersect用のクラスに移動する
     //https://pheema.hatenablog.jp/entry/ray-triangle-intersection
     bool Intersect(XMFLOAT3 & start, XMFLOAT3 & direction, XMFLOAT3 & v0, XMFLOAT3 & v1, XMFLOAT3 & v2, float* distance)
     {

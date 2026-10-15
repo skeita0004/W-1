@@ -37,6 +37,7 @@ public:
 	//描画
 	//引数：matrix	変換行列（ワールド行列）
 	//引数：color	色
+
 	void Draw(XMMATRIX matWorld, XMFLOAT4 color);
 
 	//解放

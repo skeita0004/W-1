@@ -15,7 +15,6 @@
 
 #include "Input.hpp"
 #include "Audio.hpp"
-#include "VFX.hpp"
 
 #include <imgui.h>
 #include <imgui_impl_win32.h>
@@ -143,30 +142,28 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
                 Input::Update();
 
                 //全オブジェクトの更新処理
-                //ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
                 pRootObject->UpdateSub();
 
                 pCameraSet->GetCurrent()->Update();
 
                 //エフェクトの更新
-                VFX::Update();
+                //VFX::Update();
 
                 //このフレームの描画開始
                 Direct3D::BeginDraw();
 
                 //全オブジェクトを描画
-                //ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
                 pRootObject->DrawSub();
+
                 //エフェクトの描画
-                VFX::Draw();
+                //VFX::Draw();
 
                 ImGui::Render();
                 ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
                 //描画終了
                 Direct3D::EndDraw();
-                
-                //ちょっと休ませる
+
                 Sleep(1);
             }
             timeEndPeriod(1);	//時間計測の制度を戻す
@@ -176,7 +173,7 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
     
 
     //いろいろ解放
-    VFX::Release();
+    //VFX::Release();
     Audio::AllRelease();
     Model::AllRelease();
     Image::AllRelease();

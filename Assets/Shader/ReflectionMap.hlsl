@@ -1,3 +1,5 @@
+// 平面反射マップ書き込み用シェーダ
+
 Texture2D g_texture : register(t0); //テクスチャー
 SamplerState g_sampler : register(s0); //サンプラー
 
@@ -12,6 +14,8 @@ cbuffer MaterialBufferRef : register(b1)
     float4 cb_diffuseColor;    
     int4 cb_isTexture;
 }
+
+
 
 struct VS_IN
 {

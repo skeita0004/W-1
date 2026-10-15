@@ -32,6 +32,7 @@ namespace Direct3D
     {
         SHADER_3D,
         SHADER_2D,
+        SHADER_SKY,
         SHADER_UNLIT, // DEBUG用
         SHADER_BILLBOARD,
         SHADER_SHADOW_MAP,
