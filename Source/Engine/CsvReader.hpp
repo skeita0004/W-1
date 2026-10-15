@@ -8,7 +8,8 @@
 /// 3つの横並びのセルで、VECTOR型を返すこともできます
 /// 範囲外を指定した場合は、assertします
 /// </summary>
-class CsvReader {
+class CsvReader
+{
 public:
     /// <summary>
     /// このクラスは、コンストラクタでファイルを読み、
@@ -60,7 +61,8 @@ public:
     /// <returns>小数値</returns>
     float GetFloat(int line, int column);
 private:
-    struct LINEREC {
+    struct LINEREC
+    {
         std::vector<std::string> record;
     };
     std::vector<LINEREC> all;

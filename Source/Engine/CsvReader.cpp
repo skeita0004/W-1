@@ -8,10 +8,12 @@ CsvReader::CsvReader(std::string filename)
     std::ifstream ifs(filename);
     if (!ifs) return;
     // BOM Skipする
-    unsigned char BOMS[] = { 0xEF, 0xBB, 0xBF };
+    unsigned char BOMS[] = {0xEF, 0xBB, 0xBF};
     bool found = true;
-    for (int i = 0; i < 3; i++) {
-        if (ifs.get() != BOMS[i]) {
+    for (int i = 0; i < 3; i++)
+    {
+        if (ifs.get() != BOMS[i])
+        {
             found = false;
             break;
         }
@@ -21,10 +23,13 @@ CsvReader::CsvReader(std::string filename)
 
     // データを読む
     std::string lineStr;
-    while (getline(ifs, lineStr)) {
-        while (true) {
+    while (getline(ifs, lineStr))
+    {
+        while (true)
+        {
             int dq = 0;
-            for (int i = 0; i < lineStr.size(); i++) {
+            for (int i = 0; i < lineStr.size(); i++)
+            {
                 if (lineStr[i] == '"')
                     dq++;
             }
@@ -34,7 +39,8 @@ CsvReader::CsvReader(std::string filename)
             getline(ifs, s);
             lineStr += "\n" + s;
         }
-        for (auto it = lineStr.begin(); it != lineStr.end();) {
+        for (auto it = lineStr.begin(); it != lineStr.end();)
+        {
             if (*it == '"')
                 it = lineStr.erase(it);
             if (it != lineStr.end())
@@ -45,9 +51,12 @@ CsvReader::CsvReader(std::string filename)
         LINEREC lineRecord;
         int top = 0;
         bool indq = false;
-        for (int n = 0; n < lineStr.size(); n++) {
-            if (lineStr[n] == ',') {
-                if (!indq) {
+        for (int n = 0; n < lineStr.size(); n++)
+        {
+            if (lineStr[n] == ',')
+            {
+                if (!indq)
+                {
                     lineRecord.record.emplace_back(lineStr.substr(top, (size_t)(n - top)));
                     top = n + 1;
                 }
@@ -90,7 +99,8 @@ std::string CsvReader::GetString(int line, int column)
 int CsvReader::GetInt(int line, int column)
 {
     std::string str = GetString(line, column);
-    if (str == "") {
+    if (str == "")
+    {
         return 0;
     }
     return std::stoi(str);
@@ -99,7 +109,8 @@ int CsvReader::GetInt(int line, int column)
 float CsvReader::GetFloat(int line, int column)
 {
     std::string str = GetString(line, column);
-    if (str == "") {
+    if (str == "")
+    {
         return 0.0f;
     }
     return std::stof(str);
