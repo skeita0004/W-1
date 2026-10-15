@@ -1,53 +1,67 @@
-#pragma once
-#include <vector>
+ï»¿#pragma once
 #include <string>
+#include <vector>
 
-//-----------------------------------------------------------
-//CSVƒtƒ@ƒCƒ‹‚ğˆµ‚¤ƒNƒ‰ƒX
-//-----------------------------------------------------------
-class CsvReader
-{
-	//“Ç‚İ‚ñ‚¾ƒf[ƒ^‚ğ“ü‚ê‚Ä‚¨‚­2ŸŒ³”z—ñ
-	std::vector<std::vector<std::string>> data_;
-
-	//u,v‚©u‰üsv‚Ü‚Å‚Ì•¶š—ñ‚ğæ“¾
-	//ˆø”Freuult	Œ‹‰Ê‚ğ“ü‚ê‚éƒAƒhƒŒƒX
-	//ˆø”Fdata	‚à‚Æ‚Ì•¶š—ñƒf[ƒ^
-	//ˆø”Findex	‰½•¶š–Ú‚©‚ç’²‚×‚é‚©
-	//–ß’lF‚È‚µ
-	void GetToComma(std::string *result, std::string data, DWORD* index);
-
+/// <summary>
+/// CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿ã€ã‚»ãƒ«ã”ã¨ã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã—ã¾ã™
+/// ãƒ‡ãƒ¼ã‚¿ã¯ã€stringå‹ã€intå‹ã€floatå‹ã§è¿”ã—ã¾ã™
+/// 3ã¤ã®æ¨ªä¸¦ã³ã®ã‚»ãƒ«ã§ã€VECTORå‹ã‚’è¿”ã™ã“ã¨ã‚‚ã§ãã¾ã™
+/// ç¯„å›²å¤–ã‚’æŒ‡å®šã—ãŸå ´åˆã¯ã€assertã—ã¾ã™
+/// </summary>
+class CsvReader {
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	CsvReader();
+    /// <summary>
+    /// ã“ã®ã‚¯ãƒ©ã‚¹ã¯ã€ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿ã€
+    /// CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã‚“ã§ã€å€¤ã‚’ä¿æŒã—ã¾ã™ã€‚
+    /// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿çµ‚äº†æ™‚ã«ã¯ã€ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã¦ã„ã¾ã™ã€‚
+    /// </summary>
+    /// <param name="filename">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+    CsvReader(std::string filename);
+    ~CsvReader();
 
-	//ƒfƒXƒgƒ‰ƒNƒ^
-	~CsvReader();
+    /// <summary>
+    /// CSVã®è¡Œæ•°ã‚’å–å¾—ã—ã¾ã™
+    /// </summary>
+    /// <returns></returns>
+    int GetLines();
 
-	//CSVƒtƒ@ƒCƒ‹‚Ìƒ[ƒh
-	//ˆø”FfileName@ƒtƒ@ƒCƒ‹–¼
-	//–ß’lF¬Œ÷¨true@¸”s¨false
-	bool Load(std::string fileName);
+    /// <summary>
+    /// æŒ‡å®šã—ãŸè¡Œã®ã‚«ãƒ©ãƒ æ•°ã‚’å–å¾—ã—ã¾ã™
+    /// </summary>
+    /// <param name="line">è¡Œç•ªå·</param>
+    /// <returns>ã‚«ãƒ©ãƒ æ•°</returns>
+    int GetColumns(int line);
 
+    /// <summary>
+    /// æŒ‡å®šã—ãŸè¡Œãƒ»åˆ—ã®ãƒ‡ãƒ¼ã‚¿ã‚’æ–‡å­—åˆ—ã§è¿”ã—ã¾ã™
+    /// </summary>
+    /// <param name="line">è¡Œç•ªå·</param>
+    /// <param name="column">åˆ—ç•ªå·</param>
+    /// <returns>æ–‡å­—åˆ—</returns>
+    std::string GetString(int line, int column);
 
-	//w’è‚µ‚½ˆÊ’u‚Ìƒf[ƒ^‚ğ•¶š—ñ‚Åæ“¾
-	//ˆø”Fx,y@æ“¾‚µ‚½‚¢ˆÊ’u
-	//–ß’lFæ“¾‚µ‚½•¶š—ñ
-	std::string GetString(DWORD x, DWORD y);
+    /// <summary>
+    /// æŒ‡å®šã—ãŸè¡Œãƒ»åˆ—ã®ãƒ‡ãƒ¼ã‚¿ã‚’intå‹ã®æ•°å€¤ã§è¿”ã—ã¾ã™
+    /// ãƒ‡ãƒ¼ã‚¿ãŒå…¥ã£ã¦ãªã„å ´åˆã¯0ã‚’è¿”ã—ã¾ã™
+    /// </summary>
+    /// <param name="line">è¡Œç•ªå·</param>
+    /// <param name="column">åˆ—ç•ªå·</param>
+    /// <returns>æ•°å€¤</returns>
+    int GetInt(int line, int column);
 
-	//w’è‚µ‚½ˆÊ’u‚Ìƒf[ƒ^‚ğ®”‚Åæ“¾
-	//ˆø”Fx,y@æ“¾‚µ‚½‚¢ˆÊ’u
-	//–ß’lFæ“¾‚µ‚½’l
-	int GetValue(DWORD x, DWORD y);
-
-	//ƒtƒ@ƒCƒ‹‚Ì—ñ”‚ğæ“¾
-	//ˆø”F‚È‚µ
-	//–ß’lF—ñ”
-	size_t GetWidth();
-
-	//ƒtƒ@ƒCƒ‹‚Ìs”‚ğæ“¾
-	//ˆø”F‚È‚µ
-	//–ß’lFs”
-	size_t GetHeight();
+    /// <summary>
+    /// æŒ‡å®šã—ãŸè¡Œãƒ»åˆ—ã®ãƒ‡ãƒ¼ã‚¿ã‚’intå‹ã®æ•°å€¤ã§è¿”ã—ã¾ã™
+    /// ãƒ‡ãƒ¼ã‚¿ãŒå…¥ã£ã¦ãªã„å ´åˆã¯0ã‚’è¿”ã—ã¾ã™
+    /// </summary>
+    /// <param name="line"></param>
+    /// <param name="column"></param>
+    /// <param name="line">è¡Œç•ªå·</param>
+    /// <param name="column">åˆ—ç•ªå·</param>
+    /// <returns>å°æ•°å€¤</returns>
+    float GetFloat(int line, int column);
+private:
+    struct LINEREC {
+        std::vector<std::string> record;
+    };
+    std::vector<LINEREC> all;
 };
-
