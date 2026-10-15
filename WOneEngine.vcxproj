@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <ProjectGuid>{6D2F7751-957D-490B-C799-4493DF6B26ED}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <ExternalIncludePath>.\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <ExternalIncludePath>.\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <OpenMPSupport>true</OpenMPSupport>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <OpenMPSupport>true</OpenMPSupport>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="source\engine\Audio.cpp" />
+    <ClCompile Include="source\engine\BillBoard.cpp" />
+    <ClCompile Include="source\engine\BoxCollider.cpp" />
+    <ClCompile Include="source\engine\CameraSet.cpp" />
+    <ClCompile Include="source\engine\Collider.cpp" />
+    <ClCompile Include="source\engine\CsvReader.cpp" />
+    <ClCompile Include="source\engine\Debug.cpp" />
+    <ClCompile Include="source\engine\Direct3D.cpp" />
+    <ClCompile Include="source\engine\Fbx.cpp" />
+    <ClCompile Include="source\engine\FbxParts.cpp" />
+    <ClCompile Include="source\engine\GameObject.cpp" />
+    <ClCompile Include="source\engine\Image.cpp" />
+    <ClCompile Include="source\engine\Input.cpp" />
+    <ClCompile Include="source\engine\Main.cpp" />
+    <ClCompile Include="source\engine\Model.cpp" />
+    <ClCompile Include="source\engine\Renderer.cpp" />
+    <ClCompile Include="source\engine\RootObject.cpp" />
+    <ClCompile Include="source\engine\SceneManager.cpp" />
+    <ClCompile Include="source\engine\SphereCollider.cpp" />
+    <ClCompile Include="source\engine\Sprite.cpp" />
+    <ClCompile Include="source\engine\Text.cpp" />
+    <ClCompile Include="source\engine\Texture.cpp" />
+    <ClCompile Include="source\engine\Transform.cpp" />
+    <ClCompile Include="source\engine\VirtualCameraOrtho.cpp" />
+    <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
+    <ClCompile Include="source\game\ClearScene.cpp" />
+    <ClCompile Include="source\game\OverScene.cpp" />
+    <ClCompile Include="source\game\PlayScene.cpp" />
+    <ClCompile Include="source\game\TestScene.cpp" />
+    <ClCompile Include="source\game\TitleScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\engine\Audio.hpp" />
+    <ClInclude Include="source\engine\BillBoard.hpp" />
+    <ClInclude Include="source\engine\BoxCollider.hpp" />
+    <ClInclude Include="source\engine\CameraSet.hpp" />
+    <ClInclude Include="source\engine\Collider.hpp" />
+    <ClInclude Include="source\engine\CsvReader.hpp" />
+    <ClInclude Include="source\engine\Debug.hpp" />
+    <ClInclude Include="source\engine\Direct3D.hpp" />
+    <ClInclude Include="source\engine\Fbx.hpp" />
+    <ClInclude Include="source\engine\FbxParts.hpp" />
+    <ClInclude Include="source\engine\GameObject.hpp" />
+    <ClInclude Include="source\engine\Image.hpp" />
+    <ClInclude Include="source\engine\Input.hpp" />
+    <ClInclude Include="source\engine\IVirtualCamera.hpp" />
+    <ClInclude Include="source\engine\Model.hpp" />
+    <ClInclude Include="source\engine\Renderer.hpp" />
+    <ClInclude Include="source\engine\RootObject.hpp" />
+    <ClInclude Include="source\engine\SafeCleaning.hpp" />
+    <ClInclude Include="source\engine\SceneManager.hpp" />
+    <ClInclude Include="source\engine\Screen.hpp" />
+    <ClInclude Include="source\engine\SphereCollider.hpp" />
+    <ClInclude Include="source\engine\Sprite.hpp" />
+    <ClInclude Include="source\engine\Text.hpp" />
+    <ClInclude Include="source\engine\Texture.hpp" />
+    <ClInclude Include="source\engine\Transform.hpp" />
+    <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
+    <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
+    <ClInclude Include="source\game\ClearScene.hpp" />
+    <ClInclude Include="source\game\OverScene.hpp" />
+    <ClInclude Include="source\game\PlayScene.hpp" />
+    <ClInclude Include="source\game\TestScene.hpp" />
+    <ClInclude Include="source\game\TitleScene.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\Shader\BillBoard.hlsl" />
+    <FxCompile Include="Assets\Shader\Debug3D.hlsl" />
+    <FxCompile Include="Assets\Shader\OutLine.hlsl" />
+    <FxCompile Include="Assets\Shader\Reflect.hlsl" />
+    <FxCompile Include="Assets\Shader\ReflectionMap.hlsl" />
+    <FxCompile Include="Assets\Shader\Shadow.hlsl" />
+    <FxCompile Include="Assets\Shader\ShadowMap.hlsl" />
+    <FxCompile Include="Assets\Shader\Simple2D.hlsl" />
+    <FxCompile Include="Assets\Shader\Simple3D.hlsl" />
+    <FxCompile Include="Assets\Shader\Sky.hlsl" />
+    <FxCompile Include="Assets\Shader\Toon.hlsl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,218 @@
+//───────────────────────────────────────
+// テクスチャ＆サンプラーデータのグローバル変数定義
+//───────────────────────────────────────
+Texture2D g_texture : register(t0); //テクスチャー
+SamplerState g_sampler : register(s0); //サンプラー
+
+// シャドウマップ用テクスチャ
+Texture2D shadowTex : register(t1);
+SamplerComparisonState shadowTexSampler : register(s1);
+
+// バンプ用テクスチャ
+Texture2D normalTex : register(t2);
+SamplerState normalTexSampler : register(s2);
+
+// トゥーンシェーディング用陰影マップ
+Texture2D toonMapTex : register(t3);
+SamplerState toonMapTexSampler : register(s3);
+
+//───────────────────────────────────────
+// コンスタントバッファ
+// DirectX 側から送信されてくる、ポリゴン頂点以外の諸情報の定義
+//───────────────────────────────────────
+cbuffer MatrixBuffer : register(b0)
+{
+    row_major float4x4 cb_matWVP; // ワールド・ビュー・プロジェクションの合成行列
+    row_major float4x4 cb_matNormal;
+    row_major float4x4 cb_matW; // ワールド行列
+    row_major float4x4 cb_matVP;
+    row_major float4x4 cb_matInvW;
+}
+
+cbuffer MaterialBuffer : register(b1)
+{
+    float4 cb_diffuseColor; // ディフューズカラー（マテリアルの色）
+    float4 cb_ambientColor;
+    float4 cb_specularColor;
+    float4 cb_emissiveColor;
+    
+    float cb_diffuseFactor;
+    float cb_shininess;
+    
+    int cb_isTexture; // テクスチャ貼ってあるかどうか
+    int cb_isNormalMap;
+    
+    int4 padding;
+}
+
+cbuffer LightBuffer : register(b2)
+{
+    float4 cb_lightPos;
+    float4 cb_lightDir;
+    
+    float cb_lightAttenuation;
+    float cb_conePhi;
+    
+    int2 lbPadding;
+}
+
+cbuffer CameraBuffer : register(b3)
+{
+    float4 cb_cameraPos;
+}
+
+// 関数
+float4x4 InvTangentMat(
+    float3 tangent,
+    float3 binormal,
+    float3 normal)
+{
+    float4x4 mat =
+    {
+        float4(tangent, 0.0f),
+        float4(binormal, 0.0f),
+        float4(normal, 0.0f),
+        float4(0, 0, 0, 1)
+    };
+
+    return transpose(mat);
+}
+
+//───────────────────────────────────────
+// 頂点シェーダー出力＆ピクセルシェーダー入力データ構造体
+//───────────────────────────────────────
+struct VS_IN
+{
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+    float3 normal : NORMAL0;
+    float3 tangent : TANGENT0;
+    float3 biNormal : BINORMAL;
+};
+
+struct PS_IN
+{
+    float4 pos : SV_POSITION; // 位置
+    float4 worldPos : POSITION0;
+    float2 uv : TEXCOORD0; // UV座標
+    float3 normal : NORMAL0; // 法線
+    float3 tangent : NORMAL1;
+    float3 biNormal : NORMAL2;
+    float3 lightDir : POSITION1;
+    float4 lightVP : TEXCOORD1;
+    float3 lightTanDir : POSITION2;
+};
+
+//───────────────────────────────────────
+// 頂点シェーダ
+//───────────────────────────────────────
+PS_IN VS(const VS_IN _vsInput)
+{
+	//ピクセルシェーダーへ渡す情報
+    PS_IN vsOutput;
+
+	//ローカル座標に、ワールド・ビュー・プロジェクション行列をかけて
+	//スクリーン座標に変換し、ピクセルシェーダーへ
+    vsOutput.pos = _vsInput.pos;
+    vsOutput.pos = mul(vsOutput.pos, cb_matWVP);
+    
+    // ワールド変換のみをかけた頂点座標
+    vsOutput.worldPos = _vsInput.pos;
+    vsOutput.worldPos = mul(vsOutput.worldPos, cb_matW);
+    
+    // UV座標は変換なし
+    vsOutput.uv = _vsInput.uv;
+    
+    // 法線の変換（正規化はPSで行う）
+    vsOutput.normal = mul(_vsInput.normal, (float3x3) cb_matNormal);
+    vsOutput.tangent = mul(_vsInput.tangent, (float3x3) cb_matNormal);
+    vsOutput.biNormal = mul(_vsInput.biNormal, (float3x3) cb_matNormal);
+    
+    vsOutput.lightVP = mul(vsOutput.worldPos, cb_matVP);
+    
+    float3 localLightPos = mul(cb_lightPos, cb_matInvW);
+    
+    vsOutput.lightTanDir = mul(-localLightPos, (float3x3) InvTangentMat(_vsInput.tangent, _vsInput.biNormal, _vsInput.normal));
+    
+    return vsOutput;
+}
+
+//─────────────────────────────────────── 
+// ピクセルシェーダ
+//───────────────────────────────────────
+float4 PS(PS_IN _psInput) : SV_Target
+{
+    float lightDist;
+    float atteneuationColor;
+    
+    _psInput.normal = normalize(_psInput.normal);
+   
+    // ライトの方向と距離を求める
+    _psInput.lightDir = cb_lightPos.xyz - _psInput.worldPos.xyz;
+    lightDist = length(_psInput.lightDir);
+    _psInput.lightDir = normalize(_psInput.lightDir);
+    
+    atteneuationColor = saturate(pow(1.0f - lightDist / 4.0f, 2.0f));
+    
+    
+    // ライトの強さ = 陰影の度合い
+    float lightIntensity = 0.f;
+
+    
+    lightIntensity = saturate(dot(normalize(_psInput.normal), _psInput.lightDir)); // NdotL
+    
+    float2 shadeUV = { lightIntensity, 0.5f };
+    
+    float toonColor = toonMapTex.Sample(toonMapTexSampler, shadeUV);
+    
+    float coneSize = cb_conePhi;
+    float3 lightDir = cb_lightDir.xyz;
+    lightDir.y *= -1;
+    float spot = smoothstep(coneSize - 0.02f, coneSize, pow(max(dot(_psInput.lightDir, lightDir), 0.0f), coneSize));
+    
+    atteneuationColor = spot / dot(float3(1.0f, 0.22f, 0.2f), float3(1.0f, lightDist, lightDist * lightDist));
+    
+    float4 diffuse = float4(0.f, 0.f, 0.f, 0.f);
+    if (cb_isTexture != 0)
+    {
+        // Texture color
+        diffuse = g_texture.Sample(g_sampler, _psInput.uv);
+    }
+    else
+    {
+        // Default diffuse color
+        diffuse = cb_diffuseColor;
+    }
+    float4 diffuseLight = saturate(lightIntensity * diffuse * atteneuationColor * toonColor) ;
+    
+    float ndotl = saturate(dot(_psInput.normal, _psInput.lightDir));
+    float specularFactor = 0;
+    
+    float3 eyeVector = normalize(cb_cameraPos.xyz - _psInput.worldPos.xyz);
+    
+    if (cb_specularColor.a > 0 && ndotl > 0.0f)
+    {
+        float3 reflection = reflect(-_psInput.lightDir, normalize(_psInput.normal));
+
+        specularFactor = pow(saturate(dot(reflection, eyeVector)), cb_shininess);
+    }
+    
+    float4 ambientLight = (cb_ambientColor * diffuse);
+    
+    float ambientFactor = 0.075f;
+    ambientLight = float4(ambientFactor, ambientFactor, ambientFactor, 1.0f) * diffuse;
+    
+    float4 specularLight = saturate(specularFactor * cb_specularColor * atteneuationColor);
+    
+    float4 outPutColor = ambientLight + diffuseLight + specularLight + cb_emissiveColor;
+    
+    float3 eyeVec = normalize(-eyeVector);
+    float3 normal = normalize(_psInput.normal);
+    float eyeDotNorm = abs(dot(normal, eyeVec));
+    if (eyeDotNorm < 0.15f)
+    {
+        outPutColor = float4(0, 0, 0, 1);
+    }
+    
+    return outPutColor;
+}
