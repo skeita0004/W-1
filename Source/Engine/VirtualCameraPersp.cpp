@@ -43,7 +43,7 @@ void VirtualCameraPersp::Update()
 
     //ビルボード行列
     //（常にカメラの方を向くように回転させる行列。パーティクルでしか使わない）
-    http://marupeke296.com/DXG_No11_ComeOnBillboard.html
+    // http://marupeke296.com/DXG_No11_ComeOnBillboard.html
     matBillboard_ = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0),
                                      XMLoadFloat3(&targetTransform_.position) - XMLoadFloat3(&transform_.position),
                                      XMLoadFloat3(&upDir_));

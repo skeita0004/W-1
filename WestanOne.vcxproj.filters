@@ -208,16 +208,7 @@
     <FxCompile Include="Assets\Shader\Debug3D.hlsl">
       <Filter>Engine\Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Assets\Shader\OutLine.hlsl">
-      <Filter>Engine\Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Assets\Shader\Reflect.hlsl">
-      <Filter>Engine\Shader</Filter>
-    </FxCompile>
     <FxCompile Include="Assets\Shader\ReflectionMap.hlsl">
-      <Filter>Engine\Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Assets\Shader\Shadow.hlsl">
       <Filter>Engine\Shader</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\ShadowMap.hlsl">
@@ -230,9 +221,6 @@
       <Filter>Engine\Shader</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Sky.hlsl">
-      <Filter>Engine\Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Assets\Shader\Toon.hlsl">
       <Filter>Engine\Shader</Filter>
     </FxCompile>
   </ItemGroup>

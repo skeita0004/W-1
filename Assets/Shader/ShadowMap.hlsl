@@ -16,7 +16,7 @@ struct VS_IN
 struct PS_IN
 {
     float4 pos : SV_POSITION;
-    float4 depthPosition : TEXTURE0;
+    float4 depthPosition : TEXCOORD0;
 };
 
 //───────────────────────────────────────

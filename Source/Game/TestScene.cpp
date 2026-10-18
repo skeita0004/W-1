@@ -11,7 +11,6 @@ TestScene::TestScene(GameObject * parent) :
 void TestScene::Init()
 {
     pSceneManager_ = FindObject<SceneManager>("SceneManager");
-    Instantiate<Stage>(this);
 }
 
 void TestScene::Update()

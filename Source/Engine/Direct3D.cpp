@@ -41,8 +41,6 @@ namespace Direct3D
     int						screenWidth_ = 0;
     int						screenHeight_ = 0;
 
-
-
     //初期化処理
     HRESULT Direct3D::Initialize(HWND hWnd, int screenWidth, int screenHeight)
     {
@@ -211,7 +209,7 @@ namespace Direct3D
 
 
     //シェーダー関連で必要なセット準備
-    void InitShaderBundle()
+    HRESULT InitShaderBundle()
     {
         DWORD vectorSize = sizeof(XMFLOAT3);
 
@@ -398,6 +396,166 @@ namespace Direct3D
             pDevice_->CreateRasterizerState(&rdc, &shaderBundle[SHADER_SKY].pRasterizerState);
         }
 
+        // ShadowMap
+        {
+            HRESULT hResult;
+            auto& shader = shaderBundle[SHADER_SHADOW_MAP];
+
+            // 頂点シェーダの作成（コンパイル）
+            ID3DBlob* pCompileVS = nullptr;
+            hResult = D3DCompileFromFile(L"Shader/ShadowMap.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            hResult = pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(),
+                pCompileVS->GetBufferSize(),
+                NULL,
+                &shader.pVertexShader);
+
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            //頂点インプットレイアウト
+            D3D11_INPUT_ELEMENT_DESC layout[] =
+            {
+                { "POSITION",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+            };
+
+            hResult = pDevice_->CreateInputLayout(layout,
+                sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC),
+                pCompileVS->GetBufferPointer(),
+                pCompileVS->GetBufferSize(),
+                &shader.pVertexLayout);
+
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            SafeCleaning::SafeRelease(pCompileVS);
+
+            // ピクセルシェーダの作成（コンパイル）
+            ID3DBlob* pCompilePS = nullptr;
+            D3DCompileFromFile(L"Engine/Shader/ShadowMap.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+            assert(pCompilePS != nullptr);
+
+            hResult = pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(),
+                pCompilePS->GetBufferSize(),
+                NULL,
+                &shader.pPixelShader);
+
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            SafeCleaning::SafeRelease(pCompilePS);
+
+            //ラスタライザ作成
+            D3D11_RASTERIZER_DESC rdc = {};
+            rdc.CullMode = D3D11_CULL_NONE;
+            rdc.FillMode = D3D11_FILL_SOLID;
+            rdc.FrontCounterClockwise = FALSE; // 逆時計回りが表？なるほどね。
+            rdc.DepthClipEnable = true;
+
+            hResult = pDevice_->CreateRasterizerState(&rdc, &shader.pRasterizerState);
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            SetShader(SHADER_SHADOW_MAP);
+            return hResult;
+
+        }
+
+        // ReflectionMap
+        {
+            HRESULT hResult;
+            auto& shader = shaderBundle[SHADER_REFLECTION_MAP];
+
+            WCHAR cwd[MAX_PATH];
+            GetCurrentDirectoryW(MAX_PATH, cwd);
+            OutputDebugString(cwd);
+
+            // 頂点シェーダの作成（コンパイル）
+            ID3DBlob* pCompileVS = nullptr;
+            hResult = D3DCompileFromFile(L"Engine/Shader/ReflectionMap.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            hResult = pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(),
+                pCompileVS->GetBufferSize(),
+                NULL,
+                &shader.pVertexShader);
+
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            //頂点インプットレイアウト
+            D3D11_INPUT_ELEMENT_DESC layout[] =
+            {
+                { "POSITION",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,              D3D11_INPUT_PER_VERTEX_DATA, 0 }, //位置
+                { "TEXCOORD",   0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize,     D3D11_INPUT_PER_VERTEX_DATA, 0 }  //UV座標
+            };
+
+            hResult = pDevice_->CreateInputLayout(layout,
+                sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC),
+                pCompileVS->GetBufferPointer(),
+                pCompileVS->GetBufferSize(),
+                &shader.pVertexLayout);
+
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            SafeCleaning::SafeRelease(pCompileVS);
+
+            // ピクセルシェーダの作成（コンパイル）
+            ID3DBlob* pCompilePS = nullptr;
+            D3DCompileFromFile(L"Engine/Shader/ReflectionMap.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+            assert(pCompilePS != nullptr);
+
+            hResult = pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(),
+                pCompilePS->GetBufferSize(),
+                NULL,
+                &shader.pPixelShader);
+
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            SafeCleaning::SafeRelease(pCompilePS);
+
+            //ラスタライザ作成
+            D3D11_RASTERIZER_DESC rdc = {};
+            rdc.CullMode = D3D11_CULL_NONE;
+            rdc.FillMode = D3D11_FILL_SOLID;
+            rdc.FrontCounterClockwise = FALSE;
+            rdc.DepthClipEnable = true;
+
+            hResult = pDevice_->CreateRasterizerState(&rdc, &shader.pRasterizerState);
+            if FAILED(hResult)
+            {
+                return hResult;
+            }
+
+            SetShader(SHADER_REFLECTION_MAP);
+            return hResult;
+
+        }
     }
 
 

@@ -17,7 +17,6 @@ using namespace DirectX;
 //-----------------------------------------------------------
 namespace Direct3D
 {
-    ////////////////////////外部からもアクセスする変数群///////////////////////////////
     //【デバイス】
     //描画を行うための環境やリソースの作成に使う
     extern ID3D11Device* pDevice_;
@@ -32,9 +31,9 @@ namespace Direct3D
     {
         SHADER_3D,
         SHADER_2D,
-        SHADER_SKY,
         SHADER_UNLIT, // DEBUG用
         SHADER_BILLBOARD,
+        SHADER_SKY,
         SHADER_SHADOW_MAP,
         SHADER_REFLECTION_MAP,
         SHADER_MAX
@@ -68,17 +67,10 @@ namespace Direct3D
         BLEND_MAX
     };
 
-
-
     //その他
     extern int		screenWidth_;		//スクリーンの幅
     extern int		screenHeight_;		//スクリーンの高さ
     extern bool		isDrawCollision_;	//コリジョンを表示するかフラグ
-
-
-
-
-
 
     ////////////////////////ここからは関数///////////////////////////////
 
@@ -89,7 +81,7 @@ namespace Direct3D
     HRESULT Initialize(HWND hWnd, int screenWidth, int screenHeight);
 
     //シェーダー関連で必要なセット準備
-    void InitShaderBundle();
+    HRESULT InitShaderBundle();
 
     //今から描画するShaderBundleを設定
     //引数：type	SHADER_3D, SHADER_2D, SHADER_UNLITのどれか
@@ -108,7 +100,6 @@ namespace Direct3D
 
     //開放処理
     void Release();
-
 
     //三角形と線分（レイ）の衝突判定（衝突判定に使用）
     //引数：start　		レイのスタート位置
