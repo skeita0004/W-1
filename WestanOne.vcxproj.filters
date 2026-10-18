@@ -102,6 +102,9 @@
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Time.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\game\TitleScene.hpp">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="source\game\ClearScene.hpp">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Time.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
