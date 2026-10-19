@@ -10,6 +10,9 @@
     <Filter Include="Engine\Shader">
       <UniqueIdentifier>{32ff0f99-b3fb-4684-909a-4be1e5720727}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\HorseRace">
+      <UniqueIdentifier>{34238675-10a5-4e13-91ee-fd305e296499}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\game\ClearScene.cpp">
@@ -104,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="Source\Engine\Time.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Race.cpp">
+      <Filter>Game\HorseRace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\Time.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Race.hpp">
+      <Filter>Game\HorseRace</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

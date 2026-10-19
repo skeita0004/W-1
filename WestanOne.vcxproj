@@ -160,6 +160,7 @@
     <ClCompile Include="source\game\ClearScene.cpp" />
     <ClCompile Include="source\game\OverScene.cpp" />
     <ClCompile Include="source\game\PlayScene.cpp" />
+    <ClCompile Include="Source\Game\Race.cpp" />
     <ClCompile Include="source\game\TestScene.cpp" />
     <ClCompile Include="source\game\TitleScene.cpp" />
   </ItemGroup>
@@ -195,6 +196,7 @@
     <ClInclude Include="source\game\ClearScene.hpp" />
     <ClInclude Include="source\game\OverScene.hpp" />
     <ClInclude Include="source\game\PlayScene.hpp" />
+    <ClInclude Include="Source\Game\Race.hpp" />
     <ClInclude Include="source\game\TestScene.hpp" />
     <ClInclude Include="source\game\TitleScene.hpp" />
   </ItemGroup>
