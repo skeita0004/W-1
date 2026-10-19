@@ -6,9 +6,13 @@
 
 #include "Direct3D.hpp"
 #include "Texture.hpp"
+
+#include "Model.hpp"
+
 #include "FbxParts.hpp"
 
-class Transform;
+class  Transform;
+struct Material;
 
 class Renderer
 {
@@ -17,33 +21,10 @@ public:
     ~Renderer();
 
     void Init();
-    void Draw(Transform &_transform,
-              int32_t                           _materialCount,
-              ID3D11Buffer *_pVertexBuffer,
-              std::span<ID3D11Buffer *>          _pIndexBuffer,
-              std::span<int32_t>                _indexCountArr,
-              const std::vector<FbxParts::MATERIAL> &_materialList);
 
-    void DrawShadowMap(Transform &_transform,
-                       int32_t                           _materialCount,
-                       ID3D11Buffer *_pVertexBuffer,
-                       std::span<ID3D11Buffer *>          _pIndexBuffer,
-                       std::span<int32_t>                _indexCountArr,
-                       const std::vector<FbxParts::MATERIAL> &_materialList);
-
-    void DrawReflectionMap(Transform &_transform,
-                           int32_t                           _materialCount,
-                           ID3D11Buffer *_pVertexBuffer,
-                           std::span<ID3D11Buffer *>          _pIndexBuffer,
-                           std::span<int32_t>                _indexCountArr,
-                           const std::vector<FbxParts::MATERIAL> &_materialList);
-
-    void DrawReflect(Transform &_transform,
-                     int32_t                           _materialCount,
-                     ID3D11Buffer *_pVertexBuffer,
-                     std::span<ID3D11Buffer *>          _pIndexBuffer,
-                     std::span<int32_t>                _indexCountArr,
-                     const std::vector<FbxParts::MATERIAL> &_materialList);
+    void Draw(int _modelHandle);
+    void DrawShadowMap(int _modelHandle);
+    void DrawReflectionMap(int _modelHandle);
 
     void Release();
 
@@ -117,7 +98,7 @@ private:
         XMFLOAT4    cameraPos;
     };
 
-    Texture *pNormalMap_;
+    Texture* pNormalMap_;
 
     inline static XMFLOAT4 lightPos_{
         0.f,
@@ -134,12 +115,40 @@ private:
     };
 
     // コンスタントバッファ
-    ID3D11Buffer *pMatrixBuffer_;
-    ID3D11Buffer *pShadowMatrixBuffer_;
-    ID3D11Buffer *pMaterialBuffer_;
-    ID3D11Buffer *pRefMaterialBuffer_;
-    ID3D11Buffer *pLightBuffer_;
-    ID3D11Buffer *pCameraBuffer_;
+    ID3D11Buffer* pMatrixBuffer_;
+    ID3D11Buffer* pShadowMatrixBuffer_;
+    ID3D11Buffer* pMaterialBuffer_;
+    ID3D11Buffer* pRefMaterialBuffer_;
+    ID3D11Buffer* pLightBuffer_;
+    ID3D11Buffer* pCameraBuffer_;
 
     HRESULT InitConstantBuffer();
+
+    void Draw(Transform&                   _transform,
+              int32_t                      _materialCount,
+              ID3D11Buffer*                _pVertexBuffer,
+              std::span<ID3D11Buffer*>     _pIndexBuffer,
+              std::span<int32_t>           _indexCountArr,
+              const std::vector<Material>& _materialList);
+
+    void DrawShadowMap(Transform& _transform,
+                       int32_t                           _materialCount,
+                       ID3D11Buffer* _pVertexBuffer,
+                       std::span<ID3D11Buffer*>          _pIndexBuffer,
+                       std::span<int32_t>                _indexCountArr,
+                       const std::vector<Material>& _materialList);
+
+    void DrawReflectionMap(Transform& _transform,
+                           int32_t                           _materialCount,
+                           ID3D11Buffer* _pVertexBuffer,
+                           std::span<ID3D11Buffer*>          _pIndexBuffer,
+                           std::span<int32_t>                _indexCountArr,
+                           const std::vector<Material>& _materialList);
+
+    //void DrawReflect(Transform& _transform,
+    //                 int32_t                           _materialCount,
+    //                 ID3D11Buffer* _pVertexBuffer,
+    //                 std::span<ID3D11Buffer*>          _pIndexBuffer,
+    //                 std::span<int32_t>                _indexCountArr,
+    //                 const std::vector<Material>& _materialList);
 };

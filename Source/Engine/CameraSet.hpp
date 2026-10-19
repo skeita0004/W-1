@@ -10,6 +10,15 @@ class Transform;
 class CameraSet
 {
 public:
+
+    enum CameraType
+    {
+        NORMAL = 0,
+        SHADOW,
+        REFLECTION,
+        CAMERA_TYPE_MAX
+    };
+
     CameraSet();
 
     void Init();
@@ -19,13 +28,12 @@ public:
     /// @note  作成してすぐにCurrentとして
     /// 登録されるわけではない。
     /// @return 作成されたカメラのハンドル
-    int Create(const DirectX::XMFLOAT3 &_upDir,
+    int Create(const DirectX::XMFLOAT3& _upDir,
                const float              _fovAngleDeg,
                const float              _nearClip,
                const float              _farClip);
 
-    
-    int CreateOrtho(const DirectX::XMFLOAT3 &_upDir,
+    int CreateOrtho(const DirectX::XMFLOAT3& _upDir,
                     const XMFLOAT2           _viewSize,
                     const float              _nearClip,
                     const float              _farClip);
@@ -33,7 +41,7 @@ public:
     /// @brief Currentとして設定されている
     /// カメラのTransformを返す
     /// @return カメラのTransform
-    Transform &GetTransform();
+    Transform& GetTransform();
 
     /// @brief 指定したカメラをCurrentにする
     /// @param _hCam カメラのハンドル
@@ -42,9 +50,11 @@ public:
     /// @brief Currentとして設定されているカメラの
     /// 参照を返す
     /// @return VirtualCamera&
-    IVirtualCamera *GetCurrent();
+    IVirtualCamera* GetCurrent();
 
 private:
     inline static int hCurrent_{0};
+    inline static int hCurrentShadow_{0};
+    inline static int hCurrentReflection_{0};
     inline static std::vector<IVirtualCamera*> instances_{};
 };

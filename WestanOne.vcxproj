@@ -179,7 +179,9 @@
     <ClInclude Include="source\engine\Image.hpp" />
     <ClInclude Include="source\engine\Input.hpp" />
     <ClInclude Include="source\engine\IVirtualCamera.hpp" />
+    <ClInclude Include="Source\Engine\Material.hpp" />
     <ClInclude Include="source\engine\Model.hpp" />
+    <ClInclude Include="Source\Engine\RayCast.hpp" />
     <ClInclude Include="source\engine\Renderer.hpp" />
     <ClInclude Include="source\engine\RootObject.hpp" />
     <ClInclude Include="source\engine\SafeCleaning.hpp" />
@@ -199,6 +201,7 @@
     <ClInclude Include="Source\Game\Race.hpp" />
     <ClInclude Include="source\game\TestScene.hpp" />
     <ClInclude Include="source\game\TitleScene.hpp" />
+    <ClInclude Include="Source\Engine\Vertex.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

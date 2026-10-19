@@ -1,12 +1,16 @@
 ﻿#pragma once
-#include <DirectXMath.h>
+
 #include <list>
 #include <string>
 #include <cassert>
+#include <vector>
+
+#include <DirectXMath.h>
+
 #include "SphereCollider.hpp"
 #include "BoxCollider.hpp"
 #include "Transform.hpp"
-#include <vector>
+#include "Renderer.hpp"
 
 using namespace DirectX;
 

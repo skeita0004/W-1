@@ -3,27 +3,19 @@
 #include <fbxsdk.h>
 #include <vector>
 #include <string>
+
+#include <span>
+
 #include "Transform.hpp"
+#include "RayCast.hpp"
 
 class FbxParts;
-
-//レイキャスト用構造体
-struct RayCastData
-{
-	XMFLOAT3	start;	//レイ発射位置
-	XMFLOAT3	dir;	//レイの向きベクトル
-	float       dist;	//衝突点までの距離
-	BOOL        hit;	//レイが当たったか
-	XMFLOAT3 normal;	//法線
-
-	RayCastData() { dist = INFINITY; }
-};
 
 //-----------------------------------------------------------
 //　FBXファイルを扱うクラス
 //　ほとんどの処理は各パーツごとにFbxPartsクラスで行う
 //-----------------------------------------------------------
-class Fbx
+class Fbx 
 {
 	//FbxPartクラスをフレンドクラスにする
 	//FbxPartのprivateな関数にもアクセス可
@@ -77,6 +69,11 @@ public:
 	//レイキャスト（レイを飛ばして当たり判定）
 	//引数：data	必要なものをまとめたデータ
 	void RayCast(RayCastData *data);
+
+	std::span<FbxParts*> GetParts()
+	{
+		return parts_;
+	}
 
 };
 

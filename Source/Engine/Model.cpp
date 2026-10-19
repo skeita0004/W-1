@@ -9,6 +9,11 @@ namespace Model
 	//ロード済みのモデルデータ一覧
 	std::vector<ModelData*>	_datas;
 
+	ModelData* GetModelData(int _handle)
+	{
+		return _datas[_handle];
+	}
+
 	//初期化
 	void Initialize()
 	{

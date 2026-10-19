@@ -212,6 +212,11 @@
     <ClInclude Include="Source\Engine\Time.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\Vertex.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Material.hpp" />
+    <ClInclude Include="Source\Engine\RayCast.hpp" />
     <ClInclude Include="Source\Game\Race.hpp">
       <Filter>Game\HorseRace</Filter>
     </ClInclude>

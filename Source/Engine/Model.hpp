@@ -3,8 +3,10 @@
 #include <assert.h>
 #include <vector>
 #include <string>
+
 #include "Fbx.hpp"
 #include "Transform.hpp"
+#include "Renderer.hpp"
 
 //-----------------------------------------------------------
 //3Dモデル（FBXファイル）を管理する
@@ -46,6 +48,10 @@ namespace Model
 		}
 	};
 
+	/// @brief モデル情報を返す
+	/// @param _handle モデルハンドル
+	/// @return モデル情報
+	ModelData* GetModelData(int _handle);
 
 	//初期化
 	void Initialize();
@@ -101,5 +107,4 @@ namespace Model
 	//引数：handle	判定したいモデルの番号
 	//引数：data	必要なものをまとめたデータ
 	void RayCast(int handle, RayCastData *data);
-
 };
