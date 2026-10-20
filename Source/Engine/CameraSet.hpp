@@ -1,24 +1,17 @@
 ﻿#pragma once
 #include <vector>
+//#include <string>
 
 #include <DirectXMath.h>
 
 #include "IVirtualCamera.hpp"
+#include "CameraType.hpp"
 
 class Transform;
 
 class CameraSet
 {
 public:
-
-    enum CameraType
-    {
-        NORMAL = 0,
-        SHADOW,
-        REFLECTION,
-        CAMERA_TYPE_MAX
-    };
-
     CameraSet();
 
     void Init();
@@ -28,15 +21,17 @@ public:
     /// @note  作成してすぐにCurrentとして
     /// 登録されるわけではない。
     /// @return 作成されたカメラのハンドル
-    int Create(const DirectX::XMFLOAT3& _upDir,
-               const float              _fovAngleDeg,
-               const float              _nearClip,
-               const float              _farClip);
+    int Create(const CameraType _type,
+               const XMFLOAT3&  _upDir,
+               const float      _fovAngleDeg,
+               const float      _nearClip,
+               const float      _farClip);
 
-    int CreateOrtho(const DirectX::XMFLOAT3& _upDir,
-                    const XMFLOAT2           _viewSize,
-                    const float              _nearClip,
-                    const float              _farClip);
+    int CreateOrtho(const CameraType _type,
+                    const XMFLOAT3&  _upDir,
+                    const XMFLOAT2&  _viewSize,
+                    const float      _nearClip,
+                    const float      _farClip);
 
     /// @brief Currentとして設定されている
     /// カメラのTransformを返す
@@ -51,6 +46,8 @@ public:
     /// 参照を返す
     /// @return VirtualCamera&
     IVirtualCamera* GetCurrent();
+
+    // void FindCamera(CameraType _type);
 
 private:
     inline static int hCurrent_{0};

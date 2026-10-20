@@ -169,6 +169,7 @@
     <ClInclude Include="source\engine\BillBoard.hpp" />
     <ClInclude Include="source\engine\BoxCollider.hpp" />
     <ClInclude Include="source\engine\CameraSet.hpp" />
+    <ClInclude Include="Source\Engine\CameraType.hpp" />
     <ClInclude Include="source\engine\Collider.hpp" />
     <ClInclude Include="source\engine\CsvReader.hpp" />
     <ClInclude Include="source\engine\Debug.hpp" />

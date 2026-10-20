@@ -167,7 +167,7 @@ void FbxParts::InitMaterial(fbxsdk::FbxNode * pNode)
 }
 
 //テクスチャ準備
-void FbxParts::InitTexture(fbxsdk::FbxSurfaceMaterial* pMaterial, const DWORD& i)
+void FbxParts::InitTexture(fbxsdk::FbxSurfaceMaterial* pMaterial, const int32_t& i)
 {
 	materialList_[i].pTexture = nullptr;
 

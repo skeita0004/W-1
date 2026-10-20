@@ -3,10 +3,12 @@
 
 #include <imgui.h>
 
-VirtualCameraPersp::VirtualCameraPersp(const XMFLOAT3& _upDir,
-                                       const float     _fovAngleDeg,
-                                       const float     _nearClip,
-                                       const float     _farClip) :
+VirtualCameraPersp::VirtualCameraPersp(const CameraType _type,
+                                       const XMFLOAT3&  _upDir,
+                                       const float      _fovAngleDeg,
+                                       const float      _nearClip,
+                                       const float      _farClip) :
+                                       cameraType  (_type),
                                        upDir_      (_upDir),
                                        fovAngleDeg_(_fovAngleDeg),
                                        nearClip_   (_nearClip),

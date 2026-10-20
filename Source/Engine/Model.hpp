@@ -66,7 +66,7 @@ namespace Model
 	//引数：matrix	ワールド行列
 	void Draw(int handle);
 
-    void DrawSky(int handle);
+    //void DrawSky(int handle);
 
 	//任意のモデルを開放
 	//引数：handle	開放したいモデルの番号

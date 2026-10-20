@@ -91,26 +91,26 @@ namespace Model
 		}
 	}
 
-	void DrawSky(int handle)
-	{
-        if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
-        {
-            return;
-        }
+	//void DrawSky(int handle)
+	//{
+ //       if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
+ //       {
+ //           return;
+ //       }
 
-        //アニメーションを進める
-        _datas[handle]->nowFrame += _datas[handle]->animSpeed;
+ //       //アニメーションを進める
+ //       _datas[handle]->nowFrame += _datas[handle]->animSpeed;
 
-        //最後までアニメーションしたら戻す
-        if (_datas[handle]->nowFrame > (float)_datas[handle]->endFrame)
-            _datas[handle]->nowFrame = (float)_datas[handle]->startFrame;
+ //       //最後までアニメーションしたら戻す
+ //       if (_datas[handle]->nowFrame > (float)_datas[handle]->endFrame)
+ //           _datas[handle]->nowFrame = (float)_datas[handle]->startFrame;
 
-        if (_datas[handle]->pFbx)
-        {
-            _datas[handle]->pFbx->DrawSky(_datas[handle]->transform, (int)_datas[handle]->nowFrame);
-        }
+ //       if (_datas[handle]->pFbx)
+ //       {
+ //           _datas[handle]->pFbx->DrawSky(_datas[handle]->transform, (int)_datas[handle]->nowFrame);
+ //       }
 
-	}
+	//}
 
 	//任意のモデルを開放
 	void Release(int handle)

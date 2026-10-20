@@ -1,11 +1,13 @@
 ﻿#pragma once
-#include "Transform.hpp"
+
 #include "IVirtualCamera.hpp"
+#include "CameraType.hpp"
 
 class VirtualCameraPersp final : public IVirtualCamera
 {
 public:
-    VirtualCameraPersp(const XMFLOAT3&  _upDir,
+    VirtualCameraPersp(const CameraType _type,
+                       const XMFLOAT3&  _upDir,
                        const float      _fovAngleDeg,
                        const float      _nearClip,
                        const float      _farClip);
@@ -13,14 +15,16 @@ public:
     void Init()   override;
     void Update() override;
 
-    Transform      &GetTransform()             override;
-    Transform      &GetTargetTransform()       override;
-    float          &GetFovAngleDeg();
-    float          &GetNearClip()              override;
-    float          &GetFarClip()               override;
-    const XMMATRIX &GetProjectionMat()   const override;
-    const XMMATRIX &GetViewMat()         const override;
-    const XMMATRIX &GetBillboardMat()    const;
+    Transform&      GetTransform()             override;
+    Transform&      GetTargetTransform()       override;
+    float&          GetFovAngleDeg();
+    float&          GetNearClip()              override;
+    float&          GetFarClip()               override;
+    const XMMATRIX& GetProjectionMat()   const override;
+    const XMMATRIX& GetViewMat()         const override;
+    const XMMATRIX& GetBillboardMat()    const;
+
+    CameraType cameraType;
 
 private:
     Transform transform_;
@@ -33,6 +37,6 @@ private:
     XMMATRIX  matView_;
     XMMATRIX  matBillboard_;
 
-    inline static const float DEFAULT_NEAR_CLIP{ 0.1f };
+    inline static const float DEFAULT_NEAR_CLIP{0.1f};
     inline static const float DEFAULT_FAR_CLIP{1000.f};
 };

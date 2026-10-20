@@ -135,11 +135,11 @@ void Fbx::Draw(Transform& transform, int frame)
 			parts_[k]->DrawSkinAnime(transform, time);
 		}
 
-		//メッシュアニメーションの場合
-		else
-		{
-			parts_[k]->DrawMeshAnime(transform, time, pFbxScene_);
-		}
+		////メッシュアニメーションの場合
+		//else
+		//{
+		//	parts_[k]->DrawMeshAnime(transform, time, pFbxScene_);
+		//}
 	}
 }
 
