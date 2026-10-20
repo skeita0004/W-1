@@ -32,7 +32,13 @@ namespace Direct3D
     bool		isDrawCollision_ = true;	//コリジョンを表示するか
     bool		_isLighting = false;		//ライティングするか
 
+    ID3D11Texture2D* pShadowDepthStencil;
+    ID3D11DepthStencilView* pShadowDepthStencilView;
 
+    ID3D11Texture2D* pReflectionMap;
+    ID3D11RenderTargetView* pReflectionRTV;
+    ID3D11Texture2D* pRefDepthStencil;
+    ID3D11DepthStencilView* pRefDepthStencilView;
 
     //extern宣言した変数の初期化
     ID3D11Device*           pDevice_ = nullptr;
@@ -189,6 +195,151 @@ namespace Direct3D
             BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
             BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
             pDevice_->CreateBlendState(&BlendDesc, &pBlendState[BLEND_ADD]);
+        }
+
+
+        //----------------------シャドウマップ-------------------------//
+// シャドウマップ用深度ステンシル
+        pShadowDepthStencil = nullptr;
+        D3D11_TEXTURE2D_DESC descShadowDepth{};
+        descShadowDepth.Width = 2048;
+        descShadowDepth.Height = 2048;
+        descShadowDepth.ArraySize = 1;
+        descShadowDepth.Format = DXGI_FORMAT_R32_TYPELESS;
+        descShadowDepth.SampleDesc.Count = 1;
+        descShadowDepth.SampleDesc.Quality = 0;
+        descShadowDepth.Usage = D3D11_USAGE_DEFAULT;
+        descShadowDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+        pDevice_->CreateTexture2D(&descShadowDepth, NULL, &pShadowDepthStencil);
+
+        D3D11_DEPTH_STENCIL_VIEW_DESC dscd{};
+        dscd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+        dscd.Format = DXGI_FORMAT_D32_FLOAT;
+
+        HRESULT dsvResult;
+        if (pShadowDepthStencil != nullptr)
+        {
+            dsvResult = pDevice_->CreateDepthStencilView(pShadowDepthStencil, &dscd, &pShadowDepthStencilView);
+        }
+        else
+        {
+            // pDepthStencilがnullptrの時の処理をここに書く
+        }
+
+        if (pShadowDepthStencilView == nullptr)
+        {
+            MessageBox(nullptr, L"ShadowDSV is NULL", L"ERROR", MB_OK);
+        }
+
+        D3D11_SAMPLER_DESC dsss{};
+        dsss.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+        dsss.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+        dsss.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+        dsss.BorderColor[0] = 1.0f;
+        dsss.BorderColor[1] = 1.0f;
+        dsss.BorderColor[2] = 1.0f;
+        dsss.BorderColor[3] = 1.0f;
+        dsss.MinLOD = 0.0f;
+        dsss.MaxLOD = D3D11_FLOAT32_MAX;
+        dsss.MipLODBias = 0.0f;
+        dsss.MaxAnisotropy = 1;
+        dsss.ComparisonFunc = D3D11_COMPARISON_LESS;
+        dsss.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_POINT;
+
+        pDevice_->CreateSamplerState(&dsss, &pShadowSamplerState);
+
+        D3D11_SHADER_RESOURCE_VIEW_DESC dssrv{};
+        dssrv.Format = DXGI_FORMAT_R32_FLOAT;
+        dssrv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+        dssrv.Texture2D.MipLevels = 1;
+
+        HRESULT result;
+        if (pShadowDepthStencil != nullptr)
+        {
+            result = pDevice_->CreateShaderResourceView(pShadowDepthStencil, &dssrv, &pShadowSRV);
+        }
+        else
+        {
+            // エラー処理
+        }
+
+        //------------------------反射マップ----------------------//
+        pReflectionMap = nullptr;
+        D3D11_TEXTURE2D_DESC reflectionMapDesc{};
+        reflectionMapDesc.Width = screenWidth_;
+        reflectionMapDesc.Height = screenHeight_;
+        reflectionMapDesc.ArraySize = 1;
+        reflectionMapDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+        reflectionMapDesc.SampleDesc.Count = 1;
+        reflectionMapDesc.SampleDesc.Quality = 0;
+        reflectionMapDesc.Usage = D3D11_USAGE_DEFAULT;
+        reflectionMapDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE bitor D3D11_BIND_RENDER_TARGET;
+        reflectionMapDesc.CPUAccessFlags = 0;
+        reflectionMapDesc.MiscFlags = 1;
+        result = pDevice_->CreateTexture2D(&reflectionMapDesc, nullptr, &pReflectionMap);
+
+        // 反射マップレンダーターゲット
+        pReflectionRTV = nullptr;
+
+        if (pReflectionMap)
+        {
+            result = pDevice_->CreateRenderTargetView(pReflectionMap, nullptr, &pReflectionRTV);
+        }
+        else
+        {
+            // pReflectionMap is null
+        }
+
+        pReflectionSamplerState = nullptr;
+        D3D11_SAMPLER_DESC refrectionSamplerStateDesc{};
+        refrectionSamplerStateDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+        refrectionSamplerStateDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+        refrectionSamplerStateDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+        refrectionSamplerStateDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+        result = pDevice_->CreateSamplerState(&refrectionSamplerStateDesc, &pReflectionSamplerState);
+
+        pReflectionMapSRV = nullptr;
+        D3D11_SHADER_RESOURCE_VIEW_DESC reflectionMapSRVDesc{};
+        reflectionMapSRVDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+        reflectionMapSRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+        reflectionMapSRVDesc.Texture2D.MipLevels = 1;
+
+        if (pReflectionMap)
+        {
+            result = pDevice_->CreateShaderResourceView(pReflectionMap, &reflectionMapSRVDesc, &pReflectionMapSRV);
+        }
+        else
+        {
+
+        }
+
+        if (FAILED(result))
+        {
+            return result;
+        }
+
+        pRefDepthStencil = nullptr;
+        D3D11_TEXTURE2D_DESC descRefDepth{};
+        descRefDepth.Width = screenWidth_;
+        descRefDepth.Height = screenHeight_;
+        descRefDepth.MipLevels = 1;
+        descRefDepth.ArraySize = 1;
+        descRefDepth.Format = DXGI_FORMAT_D32_FLOAT;
+        descRefDepth.SampleDesc.Count = 1;
+        descRefDepth.SampleDesc.Quality = 0;
+        descRefDepth.Usage = D3D11_USAGE_DEFAULT;
+        descRefDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+        descRefDepth.CPUAccessFlags = 0;
+        descRefDepth.MiscFlags = 0;
+        result = pDevice_->CreateTexture2D(&descRefDepth, NULL, &pRefDepthStencil);
+
+        if (pDepthStencil != nullptr)
+        {
+            result = pDevice_->CreateDepthStencilView(pRefDepthStencil, NULL, &pRefDepthStencilView);
+        }
+        else
+        {
+            // pDepthStencilがnullptrの時の処理をここに書く
         }
 
         //パイプラインの構築

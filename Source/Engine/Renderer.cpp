@@ -97,6 +97,8 @@ void Renderer::Draw(Transform &_transform,
 
     for (int i = 0; i < _materialCount; i++) // materialCountのゲッタを用意すること。
     {
+        CameraSet cameraSet{};
+
         // インデックスバッファー
         stride = sizeof(UINT);
         offset = 0;
@@ -109,14 +111,19 @@ void Renderer::Draw(Transform &_transform,
 
         size_t bufferSize = sizeof(MatrixBuffer);
 
+        const auto& normalCamera = cameraSet.GetVirtualCamera(CameraSet::hNormalCamera);
+        const auto& shadowCamera = cameraSet.GetVirtualCamera(CameraSet::hShadowCamera);
+        const auto& reflectionCamera = cameraSet.GetVirtualCamera(CameraSet::hReflectionCamera);
+
         MatrixBuffer mCb{};
-        mCb.matWVP = worldMat * Camera::GetViewMatrix() * Camera::GetProjectionMatrix();
-        mCb.matVP = ShadowCamera::GetViewMatrix() * ShadowCamera::GetProjectionMatrix();
+        
+        mCb.matWVP = worldMat * normalCamera->GetViewMat() * normalCamera->GetProjectionMat();
+        mCb.matP = normalCamera->GetProjectionMat();
+        mCb.matVP = shadowCamera->GetViewMat() * shadowCamera->GetProjectionMat();
         mCb.matNormal = _transform.GetNormalMatrix();
         mCb.matW = worldMat;
         mCb.matInvW = XMMatrixInverse(nullptr, worldMat);
-        mCb.matRefView = ReflectionCamera::GetViewMatrix();
-        mCb.matP = Camera::GetProjectionMatrix();
+        mCb.matRefView = reflectionCamera->GetViewMat();
 
         Direct3D::pContext_->Map(pMatrixBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
         memcpy_s(pdata.pData, bufferSize, (void *)(&mCb), bufferSize);	// データの値を送る
@@ -176,7 +183,13 @@ void Renderer::Draw(Transform &_transform,
 
             CameraBuffer camCb{};
 
-            camCb.cameraPos = CameraSet::GetPosition();
+            auto& cameraPosRaw = normalCamera->GetTransform().position;
+            camCb.cameraPos = {
+                cameraPosRaw.x,
+                cameraPosRaw.y,
+                cameraPosRaw.z,
+                1.0f
+            };
 
             Direct3D::pContext_->Map(pCameraBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);
             memcpy_s(pdata.pData, bufferSize, (void *)(&camCb), bufferSize);
@@ -244,6 +257,8 @@ void Renderer::DrawShadowMap(Transform &_transform,
 {
     Direct3D::SetShader(Direct3D::SHADER_SHADOW_MAP);
 
+    CameraSet cameraSet{};
+
     //頂点バッファ
     UINT stride = sizeof(Vertex);
     UINT offset = 0;
@@ -268,8 +283,11 @@ void Renderer::DrawShadowMap(Transform &_transform,
         ShadowMatrixBuffer mCb{};
         pdata.RowPitch = sizeof(ShadowMatrixBuffer);
 
+
+        const auto& shadowCamera = cameraSet.GetVirtualCamera(CameraSet::hShadowCamera);
+
         // ワールド変換行列に、ライトからのビューと射影変換行列をかける
-        mCb.matWVP = worldMat * ShadowCamera::GetViewMatrix() * ShadowCamera::GetProjectionMatrix();
+        mCb.matWVP = worldMat * shadowCamera->GetViewMat() * shadowCamera->GetProjectionMat();
         //mCb.matWVP = XMMatrixIdentity();
 
         Direct3D::pContext_->Map(pShadowMatrixBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
@@ -289,6 +307,8 @@ void Renderer::DrawReflectionMap(Transform &_transform,
 {
     Direct3D::SetShader(Direct3D::SHADER_REFLECTION_MAP);
 
+    CameraSet cameraSet{};
+
     //頂点バッファ
     UINT stride = sizeof(Vertex);
     UINT offset = 0;
@@ -305,15 +325,18 @@ void Renderer::DrawReflectionMap(Transform &_transform,
         offset = 0;
         Direct3D::pContext_->IASetIndexBuffer(_pIndexBuffer[i], DXGI_FORMAT_R32_UINT, 0);
 
-        XMMATRIX worldMat = _transform.GetWorldMatrix(); // ここで計算されるのですわ～ <- 誰？
+        XMMATRIX worldMat = _transform.GetWorldMatrix(); // ここで計算されるのですわ～ <- 誰？ <- 何？
 
         // 行列用コンスタントバッファ
         {
             D3D11_MAPPED_SUBRESOURCE pdata;
             size_t bufferSize = sizeof(ShadowMatrixBuffer);
 
+            const auto& normalCamera = cameraSet.GetVirtualCamera(CameraSet::hNormalCamera);
+            const auto& reflectionCamera = cameraSet.GetVirtualCamera(CameraSet::hReflectionCamera);
+
             ShadowMatrixBuffer mCb{};
-            mCb.matWVP = worldMat * ReflectionCamera::GetViewMatrix() * Camera::GetProjectionMatrix();
+            mCb.matWVP = worldMat * reflectionCamera->GetViewMat() * normalCamera->GetProjectionMat();
 
             Direct3D::pContext_->Map(pShadowMatrixBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
             memcpy_s(pdata.pData, bufferSize, (void *)(&mCb), bufferSize);	// データの値を送る

@@ -25,6 +25,15 @@ namespace Direct3D
     //GPUに命令を出すためのやつ
     extern ID3D11DeviceContext* pContext_;
 
+    // シャドウマップ用
+    extern ID3D11SamplerState*       pShadowSamplerState;
+    extern ID3D11ShaderResourceView* pShadowSRV;
+    extern bool isShadowRendering;
+
+    // リフレクションマップ用
+    extern ID3D11SamplerState* pReflectionSamplerState;
+    extern ID3D11ShaderResourceView* pReflectionMapSRV;
+    extern bool isReflectionRendering;
 
     //■シェーダー関連で必要なセット
     enum SHADER_TYPE

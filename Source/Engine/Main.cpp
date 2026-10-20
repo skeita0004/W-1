@@ -46,7 +46,7 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
                    _In_     LPSTR lpCmdLine,
                    _In_     int nCmdShow)
 {
-    ShowCursor(FALSE);
+    //ShowCursor(FALSE);
 
     srand((unsigned)time(NULL));
     SetCurrentDirectory(L"Assets");
@@ -144,24 +144,20 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
                 //全オブジェクトの更新処理
                 pRootObject->UpdateSub();
 
+                // 現在設定されているカメラの更新
                 pCameraSet->GetCurrent()->Update();
 
                 //エフェクトの更新
                 //VFX::Update();
 
-                //このフレームの描画開始
+
+
                 Direct3D::BeginDraw();
-
-                //全オブジェクトを描画
                 pRootObject->DrawSub();
-
-                //エフェクトの描画
-                //VFX::Draw();
 
                 ImGui::Render();
                 ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-                //描画終了
                 Direct3D::EndDraw();
 
                 Sleep(1);
@@ -172,8 +168,6 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
 
     
 
-    //いろいろ解放
-    //VFX::Release();
     Audio::AllRelease();
     Model::AllRelease();
     Image::AllRelease();

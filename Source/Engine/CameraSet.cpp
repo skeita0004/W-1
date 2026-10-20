@@ -9,21 +9,25 @@ CameraSet::CameraSet()
 
 void CameraSet::Init()
 {
-    instances_.push_back(new VirtualCameraPersp(NORMAL,
-                                                XMFLOAT3(0, 1, 0),
-                                                120.f,
-                                                0.1f,
-                                                1000.f));
-    instances_[hCurrent_]->Init();
+    hNormalCamera = Create(NORMAL,
+                           XMFLOAT3(0, 1, 0),
+                           120.f,
+                           0.1f,
+                           1000.f);
+    hShadowCamera = CreateOrtho(SHADOW,
+                                XMFLOAT3(0, 1, 0),
+                                XMFLOAT2(2, 2),
+                                0.1f,
+                                1000.f);
+    hReflectionCamera = Create(REFLECTION,
+                               XMFLOAT3(0, 1, 0),
+                               120.f,
+                               0.1f,
+                               1000.f);
 
-    hCurrentShadow_     = CreateOrtho(SHADOW,
-                                      XMFLOAT3(0, 1, 0),
-                                      XMFLOAT2(2, 2),
-                                      0.1f,
-                                      1000.f);
-    hCurrentReflection_ = Create(REFLECTION,
-                                 XMFLOAT3(0, 1, 0),
-                                 120.f);
+    instances_[hNormalCamera]->Init();
+    instances_[hShadowCamera]->Init();
+    instances_[hReflectionCamera]->Init();
 }
 
 void CameraSet::Release()
@@ -81,5 +85,10 @@ void CameraSet::SetCurrent(int _hCam)
 
 IVirtualCamera* CameraSet::GetCurrent()
 {
-    return instances_[hCurrent_];
+    return GetVirtualCamera(hCurrent_);
+}
+
+IVirtualCamera* CameraSet::GetVirtualCamera(int _handle)
+{
+    return instances_[_handle];
 }

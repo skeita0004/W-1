@@ -17,22 +17,6 @@ public:
     void Init();
     void Release();
 
-    /// @brief カメラを作成する
-    /// @note  作成してすぐにCurrentとして
-    /// 登録されるわけではない。
-    /// @return 作成されたカメラのハンドル
-    int Create(const CameraType _type,
-               const XMFLOAT3&  _upDir,
-               const float      _fovAngleDeg,
-               const float      _nearClip,
-               const float      _farClip);
-
-    int CreateOrtho(const CameraType _type,
-                    const XMFLOAT3&  _upDir,
-                    const XMFLOAT2&  _viewSize,
-                    const float      _nearClip,
-                    const float      _farClip);
-
     /// @brief Currentとして設定されている
     /// カメラのTransformを返す
     /// @return カメラのTransform
@@ -47,11 +31,27 @@ public:
     /// @return VirtualCamera&
     IVirtualCamera* GetCurrent();
 
+    IVirtualCamera* GetVirtualCamera(int _handle);
+
     // void FindCamera(CameraType _type);
 
+    inline static int hNormalCamera{0};
+    inline static int hShadowCamera{0};
+    inline static int hReflectionCamera{0};
+
 private:
-    inline static int hCurrent_{0};
-    inline static int hCurrentShadow_{0};
-    inline static int hCurrentReflection_{0};
+    int Create(const CameraType _type,
+               const XMFLOAT3&  _upDir,
+               const float      _fovAngleDeg,
+               const float      _nearClip,
+               const float      _farClip);
+
+    int CreateOrtho(const CameraType _type,
+                    const XMFLOAT3&  _upDir,
+                    const XMFLOAT2&  _viewSize,
+                    const float      _nearClip,
+                    const float      _farClip);
+
+    inline static int                          hCurrent_{0};
     inline static std::vector<IVirtualCamera*> instances_{};
 };
