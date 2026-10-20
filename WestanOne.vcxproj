@@ -158,9 +158,10 @@
     <ClCompile Include="source\engine\VirtualCameraOrtho.cpp" />
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
     <ClCompile Include="source\game\ClearScene.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\Race.cpp" />
     <ClCompile Include="source\game\OverScene.cpp" />
     <ClCompile Include="source\game\PlayScene.cpp" />
-    <ClCompile Include="Source\Game\Race.cpp" />
     <ClCompile Include="source\game\TestScene.cpp" />
     <ClCompile Include="source\game\TitleScene.cpp" />
   </ItemGroup>
@@ -197,9 +198,10 @@
     <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
     <ClInclude Include="source\game\ClearScene.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\Race.hpp" />
     <ClInclude Include="source\game\OverScene.hpp" />
     <ClInclude Include="source\game\PlayScene.hpp" />
-    <ClInclude Include="Source\Game\Race.hpp" />
     <ClInclude Include="source\game\TestScene.hpp" />
     <ClInclude Include="source\game\TitleScene.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />

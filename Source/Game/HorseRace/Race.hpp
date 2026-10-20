@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../Engine/GameObject.hpp"
+#include "../../Engine/GameObject.hpp"
 
 class Race : public GameObject {
 public:
