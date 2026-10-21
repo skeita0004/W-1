@@ -147,6 +147,8 @@
     <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Engine\RayCast.cpp" />
+    <ClCompile Include="Source\Engine\SkinInstance.cpp" />
     <ClCompile Include="source\engine\Audio.cpp" />
     <ClCompile Include="source\engine\BillBoard.cpp" />
     <ClCompile Include="source\engine\BoxCollider.cpp" />
@@ -190,6 +192,7 @@
     <ClInclude Include="Library\ImGui\include\imstb_rectpack.h" />
     <ClInclude Include="Library\ImGui\include\imstb_textedit.h" />
     <ClInclude Include="Library\ImGui\include\imstb_truetype.h" />
+    <ClInclude Include="Source\Engine\SkinInstance.hpp" />
     <ClInclude Include="source\engine\Audio.hpp" />
     <ClInclude Include="source\engine\BillBoard.hpp" />
     <ClInclude Include="source\engine\BoxCollider.hpp" />

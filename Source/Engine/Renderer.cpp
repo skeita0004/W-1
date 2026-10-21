@@ -30,45 +30,48 @@ void Renderer::Init()
 void Renderer::Draw(int _modelHandle)
 {
     Model::ModelData* modelData{Model::GetModelData(_modelHandle)};
+    auto              parts{modelData->pFbx->GetParts()};
 
-    for (auto& parts : modelData->pFbx->GetParts())
+    for (size_t i = 0; i < parts.size(); i++)
     {
         Draw(modelData->transform,
-             parts->GetMaterialCount(),
-             parts->GetVertexBuffer(),
-             parts->GetIndexBuffer(),
-             parts->GetIndexCountArray(),
-             parts->GetMaterialList());
+             parts[i]->GetMaterialCount(),
+             Model::GetVertexBuffer(_modelHandle, i),
+             parts[i]->GetIndexBuffer(),
+             parts[i]->GetIndexCountArray(),
+             parts[i]->GetMaterialList());
     }
 }
 
 void Renderer::DrawShadowMap(int _modelHandle)
 {
     Model::ModelData* modelData{Model::GetModelData(_modelHandle)};
+    auto              parts{modelData->pFbx->GetParts()};
 
-    for (auto& parts : modelData->pFbx->GetParts())
+    for (size_t i = 0; i < parts.size(); i++)
     {
         DrawShadowMap(modelData->transform,
-                      parts->GetMaterialCount(),
-                      parts->GetVertexBuffer(),
-                      parts->GetIndexBuffer(),
-                      parts->GetIndexCountArray(),
-                      parts->GetMaterialList());
+                      parts[i]->GetMaterialCount(),
+                      Model::GetVertexBuffer(_modelHandle, i),
+                      parts[i]->GetIndexBuffer(),
+                      parts[i]->GetIndexCountArray(),
+                      parts[i]->GetMaterialList());
     }
 }
 
 void Renderer::DrawReflectionMap(int _modelHandle)
 {
     Model::ModelData* modelData{Model::GetModelData(_modelHandle)};
+    auto              parts{modelData->pFbx->GetParts()};
 
-    for (auto& parts : modelData->pFbx->GetParts())
+    for (size_t i = 0; i < parts.size(); i++)
     {
         DrawReflectionMap(modelData->transform,
-                          parts->GetMaterialCount(),
-                          parts->GetVertexBuffer(),
-                          parts->GetIndexBuffer(),
-                          parts->GetIndexCountArray(),
-                          parts->GetMaterialList());
+                          parts[i]->GetMaterialCount(),
+                          Model::GetVertexBuffer(_modelHandle, i),
+                          parts[i]->GetIndexBuffer(),
+                          parts[i]->GetIndexCountArray(),
+                          parts[i]->GetMaterialList());
     }
 }
 

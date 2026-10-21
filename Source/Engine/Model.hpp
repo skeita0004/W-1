@@ -6,7 +6,7 @@
 
 #include "Fbx.hpp"
 #include "Transform.hpp"
-#include "Renderer.hpp"
+#include "SkinInstance.hpp"
 
 //-----------------------------------------------------------
 //3Dモデル（FBXファイル）を管理する
@@ -28,7 +28,9 @@ namespace Model
 		//アニメーションのフレーム
 		float nowFrame, animSpeed;
 		int startFrame, endFrame;
+		int lastSkinFrame{-1};
 
+		SkinInstance skin;
 
 		//初期化
 		ModelData() : pFbx(nullptr), nowFrame(0), startFrame(0), endFrame(0), animSpeed(0)
@@ -64,13 +66,10 @@ namespace Model
 	//描画
 	//引数：handle	描画したいモデルの番号
 	//引数：matrix	ワールド行列
-	void Draw(int handle);
-
-    //void DrawSky(int handle);
+	void Update(int _handle);
 
 	//任意のモデルを開放
 	//引数：handle	開放したいモデルの番号
-	void Release(int handle);
 
 	//全てのモデルを解放
 	//（シーンが切り替わるときは必ず実行）
@@ -102,8 +101,9 @@ namespace Model
 	//戻値：ワールド行列
 	XMMATRIX GetMatrix(int handle);
 
+	ID3D11Buffer* GetVertexBuffer(int _handle, size_t _i);
 
-	//レイキャスト（レイを飛ばして当たり判定）　※未実装
+	//レイキャスト（レイを飛ばして当たり判定）
 	//引数：handle	判定したいモデルの番号
 	//引数：data	必要なものをまとめたデータ
 	void RayCast(int handle, RayCastData *data);

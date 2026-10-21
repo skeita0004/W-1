@@ -15,3 +15,12 @@ struct RayCastData
         dist = INFINITY;
     }
 };
+
+class RayCast
+{
+public:
+    void RayCasting(RayCastData* _data);
+
+private:
+    void IntersectRect();
+};

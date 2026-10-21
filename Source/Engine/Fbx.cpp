@@ -1,8 +1,7 @@
 ﻿#include "Fbx.hpp"
 #include "Direct3D.hpp"
 #include "FbxParts.hpp"
-
-
+#include "SkinInstance.hpp"
 
 Fbx::Fbx():_animSpeed(0)
 {
@@ -21,7 +20,7 @@ Fbx::~Fbx()
 	pFbxManager_->Destroy();
 }
 
-HRESULT Fbx::Load(std::string fileName)
+HRESULT Fbx::Load(const std::string& fileName)
 {
 	// FBXの読み込み
 	pFbxManager_ = FbxManager::Create();
@@ -99,6 +98,33 @@ void Fbx::CheckNode(FbxNode * pNode, std::vector<FbxParts*>* pPartsList)
 }
 
 
+void Fbx::CreateSkinInstance(SkinInstance& _inst) const
+{
+	_inst.Parts().resize(parts_.size());
+	for (size_t i = 0; i < parts_.size(); i++)
+	{
+		if (parts_[i]->GetSkinInfo() != nullptr)
+		{
+			parts_[i]->CreateSkinInstance(_inst.Parts()[i]);
+		}
+	}
+}
+
+void Fbx::UpdateSkin(int _frame, SkinInstance& _inst) const
+{
+	FbxTime     time;
+	time.SetTime(0, 0, 0, _frame, 0, 0, _frameRate);
+
+	for (size_t i = 0; i < parts_.size(); i++)
+	{
+		//スキンアニメーション（ボーン有り）の場合
+		if (parts_[i]->GetSkinInfo() != nullptr)
+		{
+			parts_[i]->Skinning(time, _inst.Parts()[i]);
+		}
+	}
+}
+
 void Fbx::Release()
 {
 
@@ -117,31 +143,6 @@ XMFLOAT3 Fbx::GetBonePosition(std::string boneName)
 	return position;
 }
 
-void Fbx::Draw(Transform& transform, int frame)
-{
-	Direct3D::SetBlendMode(Direct3D::BLEND_DEFAULT);
-
-	//パーツを1個ずつ描画
-	for (int k = 0; k < parts_.size(); k++)
-	{
-		// その瞬間の自分の姿勢行列を得る
-		FbxTime     time;
-		time.SetTime(0, 0, 0, frame, 0, 0, _frameRate);
-
-
-		////スキンアニメーション（ボーン有り）の場合
-		//if (parts_[k]->GetSkinInfo() != nullptr)
-		//{
-		//	parts_[k]->DrawSkinAnime(transform, time);
-		//}
-
-		////メッシュアニメーションの場合
-		//else
-		//{
-		//	parts_[k]->DrawMeshAnime(transform, time, pFbxScene_);
-		//}
-	}
-}
 
 //レイキャスト（レイを飛ばして当たり判定）
 void Fbx::RayCast(RayCastData * data)

@@ -137,6 +137,8 @@
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\SkinInstance.cpp" />
+    <ClCompile Include="Source\Engine\RayCast.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\game\TitleScene.hpp">
@@ -276,6 +278,7 @@
     <ClInclude Include="Library\ImGui\include\imstb_truetype.h">
       <Filter>ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\SkinInstance.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

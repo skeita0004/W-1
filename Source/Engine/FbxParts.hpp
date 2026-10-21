@@ -14,11 +14,11 @@
 using namespace DirectX;
 
 class Fbx;
+struct SkinPartInstance;
+
 struct RayCastData;
 
-//-----------------------------------------------------------
-//FBXの１つのパーツを扱うクラス
-//-----------------------------------------------------------
+/// @brief 
 class FbxParts
 {
 public:
@@ -26,8 +26,8 @@ public:
     struct  Bone
     {
         XMMATRIX  bindPose;      // 初期ポーズ時のボーン変換行列
-        XMMATRIX  newPose;       // アニメーションで変化したときのボーン変換行列
-        XMMATRIX  diffPose;      // mBindPose に対する mNowPose の変化量
+        //XMMATRIX  newPose;       // アニメーションで変化したときのボーン変換行列
+        //XMMATRIX  diffPose;      // mBindPose に対する mNowPose の変化量
     };
 
     // ウェイト構造体（ボーンと頂点の関連付け）
@@ -78,15 +78,8 @@ public:
     //戻値：結果
     HRESULT Init(FbxNode * pNode);
 
-
-    //描画
-    //引数：world	ワールド行列
-    //void Draw(Transform& transform);
-
-    //ボーン有りのモデルを描画
-    //引数：transform	行列情報
-    //引数：time		フレーム情報（１アニメーション内の今どこか）
-    //void DrawSkinAnime(Transform& transform, FbxTime time);
+    void CreateSkinInstance(SkinPartInstance& _inst) const;
+    void Skinning(FbxTime _time, SkinPartInstance& _inst) const;
 
     //任意のボーンの位置を取得
     //引数：boneName	取得したいボーンの位置
