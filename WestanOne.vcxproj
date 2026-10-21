@@ -71,16 +71,18 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExternalIncludePath>.\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\debug;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>.\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>
+    </LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExternalIncludePath>.\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\release;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>.\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>
+    </LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,10 +100,13 @@
       <WarningLevel>Level3</WarningLevel>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,15 +127,26 @@
       <WarningLevel>Level3</WarningLevel>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <OpenMPSupport>true</OpenMPSupport>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Library\ImGui\cpp\imgui.cpp" />
+    <ClCompile Include="Library\ImGui\cpp\imgui_demo.cpp" />
+    <ClCompile Include="Library\ImGui\cpp\imgui_draw.cpp" />
+    <ClCompile Include="Library\ImGui\cpp\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Library\ImGui\cpp\imgui_impl_win32.cpp" />
+    <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp" />
+    <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp" />
+    <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp" />
     <ClCompile Include="source\engine\Audio.cpp" />
     <ClCompile Include="source\engine\BillBoard.cpp" />
     <ClCompile Include="source\engine\BoxCollider.cpp" />
@@ -166,6 +182,14 @@
     <ClCompile Include="source\game\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Library\ImGui\include\imconfig.h" />
+    <ClInclude Include="Library\ImGui\include\imgui.h" />
+    <ClInclude Include="Library\ImGui\include\imgui_impl_dx11.h" />
+    <ClInclude Include="Library\ImGui\include\imgui_impl_win32.h" />
+    <ClInclude Include="Library\ImGui\include\imgui_internal.h" />
+    <ClInclude Include="Library\ImGui\include\imstb_rectpack.h" />
+    <ClInclude Include="Library\ImGui\include\imstb_textedit.h" />
+    <ClInclude Include="Library\ImGui\include\imstb_truetype.h" />
     <ClInclude Include="source\engine\Audio.hpp" />
     <ClInclude Include="source\engine\BillBoard.hpp" />
     <ClInclude Include="source\engine\BoxCollider.hpp" />

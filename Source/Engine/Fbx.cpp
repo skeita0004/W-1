@@ -129,11 +129,11 @@ void Fbx::Draw(Transform& transform, int frame)
 		time.SetTime(0, 0, 0, frame, 0, 0, _frameRate);
 
 
-		//スキンアニメーション（ボーン有り）の場合
-		if (parts_[k]->GetSkinInfo() != nullptr)
-		{
-			parts_[k]->DrawSkinAnime(transform, time);
-		}
+		////スキンアニメーション（ボーン有り）の場合
+		//if (parts_[k]->GetSkinInfo() != nullptr)
+		//{
+		//	parts_[k]->DrawSkinAnime(transform, time);
+		//}
 
 		////メッシュアニメーションの場合
 		//else

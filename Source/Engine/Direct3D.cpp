@@ -34,11 +34,17 @@ namespace Direct3D
 
     ID3D11Texture2D* pShadowDepthStencil;
     ID3D11DepthStencilView* pShadowDepthStencilView;
+    ID3D11SamplerState* pShadowSamplerState;
+    ID3D11ShaderResourceView* pShadowSRV;
+    bool isShadowRendering;
 
     ID3D11Texture2D* pReflectionMap;
     ID3D11RenderTargetView* pReflectionRTV;
     ID3D11Texture2D* pRefDepthStencil;
     ID3D11DepthStencilView* pRefDepthStencilView;
+    ID3D11SamplerState* pReflectionSamplerState;
+    ID3D11ShaderResourceView* pReflectionMapSRV;
+    bool isReflectionRendering;
 
     //extern宣言した変数の初期化
     ID3D11Device*           pDevice_ = nullptr;
@@ -592,7 +598,7 @@ namespace Direct3D
 
             // ピクセルシェーダの作成（コンパイル）
             ID3DBlob* pCompilePS = nullptr;
-            D3DCompileFromFile(L"Engine/Shader/ShadowMap.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+            D3DCompileFromFile(L"/Shader/ShadowMap.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
             assert(pCompilePS != nullptr);
 
             hResult = pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(),
@@ -636,7 +642,7 @@ namespace Direct3D
 
             // 頂点シェーダの作成（コンパイル）
             ID3DBlob* pCompileVS = nullptr;
-            hResult = D3DCompileFromFile(L"Engine/Shader/ReflectionMap.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+            hResult = D3DCompileFromFile(L"/Shader/ReflectionMap.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 
             if FAILED(hResult)
             {
@@ -675,7 +681,7 @@ namespace Direct3D
 
             // ピクセルシェーダの作成（コンパイル）
             ID3DBlob* pCompilePS = nullptr;
-            D3DCompileFromFile(L"Engine/Shader/ReflectionMap.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+            D3DCompileFromFile(L"/Shader/ReflectionMap.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
             assert(pCompilePS != nullptr);
 
             hResult = pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(),

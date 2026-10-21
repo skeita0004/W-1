@@ -127,15 +127,14 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
                 }
             }
 
-
-            //指定した時間（FPSを60に設定した場合は60分の1秒）経過していたら更新処理
             if ((nowTime - lastUpdateTime) * fpsLimit > 1000.0f)
             {
                 ImGui_ImplDX11_NewFrame();
                 ImGui_ImplWin32_NewFrame();
                 ImGui::NewFrame();
+
                 //時間計測関連
-                lastUpdateTime = nowTime;	//現在の時間（最後に画面を更新した時間）を覚えておく
+                lastUpdateTime = nowTime;
                 FPS++;						//画面更新回数をカウントする
 
                 //入力（キーボード、マウス、コントローラー）情報を更新

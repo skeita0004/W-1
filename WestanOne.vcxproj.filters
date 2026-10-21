@@ -13,6 +13,9 @@
     <Filter Include="Game\HorseRace">
       <UniqueIdentifier>{34238675-10a5-4e13-91ee-fd305e296499}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{f5c5d119-b3a5-4053-8279-52544c315d23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\game\ClearScene.cpp">
@@ -108,8 +111,31 @@
     <ClCompile Include="Source\Engine\Time.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Race.cpp">
-      <Filter>Game\HorseRace</Filter>
+    <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\Race.cpp" />
+    <ClCompile Include="Library\ImGui\cpp\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ImGui\cpp\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ImGui\cpp\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ImGui\cpp\imgui_impl_dx11.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ImGui\cpp\imgui_impl_win32.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,10 +241,40 @@
     <ClInclude Include="Source\Engine\Vertex.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\Material.hpp" />
-    <ClInclude Include="Source\Engine\RayCast.hpp" />
-    <ClInclude Include="Source\Game\Race.hpp">
-      <Filter>Game\HorseRace</Filter>
+    <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\Race.hpp" />
+    <ClInclude Include="Source\Engine\RayCast.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Material.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\CameraType.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ImGui\include\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ImGui\include\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ImGui\include\imgui_impl_dx11.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ImGui\include\imgui_impl_win32.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ImGui\include\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ImGui\include\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ImGui\include\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ImGui\include\imstb_truetype.h">
+      <Filter>ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
