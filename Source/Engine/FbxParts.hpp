@@ -39,14 +39,6 @@ public:
         float*		pBoneWeight;	// ボーンの重み
     };
 
-    //各データの個数
-    int32_t              vertexCount_;        // 頂点数
-    int32_t              polygonCount_;       // ポリゴン数
-    std::vector<int32_t> indexCount_;         // インデックス数
-    int32_t              materialCount_;      // マテリアルの個数
-    int32_t              polygonVertexCount_; // ポリゴン頂点インデックス数 
-    
-    Vertex *pVertexData_;
 
 public:
     FbxParts();
@@ -95,6 +87,15 @@ public:
     //引数：data	必要なものをまとめたデータ
     void RayCast(RayCastData *data);
 
+private:
+    //各データの個数
+    int32_t              vertexCount_;        // 頂点数
+    int32_t              polygonCount_;       // ポリゴン数
+    std::vector<int32_t> indexCount_;         // インデックス数
+    int32_t              materialCount_;      // マテリアルの個数
+    int32_t              polygonVertexCount_; // ポリゴン頂点インデックス数 
+    
+    Vertex *pVertexData_;
 
     std::vector<std::vector<int>> ppIndexData_;
 
@@ -120,7 +121,7 @@ public:
     /////////privateな関数（Init関数から呼ばれる）//////////////////////////
     void InitVertex(fbxsdk::FbxMesh * mesh);	//頂点バッファ準備
     void InitMaterial(fbxsdk::FbxNode * pNode);	//マテリアル準備
-    void InitTexture(fbxsdk::FbxSurfaceMaterial * pMaterial, const int32_t &i);	//テクスチャ準備
+    void InitTexture(fbxsdk::FbxSurfaceMaterial * pMaterial, const int32_t &i);	//テクスチャ準備(InitMaterial内から呼び出される)
     void InitIndex(fbxsdk::FbxMesh * mesh);		//インデックスバッファ準備
     void InitSkelton(FbxMesh * pMesh);			//骨の情報を準備
 };

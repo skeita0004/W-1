@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Time
+namespace Timer
 {
 	void Initialize();
 	void Refresh();

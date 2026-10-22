@@ -1,4 +1,4 @@
-﻿#include "VirtualCameraPersp.hpp"
+#include "VirtualCameraPersp.hpp"
 #include "Screen.hpp"
 
 #include <imgui.h>
@@ -52,15 +52,15 @@ void VirtualCameraPersp::Update()
     matBillboard_ = XMMatrixInverse(nullptr, matBillboard_);
 
 #ifdef _DEBUG
-    //ImGui::Begin("CameraProperty");
+    ImGui::Begin("CameraProperty");
 
-    //ImGui::InputFloat("X: ", &transform_.position.x);
-    //ImGui::InputFloat("Y: ", &transform_.position.y);
-    //ImGui::InputFloat("Z: ", &transform_.position.z);
-    //ImGui::InputFloat("Near Clip:", &nearClip_);
-    //ImGui::InputFloat("Far Clip:", &farClip_);
+    ImGui::InputFloat("X: ", &transform_.position.x);
+    ImGui::InputFloat("Y: ", &transform_.position.y);
+    ImGui::InputFloat("Z: ", &transform_.position.z);
+    ImGui::InputFloat("Near Clip:", &nearClip_);
+    ImGui::InputFloat("Far Clip:", &farClip_);
 
-    //ImGui::End();
+    ImGui::End();
 #endif
 }
 

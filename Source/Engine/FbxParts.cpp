@@ -1,4 +1,4 @@
-﻿#include "FbxParts.hpp"
+#include "FbxParts.hpp"
 #include "Fbx.hpp"
 #include "SafeCleaning.hpp"
 #include "Direct3D.hpp"
@@ -9,7 +9,11 @@
 //コンストラクタ
 FbxParts::FbxParts() :
     pVertexBuffer_(nullptr),
-    pVertexData_(nullptr)
+    pVertexData_(nullptr),
+    pSkinInfo_(nullptr),
+    pBoneArray_(nullptr),
+    ppCluster_(nullptr),
+    pWeightArray_(nullptr)
 {
 }
 
@@ -264,6 +268,7 @@ void FbxParts::InitSkelton(FbxMesh* pMesh)
     if (pDeformer == nullptr)
     {
         //ボーン情報なし
+        numBone_ = 0;
         return;
     }
 

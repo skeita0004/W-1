@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <windows.h>
 
@@ -14,13 +14,12 @@
 class  Transform;
 struct Material;
 
-class Renderer
+namespace Renderer
 {
-public:
-    Renderer();
-    ~Renderer();
-
     void Init();
+
+    // いらなくね？
+    void Release();
 
     void Draw(int _modelHandle);
     void DrawShadowMap(int _modelHandle);
@@ -28,22 +27,20 @@ public:
 
     void Release();
 
-    void SendLightPos(XMFLOAT3 _lightPos)
-    {
-        lightPos_ = XMFLOAT4(_lightPos.x,
-                             _lightPos.y,
-                             _lightPos.z,
-                             1.0f);
-    }
-    void SendLightTarget(XMFLOAT4 _lightTar)
-    {
-        lightTar_ = XMFLOAT4(_lightTar.x,
-                             _lightTar.y,
-                             _lightTar.z,
-                             1.0f);
-    }
+    inline static XMFLOAT4 lightPos_{
+        0.f,
+        0.f,
+        0.f,
+        1.f
+    };
 
-private:
+    inline static XMFLOAT4 lightTar_{
+        0.f,
+        1.f,
+        -1.f,
+        0.f
+    };
+
     struct alignas(16) MatrixBuffer
     {
         XMMATRIX	matWVP;
@@ -98,29 +95,7 @@ private:
         XMFLOAT4    cameraPos;
     };
 
-    Texture* pNormalMap_;
-
-    inline static XMFLOAT4 lightPos_{
-        0.f,
-        2.f,
-        0.f,
-        1.f
-    };
-
-    inline static XMFLOAT4 lightTar_{
-        0.f,
-        0.f,
-        0.f,
-        0.f
-    };
-
-    // コンスタントバッファ
-    ID3D11Buffer* pMatrixBuffer_;
-    ID3D11Buffer* pShadowMatrixBuffer_;
-    ID3D11Buffer* pMaterialBuffer_;
-    ID3D11Buffer* pRefMaterialBuffer_;
-    ID3D11Buffer* pLightBuffer_;
-    ID3D11Buffer* pCameraBuffer_;
+    extern Texture* pNormalMap_;
 
     HRESULT InitConstantBuffer();
 

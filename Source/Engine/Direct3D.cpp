@@ -1,4 +1,4 @@
-﻿#include <d3dcompiler.h>
+#include <d3dcompiler.h>
 #include "Direct3D.hpp"
 #include "SafeCleaning.hpp"
 #include "Transform.hpp"
@@ -56,6 +56,9 @@ namespace Direct3D
     //初期化処理
     HRESULT Direct3D::Initialize(HWND hWnd, int screenWidth, int screenHeight)
     {
+        wchar_t buf[1024]{};
+        GetCurrentDirectoryW(1024, buf);
+        OutputDebugString(buf);
         ///////////////////////////いろいろ準備するための設定///////////////////////////////
         //いろいろな設定項目をまとめた構造体
         DXGI_SWAP_CHAIN_DESC scDesc;
@@ -89,7 +92,7 @@ namespace Direct3D
             nullptr,					// どのビデオアダプタを使用するか？既定ならばnullptrで
             D3D_DRIVER_TYPE_HARDWARE,	// ドライバのタイプを渡す。これ以外は基本的にソフトウェア実装で、どうしてもという時やデバグ用に用いるべし.
             nullptr,					// 上記をD3D_DRIVER_TYPE_SOFTWAREに設定した際に、その処理を行うDLLのハンドルを渡す。それ以外を指定している際には必ずnullptrを渡す.
-            0,							// 何らかのフラグを指定する。（デバッグ時はD3D11_CREATE_DEVICE_DEBUG？）
+            D3D11_CREATE_DEVICE_DEBUG,							// 何らかのフラグを指定する。（デバッグ時はD3D11_CREATE_DEVICE_DEBUG？）
             nullptr,					// デバイス、コンテキストのレベルを設定。nullptrにしとけば可能な限り高いレベルにしてくれる
             0,							// 上の引数でレベルを何個指定したか
             D3D11_SDK_VERSION,			// SDKのバージョン。必ずこの値
@@ -370,6 +373,8 @@ namespace Direct3D
     {
         DWORD vectorSize = sizeof(XMFLOAT3);
 
+        
+
         //3D
         {
             // 頂点シェーダの作成（コンパイル）
@@ -386,11 +391,13 @@ namespace Direct3D
 
             // 頂点レイアウトの作成（1頂点の情報が何のデータをどんな順番で持っているか）
             D3D11_INPUT_ELEMENT_DESC layout[] = {
-                { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//頂点位置
-                { "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 1, D3D11_INPUT_PER_VERTEX_DATA, 0 },	//法線
-                { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize * 2, D3D11_INPUT_PER_VERTEX_DATA, 0 },	//テクスチャ（UV）座標
+                        { "POSITION",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,              D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
+        { "TEXCOORD",   0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize,     D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
+        { "NORMAL",     0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 2, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // 法線
+        { "TANGENT",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "BINORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
             };
-            pDevice_->CreateInputLayout(layout, 3, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &shaderBundle[SHADER_3D].pVertexLayout);
+            pDevice_->CreateInputLayout(layout, sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &shaderBundle[SHADER_3D].pVertexLayout);
 
 
             //シェーダーが無事作成できたので、コンパイルしたやつはいらない
@@ -598,8 +605,12 @@ namespace Direct3D
 
             // ピクセルシェーダの作成（コンパイル）
             ID3DBlob* pCompilePS = nullptr;
-            D3DCompileFromFile(L"/Shader/ShadowMap.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
-            assert(pCompilePS != nullptr);
+            hResult = D3DCompileFromFile(L"Shader/ShadowMap.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+            //assert(pCompilePS != nullptr);
+            if (FAILED(hResult))
+            {
+                MessageBox(nullptr, L"error", L"Error", MB_OK);
+            }
 
             hResult = pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(),
                 pCompilePS->GetBufferSize(),
@@ -747,7 +758,7 @@ namespace Direct3D
         if (NULL == pSwapChain_) return;
 
         //背景の色
-        const float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };//R,G,B,A
+        const float clearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f };//R,G,B,A
 
         //画面をクリア
         pContext_->ClearRenderTargetView(pRenderTargetView_, clearColor);

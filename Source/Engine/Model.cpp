@@ -1,4 +1,4 @@
-﻿#include "SafeCleaning.hpp"
+#include "SafeCleaning.hpp"
 #include "Model.hpp"
 #include "FbxParts.hpp"
 
@@ -184,10 +184,10 @@ namespace Model
         ID3D11Buffer* pSkinVB{_datas[_handle]->skin.GetVertexBuffer(_i)};
         if (pSkinVB == nullptr)
         {
-            return pSkinVB;
+            return _datas[_handle]->pFbx->GetParts()[_i]->GetVertexBuffer();
         }
         
-        return _datas[_handle]->pFbx->GetParts()[_i]->GetVertexBuffer();
+        return pSkinVB;
     }
 
     //レイキャスト（レイを飛ばして当たり判定）

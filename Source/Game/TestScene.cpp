@@ -1,6 +1,8 @@
-﻿#include "TestScene.hpp"
+#include "TestScene.hpp"
 #include "SceneManager.hpp"
 #include "Input.hpp"
+#include "Model.hpp"
+#include "Renderer.hpp"
 
 TestScene::TestScene(GameObject * parent) : 
     GameObject(parent, "TestScene"),
@@ -11,6 +13,7 @@ TestScene::TestScene(GameObject * parent) :
 void TestScene::Init()
 {
     pSceneManager_ = FindObject<SceneManager>("SceneManager");
+    hModel_ = Model::Load("Models/Player_cube.fbx");
 }
 
 void TestScene::Update()
@@ -20,6 +23,8 @@ void TestScene::Update()
 
 void TestScene::Draw()
 {
+    Model::SetTransform(hModel_, transform);
+    Renderer::Draw(hModel_);
 }
 
 void TestScene::Release()

@@ -15,4 +15,5 @@ public:
 
 private:
     SceneManager* pSceneManager_;
+	int hModel_;
 };

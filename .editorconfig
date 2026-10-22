@@ -3,7 +3,7 @@
 # All files
 [*]
 indent_style = space
-charset = utf-8-bom
+charset = utf-8
 
 # HLSL
 [*.hlsl]

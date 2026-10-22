@@ -71,18 +71,18 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExternalIncludePath>.\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>
-    </LibraryPath>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExternalIncludePath>.\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>
-    </LibraryPath>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,15 +98,15 @@
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
-      <OpenMPSupport>true</OpenMPSupport>
+      <OpenMPSupport>false</OpenMPSupport>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\debug;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,16 +126,16 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <OpenMPSupport>true</OpenMPSupport>
+      <OpenMPSupport>false</OpenMPSupport>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\release;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -171,7 +171,7 @@
     <ClCompile Include="source\engine\Sprite.cpp" />
     <ClCompile Include="source\engine\Text.cpp" />
     <ClCompile Include="source\engine\Texture.cpp" />
-    <ClCompile Include="Source\Engine\Time.cpp" />
+    <ClCompile Include="Source\Engine\Timer.cpp" />
     <ClCompile Include="source\engine\Transform.cpp" />
     <ClCompile Include="source\engine\VirtualCameraOrtho.cpp" />
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
@@ -220,7 +220,7 @@
     <ClInclude Include="source\engine\Sprite.hpp" />
     <ClInclude Include="source\engine\Text.hpp" />
     <ClInclude Include="source\engine\Texture.hpp" />
-    <ClInclude Include="Source\Engine\Time.h" />
+    <ClInclude Include="Source\Engine\Timer.h" />
     <ClInclude Include="source\engine\Transform.hpp" />
     <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
@@ -255,6 +255,8 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> VS</EntryPointName>
@@ -267,6 +269,8 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'"> VS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Sky.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> VS</EntryPointName>

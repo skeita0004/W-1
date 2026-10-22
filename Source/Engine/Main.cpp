@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <Windows.h>
 #include <stdlib.h>
@@ -10,6 +10,7 @@
 #include "RootObject.hpp"
 #include "Model.hpp"
 #include "Image.hpp"
+#include "Renderer.hpp"
 
 #include "CameraSet.hpp"
 
@@ -64,6 +65,8 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
 
     //Direct3D準備
     Direct3D::Initialize(hWnd, screenWidth, screenHeight);
+
+    Renderer::Init();
 
     //カメラを準備
     pCameraSet = new CameraSet();
@@ -249,16 +252,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
     switch (msg)
     {
-    //ウィンドウを閉じた
     case WM_DESTROY:
-        PostQuitMessage(0);	//プログラム終了
+        PostQuitMessage(0);
         return 0;
 
-    //マウスが動いた
     case WM_MOUSEMOVE:
         Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 
-        SetCursorPos(centerX, centerY);
+        //SetCursorPos(centerX, centerY);
+
         return 0;
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
