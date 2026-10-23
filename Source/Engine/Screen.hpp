@@ -1,9 +1,9 @@
-﻿#pragma once
+#pragma once
 
 namespace Screen
 {
-    const int WIDTH{1920};
-    const int HEIGHT{1080};
+    const float WIDTH{16};
+    const float HEIGHT{9};
 
     const int FPS{60};
 

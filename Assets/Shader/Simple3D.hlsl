@@ -104,7 +104,7 @@ struct VS_IN
     float2 uv : TEXCOORD0;
     float3 normal : NORMAL0;
     float3 tangent : TANGENT0;
-    float3 biNormal : BINORMAL;
+    float3 biNormal : BINORMAL0;
 };
 
 struct PS_IN
@@ -142,7 +142,7 @@ PS_IN VS(const VS_IN _vsInput)
     vsOutput.uv = _vsInput.uv;
     
     // 法線の変換（正規化はPSで行う）
-    vsOutput.normal = mul(_vsInput.normal, (float3x3) cb_matNormal);
+    vsOutput.normal = mul(_vsInput.normal, (float3x3)cb_matNormal);
     vsOutput.tangent = mul(_vsInput.tangent, (float3x3) cb_matNormal);
     vsOutput.biNormal = mul(_vsInput.biNormal, (float3x3) cb_matNormal);
     
@@ -165,14 +165,21 @@ PS_IN VS(const VS_IN _vsInput)
 //───────────────────────────────────────
 float4 PS(PS_IN _psInput) : SV_Target
 {
-    
+
     float lightDist;
-    float atteneuationColor;
     
     // 影
     float shadowFactor = CalcShadowFactor(_psInput.lightVP);
     
-    _psInput.normal = normalize(_psInput.normal);
+    if (shadowFactor < 0)
+    {
+        shadowFactor = 1.0f;
+    }
+    
+    float normal = normalize(_psInput.normal);
+    float light = normalize(cb_lightPos.xyz - _psInput.worldPos.xyz);
+    float ndotl  = saturate(dot(normal, light));
+    
     // ノーマルマップ
     if (cb_isNormalMap != 0)
     {
@@ -190,28 +197,10 @@ float4 PS(PS_IN _psInput) : SV_Target
         normalMapVec = normalize(mul(normalMapVec, matTBN));
         _psInput.normal = normalMapVec;
     }
+   
     
-    // ライトの方向と距離を求める
-    _psInput.lightDir = cb_lightPos.xyz - _psInput.worldPos.xyz;
-    lightDist = length(_psInput.lightDir);
-    _psInput.lightDir = normalize(_psInput.lightDir);
-    
-    atteneuationColor = saturate(pow(1.0f - lightDist / 4.0, 2.0));
-    
-    
-    // ライトの強さ = 陰影の度合い
-    float lightIntensity = saturate(dot(normalize(_psInput.normal), _psInput.lightDir));
-
-    // スポットライトサイズ
-    float coneSize = cb_conePhi;
-    
-    float3 lightDir = cb_lightDir.xyz;
-    lightDir.y *= -1;
-    
-    // スポットライト計算
-    float spot = smoothstep(coneSize - 0.02f, coneSize, pow(max(dot(_psInput.lightDir, lightDir), 0.0f), coneSize));
-    
-    atteneuationColor = spot / dot(float3(1.0f, 0.22f, 0.2f), float3(1.0f, lightDist, lightDist * lightDist));
+    //// ライトの強さ = 陰影の度合い
+    float lightIntensity = ndotl;
     
     // 拡散反射の計算
     float4 diffuse = float4(0, 0, 0, 0);
@@ -225,10 +214,9 @@ float4 PS(PS_IN _psInput) : SV_Target
         // Default diffuse color
         diffuse = cb_diffuseColor;
     }
-    float3 diffuseLight = saturate(lightIntensity * diffuse * atteneuationColor);
+    float3 diffuseLight = saturate(lightIntensity * diffuse/* * atteneuationColor*/);
     
     // 鏡面反射の計算
-    float ndotl = saturate(dot(_psInput.normal, _psInput.lightDir));
     float specularFactor = 0;
     if (cb_specularColor.a > 0 && ndotl > 0.0f)
     {
@@ -239,13 +227,13 @@ float4 PS(PS_IN _psInput) : SV_Target
         specularFactor = pow(saturate(dot(reflection, eyeVector)), cb_shininess);
     }
     
-    float3 ambientLight = (cb_ambientColor * diffuse);
-    
     float ambientFactor = 0.5f;
-    ambientLight = float3(ambientFactor, ambientFactor, ambientFactor) * diffuse.xyz;
-    float3 specularLight = saturate(specularFactor * cb_specularColor * atteneuationColor);
+    float3 ambientLight = float3(ambientFactor, ambientFactor, ambientFactor) * diffuse.xyz;
+    
+    float3 specularLight = saturate(specularFactor * cb_specularColor);
     
     float3 emissiveColor = cb_emissiveColor;
+    emissiveColor = 0; // 一時的
 
     float4 outPutColor = { ambientLight + ((diffuseLight + specularLight + emissiveColor)), 1.0f };
 
@@ -257,7 +245,6 @@ float4 PS(PS_IN _psInput) : SV_Target
     {
         outPutColor.a = cb_transparency;
     }
-    
     
     return outPutColor;
 }

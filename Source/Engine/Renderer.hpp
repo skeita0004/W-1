@@ -29,15 +29,16 @@ namespace Renderer
 
     inline static XMFLOAT4 lightPos_{
         0.f,
-        0.f,
-        0.f,
+        10.f,
+        10.f,
         1.f
     };
-
+    
+    // target to light
     inline static XMFLOAT4 lightTar_{
         0.f,
         1.f,
-        -1.f,
+        1.f,
         0.f
     };
 

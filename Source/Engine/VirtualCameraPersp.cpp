@@ -22,8 +22,8 @@ void VirtualCameraPersp::Init()
     matView_       = XMMatrixIdentity();
     matBillboard_  = XMMatrixIdentity();
 
-    transform_.position = XMFLOAT3(0, 0, 0);
-    targetTransform_.position = XMFLOAT3(0, 1, 0);
+    transform_.position = XMFLOAT3(0, 0, -5);
+    targetTransform_.position = XMFLOAT3(0, 0, 0);
 
     nearClip_ = 0.1f;
     farClip_  = 1000.0f;

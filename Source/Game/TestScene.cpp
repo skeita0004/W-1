@@ -13,18 +13,26 @@ TestScene::TestScene(GameObject * parent) :
 void TestScene::Init()
 {
     pSceneManager_ = FindObject<SceneManager>("SceneManager");
-    hModel_ = Model::Load("Models/Player_cube.fbx");
+    hModel_ = Model::Load("Models/oden.fbx");
 }
 
 void TestScene::Update()
 {
+    if (Input::IsKey(DIK_D))
+    {
+        transform.rotate.y += 1.0f;
+    }
+
+
     // シーン遷移を追加する
 }
 
 void TestScene::Draw()
 {
+
     Model::SetTransform(hModel_, transform);
     Renderer::Draw(hModel_);
+   
 }
 
 void TestScene::Release()

@@ -126,8 +126,6 @@ void FbxParts::InitVertex(fbxsdk::FbxMesh* mesh)
     D3D11_SUBRESOURCE_DATA data_vertex;
     data_vertex.pSysMem = pVertexData_;
     Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
-
-
 }
 
 //マテリアル準備

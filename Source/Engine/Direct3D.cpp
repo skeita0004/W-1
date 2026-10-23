@@ -391,13 +391,13 @@ namespace Direct3D
 
             // 頂点レイアウトの作成（1頂点の情報が何のデータをどんな順番で持っているか）
             D3D11_INPUT_ELEMENT_DESC layout[] = {
-                        { "POSITION",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,              D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
-        { "TEXCOORD",   0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize,     D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
-        { "NORMAL",     0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 2, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // 法線
-        { "TANGENT",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "BINORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+                { "POSITION",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,              D3D11_INPUT_PER_VERTEX_DATA, 0 }, // 位置
+                { "NORMAL",     0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 2, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // 法線
+                { "TEXCOORD",   0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize,     D3D11_INPUT_PER_VERTEX_DATA, 0 }, // UV座標
+                { "TANGENT",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+                { "BINORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
             };
-            pDevice_->CreateInputLayout(layout, sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &shaderBundle[SHADER_3D].pVertexLayout);
+            HRESULT result = pDevice_->CreateInputLayout(layout, sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &shaderBundle[SHADER_3D].pVertexLayout);
 
 
             //シェーダーが無事作成できたので、コンパイルしたやつはいらない
@@ -545,7 +545,7 @@ namespace Direct3D
                 { "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 1, D3D11_INPUT_PER_VERTEX_DATA, 0 },	//法線
                 { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize * 2, D3D11_INPUT_PER_VERTEX_DATA, 0 },	//テクスチャ（UV）座標
             };
-            result = pDevice_->CreateInputLayout(layout, 3, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &shaderBundle[SHADER_3D].pVertexLayout);
+            result = pDevice_->CreateInputLayout(layout, 3, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &shaderBundle[SHADER_SKY].pVertexLayout);
 
 
             //シェーダーが無事作成できたので、コンパイルしたやつはいらない
