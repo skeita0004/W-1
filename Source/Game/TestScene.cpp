@@ -13,7 +13,7 @@ TestScene::TestScene(GameObject * parent) :
 void TestScene::Init()
 {
     pSceneManager_ = FindObject<SceneManager>("SceneManager");
-    hModel_ = Model::Load("Models/oden.fbx");
+    hModel_ = Model::Load("Models/mochi_kinchaku.fbx");
 }
 
 void TestScene::Update()
