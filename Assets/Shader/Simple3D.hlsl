@@ -113,21 +113,29 @@ struct PS_IN
     float4 worldPos    : POSITION0;
     float2 uv          : TEXCOORD0; // UV座標
     float3 normal      : NORMAL0; // 法線
+    
+    float3 lightDir    : POSITION1; // SpotLight用
+    
+    float4 lightVP     : TEXCOORD1; // ShadowMap用
+    
+    float3 lightTanDir : POSITION2; // NormalMap用
     float3 tangent     : NORMAL1;
     float3 biNormal    : NORMAL2;
-    float3 lightDir    : POSITION1;
-    float4 lightVP     : TEXCOORD1;
-    float3 lightTanDir : POSITION2;
-    float4 reflectPos  : TEXCOORD2;
+    
+    float4 reflectPos  : TEXCOORD2; // 平面反射用
+    
+    float3 ndotl       : NORMAL3;   // ライティング用
 };
+
+typedef PS_IN VS_OUT;
 
 //───────────────────────────────────────
 // 頂点シェーダ
 //───────────────────────────────────────
-PS_IN VS(const VS_IN _vsInput)
+VS_OUT VS(const VS_IN _vsInput)
 {
 	//ピクセルシェーダーへ渡す情報
-    PS_IN vsOutput;
+    VS_OUT vsOutput;
 
 	//ローカル座標に、ワールド・ビュー・プロジェクション行列をかけて
 	//スクリーン座標に変換し、ピクセルシェーダーへ
@@ -148,6 +156,7 @@ PS_IN VS(const VS_IN _vsInput)
     
     vsOutput.lightVP = mul(vsOutput.worldPos, cb_matVP);
     
+    
     float3 localLightPos = mul(cb_lightPos, cb_matInvW);
     vsOutput.lightDir = mul(cb_lightDir, cb_matNormal);
     vsOutput.lightTanDir = mul(-localLightPos, (float3x3) InvTangentMat(_vsInput.tangent, _vsInput.biNormal, _vsInput.normal));
@@ -156,6 +165,9 @@ PS_IN VS(const VS_IN _vsInput)
     refWVP = mul(cb_matRefView, cb_matP);
     refWVP = mul(cb_matW, refWVP);
     vsOutput.reflectPos = mul(_vsInput.pos, refWVP);
+    
+    vsOutput.ndotl = saturate(dot(normalize(vsOutput.normal), normalize(cb_lightPos.xyz - vsOutput.worldPos.xyz)));
+    
     return vsOutput;
 }
 
@@ -174,9 +186,9 @@ float4 PS(PS_IN _psInput) : SV_Target
         shadowFactor = 1.0f;
     }
     
-    float3 normal = normalize(_psInput.normal);
-    float3 light  = normalize(cb_lightPos - _psInput.worldPos.xyz);
-    float ndotl  = saturate(dot(normal, light));
+    //float3 normal = normalize(_psInput.normal);
+    //float3 light = normalize(cb_lightPos.xyz - _psInput.worldPos.xyz);
+    float ndotl  = _psInput.ndotl;
     
     // ノーマルマップ
     if (cb_isNormalMap != 0)
