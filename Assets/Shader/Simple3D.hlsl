@@ -100,31 +100,31 @@ float CalcShadowFactor(float4 lightViewProj)
 //───────────────────────────────────────
 struct VS_IN
 {
-    float4 pos      : POSITION0;
-    float2 uv       : TEXCOORD0;
-    float3 normal   : NORMAL0;
-    float3 tangent  : TANGENT0;
+    float4 pos : POSITION0;
+    float2 uv : TEXCOORD0;
+    float3 normal : NORMAL0;
+    float3 tangent : TANGENT0;
     float3 biNormal : BINORMAL0;
 };
 
 struct PS_IN
 {
-    float4 pos         : SV_POSITION; // 位置
-    float4 worldPos    : POSITION0;
-    float2 uv          : TEXCOORD0; // UV座標
-    float3 normal      : NORMAL0; // 法線
+    float4 pos : SV_POSITION; // 位置
+    float4 worldPos : POSITION0;
+    float2 uv : TEXCOORD0; // UV座標
+    float3 normal : NORMAL0; // 法線
     
-    float3 lightDir    : POSITION1; // SpotLight用
-    
-    float4 lightVP     : TEXCOORD1; // ShadowMap用
-    
+    float3 lightDir : POSITION1; // SpotLight用
+
+    float4 lightVP : TEXCOORD1; // ShadowMap用
+
     float3 lightTanDir : POSITION2; // NormalMap用
-    float3 tangent     : NORMAL1;
-    float3 biNormal    : NORMAL2;
-    
-    float4 reflectPos  : TEXCOORD2; // 平面反射用
-    
-    float3 ndotl       : NORMAL3;   // ライティング用
+    float3 tangent : NORMAL1;
+    float3 biNormal : NORMAL2;
+
+    float4 reflectPos : TEXCOORD2; // 平面反射用
+
+    float3 ndotl : NORMAL3; // ライティング用
 };
 
 typedef PS_IN VS_OUT;
@@ -150,7 +150,7 @@ VS_OUT VS(const VS_IN _vsInput)
     vsOutput.uv = _vsInput.uv;
     
     // 法線の変換（正規化はPSで行う）
-    vsOutput.normal = mul(_vsInput.normal, (float3x3)cb_matNormal);
+    vsOutput.normal = mul(_vsInput.normal, (float3x3) cb_matNormal);
     vsOutput.tangent = mul(_vsInput.tangent, (float3x3) cb_matNormal);
     vsOutput.biNormal = mul(_vsInput.biNormal, (float3x3) cb_matNormal);
     
@@ -188,7 +188,7 @@ float4 PS(PS_IN _psInput) : SV_Target
     
     //float3 normal = normalize(_psInput.normal);
     //float3 light = normalize(cb_lightPos.xyz - _psInput.worldPos.xyz);
-    float ndotl  = _psInput.ndotl;
+    float ndotl = _psInput.ndotl;
     
     // ノーマルマップ
     if (cb_isNormalMap != 0)
@@ -224,7 +224,7 @@ float4 PS(PS_IN _psInput) : SV_Target
         // Default diffuse color
         diffuse = cb_diffuseColor;
     }
-    float3 diffuseLight = saturate(lightIntensity * diffuse/* * atteneuationColor*/);
+    float3 diffuseLight = saturate(lightIntensity * diffuse /* * atteneuationColor*/);
     
     // 鏡面反射の計算
     float specularFactor = 0;

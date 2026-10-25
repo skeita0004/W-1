@@ -25,7 +25,7 @@ void TestScene::Update()
 
     //transform.position.y = -5.f;
 
-    float sc = 3.0f;
+    float sc = 1.0f;
     transform.scale = XMFLOAT3(sc, sc, sc);
 
 
