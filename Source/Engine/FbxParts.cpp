@@ -1,4 +1,4 @@
-#include "FbxParts.hpp"
+﻿#include "FbxParts.hpp"
 #include "Fbx.hpp"
 #include "SafeCleaning.hpp"
 #include "Direct3D.hpp"
@@ -75,7 +75,7 @@ HRESULT FbxParts::Init(FbxNode* pNode)
 //頂点バッファ準備
 void FbxParts::InitVertex(fbxsdk::FbxMesh* mesh)
 {
-    pVertexData_ = new Vertex[vertexCount_];
+    pVertexData_ = new Vertex[vertexCount_]{};
 
     for (DWORD poly = 0; poly < polygonCount_; poly++)
     {
@@ -107,11 +107,25 @@ void FbxParts::InitVertex(fbxsdk::FbxMesh* mesh)
     FbxLayerElementUV* pUV = mesh->GetLayer(0)->GetUVs();
     if (m_dwNumUV > 0 && pUV->GetMappingMode() == FbxLayerElement::eByControlPoint)
     {
-        for (int k = 0; k < m_dwNumUV; k++)
+        //for (int k = 0; k < m_dwNumUV; k++)
+        //{
+        //    FbxVector2 uv = pUV->GetDirectArray().GetAt(k);
+        //    pVertexData_[k].uv = XMFLOAT3((float)uv.mData[0], (float)(1.0f - uv.mData[1]), 0.0f);
+        //}
+
+        // written by claudeAI
+        const bool useIndex = (pUV->GetReferenceMode() != FbxLayerElement::eDirect);
+
+        for (int k = 0; k < vertexCount_; k++)          // ← 上限は制御点数
         {
-            FbxVector2 uv = pUV->GetDirectArray().GetAt(k);
-            pVertexData_[k].uv = XMFLOAT3((float)uv.mData[0], (float)(1.0f - uv.mData[1]), 0.0f);
+            int uvIdx = useIndex ? pUV->GetIndexArray().GetAt(k) : k;
+            FbxVector2 uv = pUV->GetDirectArray().GetAt(uvIdx);
+
+            pVertexData_[k].uv = XMFLOAT3((float)uv.mData[0],
+                                          (float)(1.0f - uv.mData[1]),
+                                          0.0f);
         }
+        // END written by claudeAI
     }
 
 

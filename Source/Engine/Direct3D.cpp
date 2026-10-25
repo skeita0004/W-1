@@ -1,4 +1,4 @@
-#include <d3dcompiler.h>
+﻿#include <d3dcompiler.h>
 #include "Direct3D.hpp"
 #include "SafeCleaning.hpp"
 #include "Transform.hpp"
@@ -168,12 +168,15 @@ namespace Direct3D
             D3D11_DEPTH_STENCIL_DESC desc = {};
             desc.DepthEnable = true;
             desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-            desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-            desc.StencilEnable = true;
-            pDevice_->CreateDepthStencilState(&desc, &pDepthStencilState[BLEND_DEFAULT]);
+            desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+            desc.StencilEnable = false;
+            
+            HRESULT result{};
+            result = pDevice_->CreateDepthStencilState(&desc, &pDepthStencilState[BLEND_DEFAULT]);
             pContext_->OMSetDepthStencilState(pDepthStencilState[BLEND_DEFAULT], 0);
 
             //加算合成用（書き込みなし）
+            desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
             desc.StencilEnable = false;
             pDevice_->CreateDepthStencilState(&desc, &pDepthStencilState[BLEND_ADD]);
         }
@@ -275,8 +278,8 @@ namespace Direct3D
         //------------------------反射マップ----------------------//
         pReflectionMap = nullptr;
         D3D11_TEXTURE2D_DESC reflectionMapDesc{};
-        reflectionMapDesc.Width = screenWidth_;
-        reflectionMapDesc.Height = screenHeight_;
+        reflectionMapDesc.Width = screenWidth;
+        reflectionMapDesc.Height = screenHeight;
         reflectionMapDesc.ArraySize = 1;
         reflectionMapDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
         reflectionMapDesc.SampleDesc.Count = 1;
@@ -284,7 +287,8 @@ namespace Direct3D
         reflectionMapDesc.Usage = D3D11_USAGE_DEFAULT;
         reflectionMapDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE bitor D3D11_BIND_RENDER_TARGET;
         reflectionMapDesc.CPUAccessFlags = 0;
-        reflectionMapDesc.MiscFlags = 1;
+        reflectionMapDesc.MipLevels = 1;
+        reflectionMapDesc.MiscFlags = 0;
         result = pDevice_->CreateTexture2D(&reflectionMapDesc, nullptr, &pReflectionMap);
 
         // 反射マップレンダーターゲット
@@ -329,8 +333,8 @@ namespace Direct3D
 
         pRefDepthStencil = nullptr;
         D3D11_TEXTURE2D_DESC descRefDepth{};
-        descRefDepth.Width = screenWidth_;
-        descRefDepth.Height = screenHeight_;
+        descRefDepth.Width = screenWidth;
+        descRefDepth.Height = screenHeight;
         descRefDepth.MipLevels = 1;
         descRefDepth.ArraySize = 1;
         descRefDepth.Format = DXGI_FORMAT_D32_FLOAT;
@@ -391,9 +395,9 @@ namespace Direct3D
 
             // 頂点レイアウトの作成（1頂点の情報が何のデータをどんな順番で持っているか）
             D3D11_INPUT_ELEMENT_DESC layout[] = {
-                { "POSITION",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,              D3D11_INPUT_PER_VERTEX_DATA, 0 }, // 位置
+                { "POSITION",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // 位置
+                { "TEXCOORD",   0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize * 1, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // UV座標
                 { "NORMAL",     0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 2, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // 法線
-                { "TEXCOORD",   0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize,     D3D11_INPUT_PER_VERTEX_DATA, 0 }, // UV座標
                 { "TANGENT",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
                 { "BINORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
             };

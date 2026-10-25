@@ -1,4 +1,4 @@
-#include "TestScene.hpp"
+﻿#include "TestScene.hpp"
 #include "SceneManager.hpp"
 #include "Input.hpp"
 #include "Model.hpp"
@@ -20,8 +20,13 @@ void TestScene::Update()
 {
     if (Input::IsKey(DIK_D))
     {
-        transform.rotate.y += 1.0f;
+        transform.rotate.y -= 1.0f;
     }
+
+    //transform.position.y = -5.f;
+
+    float sc = 3.0f;
+    transform.scale = XMFLOAT3(sc, sc, sc);
 
 
     // シーン遷移を追加する

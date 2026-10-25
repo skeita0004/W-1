@@ -1,4 +1,4 @@
-#include "Renderer.hpp"
+﻿#include "Renderer.hpp"
 
 #include "Transform.hpp"
 #include "CameraSet.hpp"
@@ -37,6 +37,7 @@ namespace Renderer
             Draw(modelData->transform,
                  parts[i]->GetMaterialCount(),
                  Model::GetVertexBuffer(_modelHandle, i),
+                 //parts[i]->GetVertexBuffer(),
                  parts[i]->GetIndexBuffer(),
                  parts[i]->GetIndexCountArray(),
                  parts[i]->GetMaterialList());

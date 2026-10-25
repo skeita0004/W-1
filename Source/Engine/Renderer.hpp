@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <windows.h>
 
@@ -30,7 +30,7 @@ namespace Renderer
     inline static XMFLOAT4 lightPos_{
         0.f,
         10.f,
-        10.f,
+        -10.f,
         1.f
     };
     

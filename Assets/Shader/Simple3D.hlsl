@@ -100,25 +100,25 @@ float CalcShadowFactor(float4 lightViewProj)
 //───────────────────────────────────────
 struct VS_IN
 {
-    float4 pos : POSITION;
-    float2 uv : TEXCOORD0;
-    float3 normal : NORMAL0;
-    float3 tangent : TANGENT0;
+    float4 pos      : POSITION0;
+    float2 uv       : TEXCOORD0;
+    float3 normal   : NORMAL0;
+    float3 tangent  : TANGENT0;
     float3 biNormal : BINORMAL0;
 };
 
 struct PS_IN
 {
-    float4 pos : SV_POSITION; // 位置
-    float4 worldPos : POSITION0;
-    float2 uv : TEXCOORD0; // UV座標
-    float3 normal : NORMAL0; // 法線
-    float3 tangent : NORMAL1;
-    float3 biNormal : NORMAL2;
-    float3 lightDir : POSITION1;
-    float4 lightVP : TEXCOORD1;
+    float4 pos         : SV_POSITION; // 位置
+    float4 worldPos    : POSITION0;
+    float2 uv          : TEXCOORD0; // UV座標
+    float3 normal      : NORMAL0; // 法線
+    float3 tangent     : NORMAL1;
+    float3 biNormal    : NORMAL2;
+    float3 lightDir    : POSITION1;
+    float4 lightVP     : TEXCOORD1;
     float3 lightTanDir : POSITION2;
-    float4 reflectPos : TEXCOORD2;
+    float4 reflectPos  : TEXCOORD2;
 };
 
 //───────────────────────────────────────
@@ -149,14 +149,13 @@ PS_IN VS(const VS_IN _vsInput)
     vsOutput.lightVP = mul(vsOutput.worldPos, cb_matVP);
     
     float3 localLightPos = mul(cb_lightPos, cb_matInvW);
-    
+    vsOutput.lightDir = mul(cb_lightDir, cb_matNormal);
     vsOutput.lightTanDir = mul(-localLightPos, (float3x3) InvTangentMat(_vsInput.tangent, _vsInput.biNormal, _vsInput.normal));
     
     float4x4 refWVP;
     refWVP = mul(cb_matRefView, cb_matP);
     refWVP = mul(cb_matW, refWVP);
     vsOutput.reflectPos = mul(_vsInput.pos, refWVP);
-    
     return vsOutput;
 }
 
@@ -165,7 +164,6 @@ PS_IN VS(const VS_IN _vsInput)
 //───────────────────────────────────────
 float4 PS(PS_IN _psInput) : SV_Target
 {
-
     float lightDist;
     
     // 影
@@ -176,8 +174,8 @@ float4 PS(PS_IN _psInput) : SV_Target
         shadowFactor = 1.0f;
     }
     
-    float normal = normalize(_psInput.normal);
-    float light = normalize(cb_lightPos.xyz - _psInput.worldPos.xyz);
+    float3 normal = normalize(_psInput.normal);
+    float3 light  = normalize(cb_lightPos - _psInput.worldPos.xyz);
     float ndotl  = saturate(dot(normal, light));
     
     // ノーマルマップ
@@ -227,7 +225,7 @@ float4 PS(PS_IN _psInput) : SV_Target
         specularFactor = pow(saturate(dot(reflection, eyeVector)), cb_shininess);
     }
     
-    float ambientFactor = 0.5f;
+    float ambientFactor = 0.0f;
     float3 ambientLight = float3(ambientFactor, ambientFactor, ambientFactor) * diffuse.xyz;
     
     float3 specularLight = saturate(specularFactor * cb_specularColor);
