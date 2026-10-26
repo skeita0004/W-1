@@ -139,6 +139,11 @@
     </ClCompile>
     <ClCompile Include="Source\Engine\SkinInstance.cpp" />
     <ClCompile Include="Source\Engine\RayCast.cpp" />
+    <ClCompile Include="Library\fastgltf\base64.cpp" />
+    <ClCompile Include="Library\fastgltf\fastgltf.cpp" />
+    <ClCompile Include="Library\fastgltf\fastgltf.ixx" />
+    <ClCompile Include="Library\fastgltf\io.cpp" />
+    <ClCompile Include="Library\fastgltf\simdjson.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\game\TitleScene.hpp">
@@ -279,6 +284,15 @@
       <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\SkinInstance.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\base64.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\core.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\dxmath_element_traits.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\glm_element_traits.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\math.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\tools.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\types.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\util.hpp" />
+    <ClInclude Include="Library\fastgltf\simdjson.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

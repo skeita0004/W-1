@@ -101,7 +101,7 @@
       <OpenMPSupport>false</OpenMPSupport>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Projectdir)\Library\fastgltf;$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;$(ProjectDir)\Library\ImGui\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -128,7 +128,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <OpenMPSupport>false</OpenMPSupport>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;.\Library\ImGui\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Projectdir)\Library\fastgltf;$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;$(ProjectDir)\Library\ImGui\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -139,6 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Library\fastgltf\base64.cpp" />
+    <ClCompile Include="Library\fastgltf\fastgltf.cpp" />
+    <ClCompile Include="Library\fastgltf\fastgltf.ixx" />
+    <ClCompile Include="Library\fastgltf\io.cpp" />
+    <ClCompile Include="Library\fastgltf\simdjson.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_demo.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_draw.cpp" />
@@ -184,6 +189,15 @@
     <ClCompile Include="source\game\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Library\fastgltf\fastgltf\base64.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\core.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\dxmath_element_traits.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\glm_element_traits.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\math.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\tools.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\types.hpp" />
+    <ClInclude Include="Library\fastgltf\fastgltf\util.hpp" />
+    <ClInclude Include="Library\fastgltf\simdjson.h" />
     <ClInclude Include="Library\ImGui\include\imconfig.h" />
     <ClInclude Include="Library\ImGui\include\imgui.h" />
     <ClInclude Include="Library\ImGui\include\imgui_impl_dx11.h" />
