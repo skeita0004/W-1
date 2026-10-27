@@ -14,7 +14,7 @@ void TestScene::Init()
 {
     pSceneManager_ = FindObject<SceneManager>("SceneManager");
     hModel_ = Model::Load("Models/mochi_kinchaku.fbx");
-    //hModel_ = Model::Load("Models/ps_enemy.fbx");
+    hModel_ = Model::Load("Models/ps_enemy.fbx");
 
     EffekseerLib::gEfk->AddEffect("BLUE_LASER", "Effects/AndrewFM01/blue_laser.efk");
 
@@ -50,7 +50,7 @@ void TestScene::Update()
 
     Model::SetTransform(hModel_, transform);
 
-    //Model::Update(hModel_);
+    Model::Update(hModel_);
 
     // シーン遷移を追加する
 }

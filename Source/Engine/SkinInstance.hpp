@@ -9,7 +9,7 @@ struct SkinPartInstance
 {
 	std::vector<XMMATRIX> diffPose;
 	std::vector<Vertex>   vertices;
-	ID3D11Buffer*         pVertexBuffer;
+	ID3D11Buffer*         pVertexBuffer = nullptr;
 };
 
 class SkinInstance

@@ -12,7 +12,7 @@ void SkinInstance::Release()
 
 ID3D11Buffer* SkinInstance::GetVertexBuffer(size_t _index)
 {
-	if (_index > parts_.size())
+	if (_index >= parts_.size())
 	{
 		return nullptr;
 	}

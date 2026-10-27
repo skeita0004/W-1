@@ -13,7 +13,8 @@ FbxParts::FbxParts() :
     pSkinInfo_(nullptr),
     pBoneArray_(nullptr),
     ppCluster_(nullptr),
-    pWeightArray_(nullptr)
+    pWeightArray_(nullptr),
+    numBone_(0)
 {
 }
 
@@ -451,7 +452,11 @@ void FbxParts::Skinning(FbxTime _time, SkinPartInstance& _inst) const
         const auto& w = pWeightArray_[i];
 
         // 各頂点ごとに、「影響するボーン×ウェイト値」を反映させた関節行列を作成する
-        XMMATRIX matrix{};
+        XMMATRIX matrix{XMMatrixSet(0, 0, 0, 0, 
+                                    0, 0, 0, 0,
+                                    0, 0, 0, 0,
+                                    0, 0, 0, 0)};
+        float totalWeight{};
         for (int m = 0; m < numBone_; m++)
         {
             if (pWeightArray_[i].pBoneIndex[m] < 0)
@@ -459,21 +464,30 @@ void FbxParts::Skinning(FbxTime _time, SkinPartInstance& _inst) const
                 break;
             }
             matrix += _inst.diffPose[w.pBoneIndex[m]] * w.pBoneWeight[m];
+            totalWeight += w.pBoneWeight[m];
+        }
 
+        if (totalWeight <= 1e-4f)
+        {
+            matrix = XMMatrixIdentity();
+        }
+        else
+        {
+            matrix = matrix * (1.0f / totalWeight);
         }
 
         // 作成された関節行列を使って、頂点を変形する
         XMVECTOR pos = XMLoadFloat3(&w.posOrigin);
         XMVECTOR normal = XMLoadFloat3(&w.normalOrigin);
-        XMStoreFloat3(&pVertexData_[i].position,
+        XMStoreFloat3(&_inst.vertices[i].position,
                       XMVector3TransformCoord(pos, matrix));
-        XMStoreFloat3(&pVertexData_[i].normal,
+        XMStoreFloat3(&_inst.vertices[i].normal,
                       XMVector3TransformNormal(normal, matrix));
     }
 
     D3D11_MAPPED_SUBRESOURCE msr{};
-    if (Direct3D::pContext_->Map(_inst.pVertexBuffer, 0,
-                                 D3D11_MAP_WRITE_DISCARD, 0, &msr))
+    if (SUCCEEDED(Direct3D::pContext_->Map(_inst.pVertexBuffer, 0,
+                                 D3D11_MAP_WRITE_DISCARD, 0, &msr)))
     {
         memcpy(msr.pData, _inst.vertices.data(), sizeof(Vertex) * vertexCount_);
         Direct3D::pContext_->Unmap(_inst.pVertexBuffer, 0);
