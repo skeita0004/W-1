@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "GameObject.hpp"
+#include "EffekseerVFX.h"
 
 class SceneManager;
 
@@ -16,4 +17,5 @@ public:
 private:
     SceneManager* pSceneManager_;
 	int hModel_;
+	std::shared_ptr<EffekseerLib::EFKTransform> effectTsfrm;
 };

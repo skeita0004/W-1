@@ -13,8 +13,17 @@
     <Filter Include="Game\HorseRace">
       <UniqueIdentifier>{34238675-10a5-4e13-91ee-fd305e296499}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ImGui">
+    <Filter Include="Library">
+      <UniqueIdentifier>{39e487e2-4fa3-421a-9d63-8f4637013c9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\ImGui">
       <UniqueIdentifier>{f5c5d119-b3a5-4053-8279-52544c315d23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\fastgltf">
+      <UniqueIdentifier>{342b9af3-7ed5-4547-bca9-7d8feaf72d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\effekseer">
+      <UniqueIdentifier>{bb9fb69c-c1c1-4355-8393-5c4298975380}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -114,36 +123,53 @@
     <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
     <ClCompile Include="Source\Game\HorseRace\Race.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Library\ImGui\cpp\imgui_demo.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Library\ImGui\cpp\imgui_draw.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Library\ImGui\cpp\imgui_impl_dx11.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Library\ImGui\cpp\imgui_impl_win32.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\SkinInstance.cpp" />
-    <ClCompile Include="Source\Engine\RayCast.cpp" />
-    <ClCompile Include="Library\fastgltf\base64.cpp" />
-    <ClCompile Include="Library\fastgltf\fastgltf.cpp" />
-    <ClCompile Include="Library\fastgltf\fastgltf.ixx" />
-    <ClCompile Include="Library\fastgltf\io.cpp" />
-    <ClCompile Include="Library\fastgltf\simdjson.cpp" />
+    <ClCompile Include="Library\fastgltf\base64.cpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\fastgltf\fastgltf.cpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\fastgltf\fastgltf.ixx">
+      <Filter>Library\fastgltf</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\fastgltf\io.cpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\fastgltf\simdjson.cpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\RayCast.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\SkinInstance.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\effekseerlib\EffekseerVFX.cpp">
+      <Filter>Library\effekseer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\game\TitleScene.hpp">
@@ -260,39 +286,62 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Library\ImGui\include\imconfig.h">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Library\ImGui\include\imgui.h">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Library\ImGui\include\imgui_impl_dx11.h">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Library\ImGui\include\imgui_impl_win32.h">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Library\ImGui\include\imgui_internal.h">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Library\ImGui\include\imstb_rectpack.h">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Library\ImGui\include\imstb_textedit.h">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Library\ImGui\include\imstb_truetype.h">
-      <Filter>ImGui</Filter>
+      <Filter>Library\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\SkinInstance.hpp" />
-    <ClInclude Include="Library\fastgltf\fastgltf\base64.hpp" />
-    <ClInclude Include="Library\fastgltf\fastgltf\core.hpp" />
-    <ClInclude Include="Library\fastgltf\fastgltf\dxmath_element_traits.hpp" />
-    <ClInclude Include="Library\fastgltf\fastgltf\glm_element_traits.hpp" />
-    <ClInclude Include="Library\fastgltf\fastgltf\math.hpp" />
-    <ClInclude Include="Library\fastgltf\fastgltf\tools.hpp" />
-    <ClInclude Include="Library\fastgltf\fastgltf\types.hpp" />
-    <ClInclude Include="Library\fastgltf\fastgltf\util.hpp" />
-    <ClInclude Include="Library\fastgltf\simdjson.h" />
+    <ClInclude Include="Library\fastgltf\fastgltf\base64.hpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\fastgltf\fastgltf\core.hpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\fastgltf\fastgltf\dxmath_element_traits.hpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\fastgltf\fastgltf\glm_element_traits.hpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\fastgltf\fastgltf\math.hpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\fastgltf\simdjson.h">
+      <Filter>Library\fastgltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\fastgltf\fastgltf\tools.hpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\fastgltf\fastgltf\types.hpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\fastgltf\fastgltf\util.hpp">
+      <Filter>Library\fastgltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\SkinInstance.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\effekseerlib\EffekseerVFX.h">
+      <Filter>Library\effekseer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

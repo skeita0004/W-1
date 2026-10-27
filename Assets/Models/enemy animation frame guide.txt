@@ -1,0 +1,10 @@
+enemy animation frame guide
+
+idle   :   1 ~ 60
+walk   :  61 ~ 94
+run    :  95 ~ 110
+attack : 111 ~ 189
+hit    : 190 ~ 224
+dead   : 225 ~ 313
+
+throw も欲しい

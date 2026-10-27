@@ -1,5 +1,6 @@
-#pragma once
+﻿#pragma once
 
+// TODO:これらの値は、すべてiniファイルから取得するようにすること。
 namespace Screen
 {
     const float WIDTH{16};

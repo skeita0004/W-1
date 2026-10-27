@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+﻿#define _CRT_SECURE_NO_WARNINGS
 
 #include <Windows.h>
 #include <stdlib.h>
@@ -20,6 +20,8 @@
 #include <imgui.h>
 #include <imgui_impl_win32.h>
 #include <imgui_impl_dx11.h>
+
+#include <EffekseerVFX.h>
 
 #pragma comment(lib,"Winmm.lib")
 
@@ -78,6 +80,9 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
     //オーディオ（効果音）の準備
     Audio::Initialize();
 
+    EffekseerLib::gEfk = new EffekseerLib::EffekseerManager;
+    EffekseerLib::gEfk->Initialize(Direct3D::pDevice_, Direct3D::pContext_);
+
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
 
@@ -118,19 +123,21 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
             //キャプションに現在のFPSを表示する
             if (isDrawFps)
             {
-                //1秒（1000ミリ秒）経ったら
                 if (nowTime - lastFpsResetTime > 1000)
                 {
                     //FPSの値を表示
+#ifdef _DEBUG
                     wchar_t string[16];
                     wsprintf(string, L"FPS:%d", FPS);
                     SetWindowText(GetActiveWindow(), string);
                     FPS = 0;
                     lastFpsResetTime = nowTime;
+#endif // DEBUG
                 }
             }
 
-            if ((nowTime - lastUpdateTime) * fpsLimit > 1000.0f)
+            double deltaTime = nowTime - lastUpdateTime;
+            if ((deltaTime * fpsLimit) > 1000.0f)
             {
                 ImGui_ImplDX11_NewFrame();
                 ImGui_ImplWin32_NewFrame();
@@ -150,13 +157,16 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
                 pCameraSet->GetCurrent()->Update();
 
                 //エフェクトの更新
-                //VFX::Update();
-
-
+                EffekseerLib::gEfk->Update(deltaTime / 1000);
 
                 Direct3D::BeginDraw();
-                pRootObject->DrawSub();
 
+                pRootObject->DrawSub();
+                
+                // エフェクト描画
+                EffekseerLib::gEfk->Draw();
+
+                // ImGui描画 TODO:ウィンドウ外にも出せるようにしろ
                 ImGui::Render();
                 ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
@@ -167,9 +177,7 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
             timeEndPeriod(1);	//時間計測の制度を戻す
         }
     }
-
     
-
     Audio::AllRelease();
     Model::AllRelease();
     Image::AllRelease();
