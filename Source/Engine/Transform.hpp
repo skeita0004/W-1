@@ -29,6 +29,72 @@ public:
     const XMMATRIX GetRotateMatrix();
     const XMMATRIX GetScaleMatrix();
 
+    XMFLOAT3 GetPosition()
+    {
+        return position;
+    }
+    XMFLOAT3 GetRotate()
+    {
+        return rotate;
+    }
+    XMFLOAT3 GetScale()
+    {
+        return scale;
+    }
+    XMFLOAT3 GetWorldPosition()
+    {
+        return Transform::Float3Add(pParent->position, position);
+    }
+    XMFLOAT3 GetWorldRotate()
+    {
+        return Transform::Float3Add(pParent->rotate, rotate);
+    }
+    XMFLOAT3 GetWorldScale()
+    {
+        return Transform::Float3Add(pParent->scale, scale);
+    }
+
+    void SetPosition(XMFLOAT3 _position)
+    {
+        position = _position;
+    }
+    void SetPosition(float x, float y, float z)
+    {
+        SetPosition(XMFLOAT3(x, y, z));
+    }
+    void SetRotate(XMFLOAT3 _rotate)
+    {
+        rotate = _rotate;
+    }
+    void SetRotate(float x, float y, float z)
+    {
+        SetRotate(XMFLOAT3(x, y, z));
+    }
+    void SetRotateX(float x)
+    {
+        SetRotate(x, rotate.y, rotate.z);
+    }
+    void SetRotateY(float y)
+    {
+        SetRotate(rotate.x, y, rotate.z);
+    }
+    void SetRotateZ(float z)
+    {
+        SetRotate(rotate.x, rotate.y, z);
+    }
+    void SetScale(XMFLOAT3 scale)
+    {
+        scale = scale;
+    }
+    void SetScale(float _scale)
+    {
+        SetScale(XMFLOAT3(_scale, _scale, _scale));
+    }
+    void SetScale(float x, float y, float z)
+    {
+        SetScale(XMFLOAT3(x, y, z));
+    }
+
     static inline XMFLOAT3 Float3Add(const XMFLOAT3& _lhs, const XMFLOAT3& _rhs)
     {
         return
