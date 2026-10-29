@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <vector>
 #include <span>
 
@@ -27,6 +27,7 @@ public:
     {
         XMMATRIX  bindPose;      // 初期ポーズ時のボーン変換行列
         //XMMATRIX  newPose;       // アニメーションで変化したときのボーン変換行列
+        // 
         //XMMATRIX  diffPose;      // mBindPose に対する mNowPose の変化量
     };
 

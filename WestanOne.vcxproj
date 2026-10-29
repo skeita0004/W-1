@@ -190,6 +190,7 @@
     <ClCompile Include="source\game\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Engine\InputBinding.hpp" />
     <ClInclude Include="Library\effekseerlib\EffekseerVFX.h" />
     <ClInclude Include="Library\fastgltf\fastgltf\base64.hpp" />
     <ClInclude Include="Library\fastgltf\fastgltf\core.hpp" />

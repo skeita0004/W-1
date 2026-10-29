@@ -16,6 +16,8 @@ using namespace DirectX;
 //-----------------------------------------------------------
 namespace Input
 {
+	const unsigned int UNASSIGNED = 0xFFFFFFFF;
+
     enum MOUSE : int
     {
         LEFT = 0,

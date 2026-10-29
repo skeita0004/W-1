@@ -4,6 +4,7 @@
 #include <string>
 #include <cassert>
 #include <vector>
+#include <map>
 
 #include <DirectXMath.h>
 
@@ -135,7 +136,6 @@ public:
 	GameObject* GetRootJob();
 
 protected:
-	
 	//位置や向きなどを管理するオブジェクト
 	Transform				transform;
 
