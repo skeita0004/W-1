@@ -129,6 +129,7 @@
       <OpenMPSupport>false</OpenMPSupport>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(ProjectDir)\Library\effekseerlib\install_msvc2022_x64\include\Effekseer;$(ProjectDir)\Library\effekseerlib;$(Projectdir)\Library\fastgltf;$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;$(ProjectDir)\Library\ImGui\include</AdditionalIncludeDirectories>
+      <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -153,6 +154,7 @@
     <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Engine\Gltf.cpp" />
     <ClCompile Include="Source\Engine\RayCast.cpp" />
     <ClCompile Include="Source\Engine\SkinInstance.cpp" />
     <ClCompile Include="source\engine\Audio.cpp" />
@@ -190,8 +192,8 @@
     <ClCompile Include="source\game\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Engine\glTF.hpp" />
-    <ClInclude Include="Source\Engine\glTFParts.hpp" />
+    <ClInclude Include="Source\Engine\Gltf.hpp" />
+    <ClInclude Include="Source\Engine\GltfParts.hpp" />
     <ClInclude Include="Source\Engine\InputBinding.hpp" />
     <ClInclude Include="Library\effekseerlib\EffekseerVFX.h" />
     <ClInclude Include="Library\fastgltf\fastgltf\base64.hpp" />

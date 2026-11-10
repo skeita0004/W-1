@@ -152,9 +152,6 @@
     <ClCompile Include="Library\fastgltf\fastgltf.cpp">
       <Filter>Library\fastgltf</Filter>
     </ClCompile>
-    <ClCompile Include="Library\fastgltf\fastgltf.ixx">
-      <Filter>Library\fastgltf</Filter>
-    </ClCompile>
     <ClCompile Include="Library\fastgltf\io.cpp">
       <Filter>Library\fastgltf</Filter>
     </ClCompile>
@@ -170,6 +167,8 @@
     <ClCompile Include="Library\effekseerlib\EffekseerVFX.cpp">
       <Filter>Library\effekseer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Gltf.cpp" />
+    <ClCompile Include="Library\fastgltf\fastgltf.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\game\TitleScene.hpp">
@@ -343,8 +342,8 @@
       <Filter>Library\effekseer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\InputBinding.hpp" />
-    <ClInclude Include="Source\Engine\glTF.hpp" />
-    <ClInclude Include="Source\Engine\glTFParts.hpp" />
+    <ClInclude Include="Source\Engine\Gltf.hpp" />
+    <ClInclude Include="Source\Engine\GltfParts.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
