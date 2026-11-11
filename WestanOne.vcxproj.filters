@@ -342,9 +342,15 @@
     <ClInclude Include="Library\effekseerlib\EffekseerVFX.h">
       <Filter>Library\effekseer</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\InputBinding.hpp" />
-    <ClInclude Include="Source\Engine\glTF.hpp" />
-    <ClInclude Include="Source\Engine\glTFParts.hpp" />
+    <ClInclude Include="Source\Engine\glTF.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\glTFParts.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\InputBinding.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
