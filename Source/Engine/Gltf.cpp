@@ -29,6 +29,9 @@ fastgltf::Error Gltf::Load(std::filesystem::path _path)
     asset_ = std::move(gltfAsset.get());
 
     for (auto& parts : gltfAsset.get().meshes)
+    {
+
+    }
 
     return fastgltf::Error::None;
 }
