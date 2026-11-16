@@ -154,8 +154,6 @@
     <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp" />
-    <ClCompile Include="Source\Engine\Gltf.cpp" />
-    <ClCompile Include="Source\Engine\GltfParts.cpp" />
     <ClCompile Include="Source\Engine\RayCast.cpp" />
     <ClCompile Include="Source\Engine\SkinInstance.cpp" />
     <ClCompile Include="source\engine\Audio.cpp" />
@@ -193,8 +191,6 @@
     <ClCompile Include="source\game\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Engine\Gltf.hpp" />
-    <ClInclude Include="Source\Engine\GltfParts.hpp" />
     <ClInclude Include="Source\Engine\InputBinding.hpp" />
     <ClInclude Include="Library\effekseerlib\EffekseerVFX.h" />
     <ClInclude Include="Library\fastgltf\fastgltf\base64.hpp" />
