@@ -1,4 +1,5 @@
 ﻿#include "Gltf.hpp"
+#include "GltfParts.hpp"
 
 Gltf::Gltf()
 {
@@ -28,9 +29,13 @@ fastgltf::Error Gltf::Load(std::filesystem::path _path)
     }
     asset_ = std::move(gltfAsset.get());
 
-    for (auto& parts : gltfAsset.get().meshes)
+    // 結合メッシュをパーツ単位で読み込む
+    for (auto& mesh : asset_.meshes)
     {
-
+        // 1mesh = 1parts
+        GltfParts* pParts = new GltfParts();
+        pParts->Init(mesh, asset_);
+        pParts_.push_back(std::move(pParts));
     }
 
     return fastgltf::Error::None;

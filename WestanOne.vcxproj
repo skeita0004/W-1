@@ -155,6 +155,7 @@
     <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp" />
     <ClCompile Include="Source\Engine\Gltf.cpp" />
+    <ClCompile Include="Source\Engine\GltfParts.cpp" />
     <ClCompile Include="Source\Engine\RayCast.cpp" />
     <ClCompile Include="Source\Engine\SkinInstance.cpp" />
     <ClCompile Include="source\engine\Audio.cpp" />
