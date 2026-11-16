@@ -120,8 +120,6 @@
     <ClCompile Include="Source\Engine\Timer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
-    <ClCompile Include="Source\Game\HorseRace\Race.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui.cpp">
       <Filter>Library\ImGui</Filter>
     </ClCompile>
@@ -274,8 +272,6 @@
     <ClInclude Include="Source\Engine\Vertex.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Race.hpp" />
     <ClInclude Include="Source\Engine\RayCast.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
