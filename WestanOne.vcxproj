@@ -106,7 +106,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\install_msvc2022_x64\lib\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\install_msvc2022_x64\library\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -135,7 +135,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\install_msvc2022_x64\lib\release;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\install_msvc2022_x64\library\release;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
