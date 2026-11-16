@@ -101,12 +101,12 @@
       <OpenMPSupport>false</OpenMPSupport>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Library\effekseerlib\install_msvc2022_x64\include\Effekseer;$(ProjectDir)\Library\effekseerlib;$(Projectdir)\Library\fastgltf;$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;$(ProjectDir)\Library\ImGui\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Library\effekseerlib\effekseer\include\Effekseer;$(ProjectDir)\Library\effekseerlib;$(Projectdir)\Library\fastgltf;$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;$(ProjectDir)\Library\ImGui\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\install_msvc2022_x64\library\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\effekseer\library\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -128,14 +128,14 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <OpenMPSupport>false</OpenMPSupport>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Library\effekseerlib\install_msvc2022_x64\include\Effekseer;$(ProjectDir)\Library\effekseerlib;$(Projectdir)\Library\fastgltf;$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;$(ProjectDir)\Library\ImGui\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Library\effekseerlib\effekseer\include\Effekseer;$(ProjectDir)\Library\effekseerlib;$(Projectdir)\Library\fastgltf;$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;$(ProjectDir)\Library\ImGui\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\install_msvc2022_x64\library\release;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\effekseer\library\release;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
