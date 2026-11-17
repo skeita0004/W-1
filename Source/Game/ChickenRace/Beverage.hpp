@@ -1,8 +1,8 @@
-#pragma once
+﻿#pragma once
 
 #pragma once
 
-#include "../Engine/GameObject.h"
+#include "GameObject.hpp"
 
 class Beverage : public GameObject
 {

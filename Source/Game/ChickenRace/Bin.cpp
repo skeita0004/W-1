@@ -1,9 +1,13 @@
-﻿#include "Bin.h"
-#include "./Engine/Model.h"
-#include "Engine/Input.h"
-#include "Engine/Global.h"
-#include "Beermug.h"
-#include "WaterFlowOrigin.h"
+﻿#include "Bin.hpp"
+
+#include "Model.hpp"
+
+// deltaT
+#include "Global.hpp"
+
+#include "Beermug.hpp"
+
+#include "WaterFlowOrigin.hpp"
 
 #include <algorithm>
 #include <cmath>

@@ -110,7 +110,7 @@ void Beermug::Update()
 void Beermug::Draw()
 {
 	Model::SetTransform(hModels_[modelIdx_], transform_);
-	Model::Draw(hModels_[modelIdx_]);
+	Renderer::Draw(hModels_[modelIdx_]);
 }
 
 void Beermug::Release()

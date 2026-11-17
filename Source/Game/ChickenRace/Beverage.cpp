@@ -1,8 +1,8 @@
-#include "Beverage.h"
+﻿#include "Beverage.hpp"
 
-#include "Engine/Model.h"
+#include "Model.hpp"
 
-#include "ImGui/imgui.h"
+#include <imgui.h>
 
 Beverage::Beverage(GameObject *_pParent) :
 	GameObject(_pParent, "Beverage"),
@@ -39,7 +39,7 @@ void Beverage::Update()
 void Beverage::Draw()
 {
 	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	Renderer::Draw(hModel_);
 }
 
 void Beverage::Release()
