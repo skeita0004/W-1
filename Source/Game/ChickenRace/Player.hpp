@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 
-#include "../Engine/GameObject.h"
+#include "GameObject.hpp"
 
 #include <map>
 
-#include "PlayerAction.h"
+#include "PlayerAction.hpp"
 
 struct InputBinding;
 class Text;

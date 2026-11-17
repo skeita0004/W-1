@@ -1,6 +1,6 @@
-#pragma once
+﻿#pragma once
 
-#include "../Engine/GameObject.h"
+#include "GameObject.hpp"
 
 class SceneManager;
 class Judge;
@@ -17,5 +17,5 @@ public:
 
 private:
 	SceneManager *pSceneManager_;
-	Judge *pJudge_;
+	Judge        *pJudge_;
 };

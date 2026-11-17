@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../Engine/GameObject.h"
+#include "GameObject.hpp"
 
 #include <array>
 

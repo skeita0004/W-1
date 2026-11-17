@@ -1,17 +1,17 @@
-#include "Player.h"
+﻿#include "Player.hpp"
 
 #include <imgui.h>
 
-#include "Engine/InputBinding.h"
+#include "InputBinding.hpp"
 
-#include "Bin.h"
-#include "Beermug.h"
-#include "Judge.h"
+#include "Bin.hpp"
+#include "Beermug.hpp"
+#include "Judge.hpp"
 
-#include "Engine/Text.h"
-#include "Engine/Camera.h"
-#include "Engine/Direct3D.h"
-#include "Engine/Global.h"
+#include "Text.hpp"
+#include "CameraSet.hpp"
+#include "Direct3D.hpp"
+#include "Timer.hpp"
 
 namespace
 {
@@ -84,7 +84,7 @@ void Player::Update()
 
     if (pBeermug_->IsOverFlow())
     {
-        overFlowTextTimer_ -= deltaTime / 1000.f;
+        overFlowTextTimer_ -= Timer::DeltaTime();
         if (overFlowTextTimer_ <= 0.f)
         {
             overFlowTextVisible_ = not overFlowTextVisible_;

@@ -1,11 +1,11 @@
-#include "ChickenRaceScene.h"
+﻿#include "ChickenRaceScene.hpp"
 
-#include "Stage.h"
-#include "BackGround.h"
-#include "Judge.h"
+#include "Stage.hpp"
+#include "BackGround.hpp"
+#include "Judge.hpp"
 
-#include "./Engine/Camera.h"
-#include "Engine/SceneManager.h"
+#include "CameraSet.hpp"
+#include "SceneManager.hpp"
 
 ChickenRaceScene::ChickenRaceScene(GameObject *_pParent) :
 	GameObject(_pParent, "ChickenRaceScene"),
@@ -16,10 +16,11 @@ ChickenRaceScene::ChickenRaceScene(GameObject *_pParent) :
 
 void ChickenRaceScene::Initialize()
 {
-	pSceneManager_ = static_cast<SceneManager*>(FindObject("SceneManager"));
+	pSceneManager_ = (FindObject<SceneManager>("SceneManager"));
 
 	XMFLOAT3 camPos{0.f, 0.f, -10.f};
-	Camera::SetPosition(camPos);
+	CameraSet cs{};
+	cs.GetVirtualCamera(CameraSet::hNormalCamera)->GetTransform().position = camPos;
 
 	Instantiate<BackGround>(this);
 	Instantiate<Stage>(this);

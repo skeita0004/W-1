@@ -1,7 +1,7 @@
-#include "Judge.h"
+﻿#include "Judge.hpp"
 
-#include "Player.h"
-#include "Stage.h"
+#include "Player.hpp"
+#include "Stage.hpp"
 
 Judge::Judge(GameObject *_pParent) :
 	GameObject(_pParent, "Judge"),
@@ -13,7 +13,7 @@ void Judge::Initialize()
 {
 	for (size_t i = 0; i < Stage::MAX_PLAYER_NUM; i++)
 	{
-		pPlayers_[i] = static_cast<Player*>(FindObject("Player" + std::to_string(i + 1)));
+		pPlayers_[i] = (FindObject<Player>("Player" + std::to_string(i + 1)));
 	}
 }
 
