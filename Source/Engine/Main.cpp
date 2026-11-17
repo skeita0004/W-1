@@ -11,6 +11,7 @@
 #include "Model.hpp"
 #include "Image.hpp"
 #include "Renderer.hpp"
+#include "Timer.hpp"
 
 #include "CameraSet.hpp"
 
@@ -69,6 +70,8 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
     Direct3D::Initialize(hWnd, screenWidth, screenHeight);
 
     Renderer::Init();
+
+    Timer::Initialize();
 
     //カメラを準備
     pCameraSet = new CameraSet();
@@ -146,6 +149,8 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
                 //時間計測関連
                 lastUpdateTime = nowTime;
                 FPS++;						//画面更新回数をカウントする
+
+                Timer::Refresh();
 
                 //入力（キーボード、マウス、コントローラー）情報を更新
                 Input::Update();
