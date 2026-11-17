@@ -1,6 +1,7 @@
-#include "SafeCleaning.hpp"
+﻿#include "SafeCleaning.hpp"
 #include "Model.hpp"
 #include "FbxParts.hpp"
+
 
 using namespace SafeCleaning;
 
@@ -90,8 +91,8 @@ namespace Model
             data.nowFrame = (float)data.startFrame;
         }
 
-        int frame = data.nowFrame;
-        if (data.pFbx and frame != data.lastSkinFrame)
+        int frame = (int)data.nowFrame;
+        if (data.pFbx and (frame != data.lastSkinFrame))
         {
             data.pFbx->UpdateSkin(frame, data.skin);
             data.lastSkinFrame = frame;

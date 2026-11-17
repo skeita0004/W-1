@@ -93,11 +93,11 @@ public:
 
 private:
     //各データの個数
-    int32_t              vertexCount_;        // 頂点数
-    int32_t              polygonCount_;       // ポリゴン数
+    uint32_t              vertexCount_;        // 頂点数
+    uint32_t              polygonCount_;       // ポリゴン数
     std::vector<int32_t> indexCount_;         // インデックス数
-    int32_t              materialCount_;      // マテリアルの個数
-    int32_t              polygonVertexCount_; // ポリゴン頂点インデックス数 
+    uint32_t              materialCount_;      // マテリアルの個数
+    uint32_t              polygonVertexCount_; // ポリゴン頂点インデックス数 
 
     Vertex* pVertexData_;
 
