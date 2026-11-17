@@ -34,7 +34,7 @@ public:
 	virtual ~GameObject();
 
 	/// @brief 初期化処理
-	virtual void Init(void) = 0;
+	virtual void Initialize(void) = 0;
 
 	/// @brief 更新処理
 	virtual void Update(void) = 0;
@@ -61,11 +61,11 @@ public:
 	/// @brief  オブジェクトがDeleteMeを呼んだのかを返す
     /// @detail このフラグがtrueのオブジェクトは削除される。
 	/// @return true: 呼んだ, false: 呼んでいない
-	bool IsDelete();
+	bool IsDead();
 
 	/// @brief  自分を消す
     /// @detail オブジェクトのリストから削除される
-	void DeleteMe();
+	void KillMe();
 
 	void EnableUpdate();
 	void DisableUpdate();
@@ -117,7 +117,7 @@ public:
 
     XMFLOAT3 GetBoxColliderSize(int _index = 0)
     {
-        return colliderList[_index]->GetBoxSize();
+        return colliderList_[_index]->GetBoxSize();
     }
 
 	//何かと衝突した場合に呼ばれる（オーバーライド用）
@@ -135,22 +135,88 @@ public:
 
 	GameObject* GetRootJob();
 
+    XMFLOAT3 GetPosition()
+    {
+        return transform_.position;
+    }
+    XMFLOAT3 GetRotate()
+    {
+        return transform_.rotate;
+    }
+    XMFLOAT3 GetScale()
+    {
+        return transform_.scale;
+    }
+    XMFLOAT3 GetWorldPosition()
+    {
+        return Transform::Float3Add(transform_.pParent->position, transform_.position);
+    }
+    XMFLOAT3 GetWorldRotate()
+    {
+        return Transform::Float3Add(transform_.pParent->rotate, transform_.rotate);
+    }
+    XMFLOAT3 GetWorldScale()
+    {
+        return Transform::Float3Add(transform_.pParent->scale, transform_.scale);
+    }
+
+    void SetPosition(XMFLOAT3 _position)
+    {
+        transform_.position = _position;
+    }
+    void SetPosition(float x, float y, float z)
+    {
+        SetPosition(XMFLOAT3(x, y, z));
+    }
+    void SetRotate(XMFLOAT3 _rotate)
+    {
+        transform_.rotate = _rotate;
+    }
+    void SetRotate(float x, float y, float z)
+    {
+        SetRotate(XMFLOAT3(x, y, z));
+    }
+    void SetRotateX(float x)
+    {
+        SetRotate(x, transform_.rotate.y, transform_.rotate.z);
+    }
+    void SetRotateY(float y)
+    {
+        SetRotate(transform_.rotate.x, y, transform_.rotate.z);
+    }
+    void SetRotateZ(float z)
+    {
+        SetRotate(transform_.rotate.x, transform_.rotate.y, z);
+    }
+    void SetScale(XMFLOAT3 scale)
+    {
+        scale = scale;
+    }
+    void SetScale(float _scale)
+    {
+        SetScale(XMFLOAT3(_scale, _scale, _scale));
+    }
+    void SetScale(float x, float y, float z)
+    {
+        SetScale(XMFLOAT3(x, y, z));
+    }
+
 protected:
 	//位置や向きなどを管理するオブジェクト
-	Transform				transform;
+	Transform				transform_;
 
 	//オブジェクトの名前
-	std::string				objectName;
+	std::string				objectName_;
 
 	//衝突判定リスト
-	std::vector<Collider*>	colliderList;	
+	std::vector<Collider*>	colliderList_;	
 
     /// @brief ゲームオブジェクトの子クラスをインスタンスするテンプレート
     /// @param T ゲームオブジェクトの子クラス型
     /// @param _pParent インスタンス対象クラスの親（継承元のことではない）
     /// @return 実体へのポインタ(型は、実体の型)
     template <class T>
-    GameObject* Instantiate(GameObject* _pParent)
+    T* Instantiate(GameObject* _pParent)
     {
 	    T* pNewObject = new T(_pParent);
 	    if (_pParent != nullptr)

@@ -31,13 +31,13 @@ GameObject::~GameObject()
 }
 
 // 削除するかどうか
-bool GameObject::IsDelete()
+bool GameObject::IsDead()
 {
 	return (state_.dead != 0);
 }
 
 // 自分を削除する
-void GameObject::DeleteMe()
+void GameObject::KillMe()
 {
 	state_.dead = 1;
 }
@@ -307,7 +307,7 @@ void GameObject::UpdateSub()
 
 	for (auto it = childList_.begin(); it != childList_.end();)
 	{
-		if ((*it)->IsDelete() == true)
+		if ((*it)->IsDead() == true)
 		{
 			(*it)->ReleaseSub();
 			SafeDelete(*it);
