@@ -1,4 +1,4 @@
-#include "Timer.h"
+﻿#include "Timer.h"
 #include <Windows.h>
 
 namespace
