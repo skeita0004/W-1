@@ -1,8 +1,11 @@
-﻿#include <stdlib.h>
-#include "Direct3D.hpp"
-#include "Text.hpp"
+﻿#include "Text.hpp"
 
-Text::Text() : hPict_(-1), width_(16), height_(32), fileName_("char.png"), rowLength_(16)
+#include <cstdlib>
+
+#include "Direct3D.hpp"
+#include "CameraSet.hpp"
+
+Text::Text() : hPict_(-1), width_(16), height_(32), fileName_("Picture/char.png"), rowLength_(16)
 {
 }
 
@@ -32,11 +35,50 @@ HRESULT Text::Initialize(const char* fileName, const unsigned int charWidth, con
 	return Initialize();
 }
 
+XMFLOAT2 Text::GetScreenPos(Transform& _t)
+{
+	XMVECTOR worldPos = XMVector3Transform(XMVectorZero(), _t.GetWorldMatrix());
+	XMMATRIX vp = Camera::GetViewMatrix() * Camera::GetProjectionMatrix();
+
+	XMVECTOR clip = XMVector4Transform(XMVectorSetW(worldPos, 1.0f), vp);
+	float w = XMVectorGetW(clip);
+
+	float ndcX = XMVectorGetX(clip) / w;
+	float ndcY = XMVectorGetY(clip) / w;
+
+	XMFLOAT2 ret{};
+	ret.x = (ndcX * 0.5f + 0.5f) * Direct3D::screenWidth_;
+	ret.y = (1.0f - (ndcY * 0.5f + 0.5f)) * Direct3D::screenHeight_;
+
+	return ret;
+}
+
+void Text::GetScreenPos(float& _x, float& _y)
+{
+	Transform t{};
+	t.position_ = XMFLOAT3(_x, _y, 0.0f);
+	XMVECTOR worldPos = XMVector3Transform(XMVectorZero(), t.GetWorldMatrix());
+	XMMATRIX vp = Camera::GetViewMatrix() * Camera::GetProjectionMatrix();
+
+	XMVECTOR clip = XMVector4Transform(XMVectorSetW(worldPos, 1.0f), vp);
+	float w = XMVectorGetW(clip);
+
+	float ndcX = XMVectorGetX(clip) / w;
+	float ndcY = XMVectorGetY(clip) / w;
+
+	_x = (ndcX * 0.5f + 0.5f) * Direct3D::screenWidth_;
+	_y = (1.0f - (ndcY * 0.5f + 0.5f)) * Direct3D::screenHeight_;
+}
+
+void Text::GetScreenPos(XMFLOAT3& _pos)
+{
+	GetScreenPos(_pos.x, _pos.y);
+}
+
 
 //描画（文字列）
 void Text::Draw(int x, int y, const char* str)
 {
-    Direct3D::SetDepthBafferWriteEnable(false);
 	//表示位置（左上）を計算
 	//Spriteクラスは中心が(0,0)、右上が(1,1)という座標だが、ここの引数は左上を(0,0)、ドット単位で指定している
 	float px, py;
@@ -62,20 +104,20 @@ void Text::Draw(int x, int y, const char* str)
 
 		//表示する位置
 		Transform transform;
-		transform.position.x = px;
-		transform.position.y = py;
+		transform.position_.x = px;
+		transform.position_.y = py;
+
 		Image::SetTransform(hPict_, transform);
 
 		//表示する範囲
 		Image::SetRect(hPict_, width_ * x, height_ * y, width_, height_);
-		
+
 		//表示
 		Image::Draw(hPict_);
 
 		//次の位置にずらす
 		px += width_ / (float)(Direct3D::screenWidth_ / 2.0f);
 	}
-    Direct3D::SetDepthBafferWriteEnable(true);
 }
 
 //描画（整数値）
