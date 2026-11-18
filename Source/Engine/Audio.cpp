@@ -34,11 +34,13 @@ namespace Audio
 //初期化
 void Audio::Initialize()
 {
-	CoInitializeEx(0, COINIT_MULTITHREADED);
+	HRESULT result{};
+	result = CoInitializeEx(0, COINIT_MULTITHREADED);
 
 	XAudio2Create(&pXAudio);
 	pXAudio->CreateMasteringVoice(&pMasteringVoice);
 
+	//return result;
 }
 
 //サウンドファイル(.wav）をロード

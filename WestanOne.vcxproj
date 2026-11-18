@@ -107,6 +107,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\effekseer\library\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libfbxsdk-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,6 +138,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)\Library\effekseerlib\effekseer\library\release;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\lib\x64\release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libfbxsdk-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -177,7 +181,7 @@
     <ClCompile Include="source\engine\Sprite.cpp" />
     <ClCompile Include="source\engine\Text.cpp" />
     <ClCompile Include="source\engine\Texture.cpp" />
-    <ClCompile Include="Source\Engine\Timer.cpp" />
+    <ClCompile Include="Source\Engine\DeltaTime.cpp" />
     <ClCompile Include="source\engine\Transform.cpp" />
     <ClCompile Include="source\engine\VirtualCameraOrtho.cpp" />
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
@@ -234,7 +238,7 @@
     <ClInclude Include="source\engine\Sprite.hpp" />
     <ClInclude Include="source\engine\Text.hpp" />
     <ClInclude Include="source\engine\Texture.hpp" />
-    <ClInclude Include="Source\Engine\Timer.h" />
+    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
     <ClInclude Include="source\engine\Transform.hpp" />
     <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />

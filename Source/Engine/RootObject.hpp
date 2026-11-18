@@ -13,7 +13,7 @@ public:
 	~RootObject();
 
 	//初期化
-	void Init() override;
+	void Initialize() override;
 
 	//更新
 	void Update() override;

@@ -1,4 +1,4 @@
-#include "Timer.h"
+﻿#include "DeltaTime.hpp"
 #include <Windows.h>
 
 namespace
@@ -16,7 +16,7 @@ namespace
 	int writeP = 0;
 }
 
-void Timer::Initialize()
+void DeltaTime::Initialize()
 {
 	QueryPerformanceFrequency(&freq);
 	QueryPerformanceCounter(&current);
@@ -26,7 +26,7 @@ void Timer::Initialize()
 	writeP = 0;
 }
 
-void Timer::Refresh()
+void DeltaTime::Refresh()
 {
 	last = current;
 	QueryPerformanceCounter(&current);
@@ -64,11 +64,11 @@ void Timer::Refresh()
 		deltaTime = 0.05f;
 }
 
-float Timer::DeltaTime()
+float DeltaTime::DeltaTime()
 {
     return deltaTime;
 }
 
-void Timer::Release()
+void DeltaTime::Release()
 {
 }

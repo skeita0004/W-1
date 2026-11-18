@@ -11,6 +11,7 @@
 #include "Model.hpp"
 #include "Image.hpp"
 #include "Renderer.hpp"
+#include "DeltaTime.hpp"
 
 #include "CameraSet.hpp"
 
@@ -70,6 +71,8 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
 
     Renderer::Init();
 
+    DeltaTime::Initialize();
+
     //カメラを準備
     pCameraSet = new CameraSet();
     pCameraSet->Init();
@@ -95,8 +98,8 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
 
     //ルートオブジェクト準備
     //すべてのゲームオブジェクトの親となるオブジェクト
-    RootObject* pRootObject = new RootObject;
-    pRootObject->Init();
+    RootObject* pRootObject = new RootObject();
+    pRootObject->Initialize();
 
 
     //メッセージループ（何か起きるのを待つ）
@@ -146,6 +149,8 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
                 //時間計測関連
                 lastUpdateTime = nowTime;
                 FPS++;						//画面更新回数をカウントする
+
+                DeltaTime::Refresh();
 
                 //入力（キーボード、マウス、コントローラー）情報を更新
                 Input::Update();
