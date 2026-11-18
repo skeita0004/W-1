@@ -1,6 +1,6 @@
-#pragma once
+﻿#pragma once
 
-namespace Timer
+namespace DeltaTime
 {
 	void Initialize();
 	void Refresh();
