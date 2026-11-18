@@ -225,7 +225,7 @@ protected:
         {
             _pParent->PushBackChild(pNewObject);
         }
-        pNewObject->Init();
+        pNewObject->Initialize();
         pNewObject->CalledInit();
         return pNewObject;
     }
