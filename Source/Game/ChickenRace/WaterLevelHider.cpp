@@ -1,7 +1,7 @@
-#include "WaterLevelHider.h"
+﻿#include "WaterLevelHider.hpp"
 
-#include "Engine/Image.h"
-#include "Engine/Model.h"
+#include "Image.hpp"
+#include "Model.hpp"
 
 #include <imgui.h>
 
@@ -23,17 +23,17 @@ void WaterLevelHider::Update()
 	std::string panelName{ "ObjectTS" + objectName_ };
 
 	ImGui::Begin(panelName.c_str());
-	ImGui::InputFloat("pos.x", &transform_.position_.x);
-	ImGui::InputFloat("pos.y", &transform_.position_.y);
-	ImGui::InputFloat("pos.z", &transform_.position_.z);
+	ImGui::InputFloat("pos.x", &transform_.position.x);
+	ImGui::InputFloat("pos.y", &transform_.position.y);
+	ImGui::InputFloat("pos.z", &transform_.position.z);
 
-	ImGui::InputFloat("rot.x", &transform_.rotate_.x);
-	ImGui::InputFloat("rot.y", &transform_.rotate_.y);
-	ImGui::InputFloat("rot.z", &transform_.rotate_.z);
+	ImGui::InputFloat("rot.x", &transform_.rotate.x);
+	ImGui::InputFloat("rot.y", &transform_.rotate.y);
+	ImGui::InputFloat("rot.z", &transform_.rotate.z);
 
-	ImGui::InputFloat("scl.x", &transform_.scale_.x);
-	ImGui::InputFloat("scl.y", &transform_.scale_.y);
-	ImGui::InputFloat("scl.z", &transform_.scale_.z);
+	ImGui::InputFloat("scl.x", &transform_.scale.x);
+	ImGui::InputFloat("scl.y", &transform_.scale.y);
+	ImGui::InputFloat("scl.z", &transform_.scale.z);
 	ImGui::End();
 #endif
 }
@@ -41,7 +41,7 @@ void WaterLevelHider::Update()
 void WaterLevelHider::Draw()
 {
 	Model::SetTransform(hImage_, transform_);
-	Model::Draw(hImage_);
+	Renderer::Draw(hImage_);
 }
 
 void WaterLevelHider::Release()

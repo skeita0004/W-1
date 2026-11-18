@@ -1,7 +1,7 @@
 ﻿#include "Puddle.hpp"
 
 #include "Model.hpp"
-#include "Timer.hpp"
+#include "DeltaTime.hpp"
 
 #include <cmath>
 #include <algorithm>
@@ -25,7 +25,7 @@ void Puddle::Initialize()
 
 void Puddle::Update()
 {
-	scalingTime_ -= Timer::DeltaTime() / 1000.f;
+	scalingTime_ -= DeltaTime::DeltaTime() / 1000.f;
 	float t = std::clamp(1 - scalingTime_ / MAX_SCALING_TIME, 0.0f, 1.0f);
 	float rate{ 1.0f - powf( 1.0f - t, 5.0f ) };
 

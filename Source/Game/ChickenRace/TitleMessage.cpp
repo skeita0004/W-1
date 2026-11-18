@@ -1,8 +1,8 @@
-#include "TitleMessage.h"
+﻿#include "TitleMessage.hpp"
 
-#include "Engine/Text.h"
+#include "Text.hpp"
 
-#include "Engine/Direct3D.h"
+#include "Direct3D.hpp"
 
 namespace
 {
@@ -22,7 +22,7 @@ void TitleMessage::Initialize()
     pText_ = new Text();
     pText_->Initialize();
 
-    transform_.position_.y = -1.f;
+    transform_.position.y = -1.f;
 }
 
 void TitleMessage::Update()
@@ -37,11 +37,11 @@ void TitleMessage::Update()
 
     if (counter % (int)(BLINK_OUT_COUNT * blinkIntervalDiv) == 0)
     {
-        Invisible();
+        DisableDraw();
     }
-    else if (not(IsVisibled()) and counter % (int)(LIGHT_UP_COUNT * blinkIntervalDiv) == 0)
+    else if (not(IsEnableDraw()) and counter % (int)(LIGHT_UP_COUNT * blinkIntervalDiv) == 0)
     {
-        Visible();
+        EnableDraw();
     }
 }
 

@@ -1,5 +1,5 @@
-#include "WaterFlow.h"
-#include "Engine/Model.h"
+﻿#include "WaterFlow.hpp"
+#include "Model.hpp"
 
 WaterFlow::WaterFlow(GameObject *_pParent) :
 	GameObject(_pParent, "WaterFlow"),
@@ -14,13 +14,13 @@ void WaterFlow::Initialize()
 
 void WaterFlow::Update()
 {
-	transform_.rotate_.x += 3;
+	transform_.rotate.x += 3;
 }
 
 void WaterFlow::Draw()
 {
 	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	Renderer::Draw(hModel_);
 }
 
 void WaterFlow::Release()

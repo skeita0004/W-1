@@ -1,7 +1,7 @@
-#include "WaterFlowOrigin.h"
-#include "WaterFlow.h"
+﻿#include "WaterFlowOrigin.hpp"
+#include "WaterFlow.hpp"
 
-#include "Engine/Model.h"
+#include "Model.hpp"
 
 WaterFlowOrigin::WaterFlowOrigin(GameObject *_pParent) :
 	GameObject(_pParent, "WaterFlowOrigin"),
@@ -15,7 +15,7 @@ void WaterFlowOrigin::Initialize()
 
 	pWaterFlow_ = Instantiate<WaterFlow>(this);
 
-	pWaterFlow_->Invisible();
+	pWaterFlow_->DisableDraw();
 
 	XMFLOAT3 wfPos{Model::GetBonePosition(hModel_, "WaterFlowTail")};
 	pWaterFlow_->SetPosition(wfPos);
@@ -25,14 +25,14 @@ void WaterFlowOrigin::Update()
 {
 	if (wfVisible_)
 	{
-		pWaterFlow_->Visible();
+		pWaterFlow_->EnableDraw();
 	}
 }
 
 void WaterFlowOrigin::Draw()
 {
 	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	Renderer::Draw(hModel_);
 }
 
 void WaterFlowOrigin::Release()

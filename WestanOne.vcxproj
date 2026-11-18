@@ -196,7 +196,6 @@
     <ClCompile Include="Source\Game\ChickenRace\ChickenRaceResultScene.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\Stage.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\Table.cpp" />
-    <ClCompile Include="Source\Game\ChickenRace\TitleLogo.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\TitleMessage.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterFlow.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterFlowOrigin.cpp" />
@@ -269,7 +268,6 @@
     <ClInclude Include="Source\Game\ChickenRace\Puddle.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\Stage.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\Table.hpp" />
-    <ClInclude Include="Source\Game\ChickenRace\TitleLogo.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\TitleMessage.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\WaterFlow.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\WaterFlowOrigin.hpp" />

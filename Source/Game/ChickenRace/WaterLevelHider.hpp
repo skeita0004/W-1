@@ -1,6 +1,6 @@
-#pragma once
+﻿#pragma once
 
-#include "../Engine/GameObject.h"
+#include "GameObject.hpp"
 
 class WaterLevelHider : public GameObject
 {
