@@ -181,12 +181,20 @@
     <ClCompile Include="source\engine\Sprite.cpp" />
     <ClCompile Include="source\engine\Text.cpp" />
     <ClCompile Include="source\engine\Texture.cpp" />
-    <ClCompile Include="Source\Engine\DeltaTime.cpp" />
     <ClCompile Include="source\engine\Transform.cpp" />
     <ClCompile Include="source\engine\VirtualCameraOrtho.cpp" />
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
-    <ClCompile Include="source\game\TestScene.cpp" />
-    <ClCompile Include="source\game\TitleScene.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\cactus1.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\cactus2.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\FallingRock.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\Fence.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\Obstacle.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\RaceScene.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\ResultScene.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\Rock.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\Stage.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\Tumbleweed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\glTF.hpp" />
@@ -238,13 +246,21 @@
     <ClInclude Include="source\engine\Sprite.hpp" />
     <ClInclude Include="source\engine\Text.hpp" />
     <ClInclude Include="source\engine\Texture.hpp" />
-    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
     <ClInclude Include="source\engine\Transform.hpp" />
     <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
-    <ClInclude Include="source\game\TestScene.hpp" />
-    <ClInclude Include="source\game\TitleScene.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\cactus1.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\cactus2.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\FallingRock.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\Fence.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\Obstacle.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\RaceScene.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\ResultScene.h" />
+    <ClInclude Include="Source\Game\HorseRace\Rock.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\Stage.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\Tumbleweed.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
