@@ -21,7 +21,7 @@ public:
 	//引数：parent	親オブジェクト（基本的にゲームマネージャー）
 	SceneManager(GameObject* parent);
 
-	void Init() override;
+	void Initialize() override;
 	void Update() override;
 	void Draw() override;
 	void Release() override;
