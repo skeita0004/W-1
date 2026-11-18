@@ -17,6 +17,8 @@
 // game object
 #include "RootObject.hpp"
 #include "DeltaTime.hpp"
+#include "Renderer.hpp"
+#include "DeltaTime.hpp"
 
 // rendering
 #include "CameraSet.hpp"
@@ -106,7 +108,7 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
     //ルートオブジェクト準備
     //すべてのゲームオブジェクトの親となるオブジェクト
     RootObject* pRootObject = new RootObject();
-    pRootObject->Init();
+    pRootObject->Initialize();
 
 
     //メッセージループ（何か起きるのを待つ）

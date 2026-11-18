@@ -8,13 +8,13 @@ using namespace SafeCleaning;
 GameObject::GameObject(GameObject * parent, const std::string& name)
 	: pParent_(parent),
 
-	objectName(name)
+	objectName_(name)
 {
 	childList_.clear();
 	state_ = { 0, 1, 1, 0 };
 
 	if(parent)
-		transform.pParent = &parent->transform;
+		transform_.pParent = &parent->transform_;
 
 }
 
@@ -23,11 +23,11 @@ GameObject::~GameObject()
 {
     using namespace SafeCleaning;
 
-	for (auto it = colliderList.begin(); it != colliderList.end(); it++)
+	for (auto it = colliderList_.begin(); it != colliderList_.end(); it++)
 	{
 		SafeDelete(*it);
 	}
-	colliderList.clear();
+	colliderList_.clear();
 }
 
 // 削除するかどうか
@@ -104,7 +104,7 @@ GameObject * GameObject::GetParent(void)
 
 Transform* GameObject::GetTransform()
 {
-	return &transform;
+	return &transform_;
 }
 
 //名前でオブジェクトを検索（対象は自分の子供以下）
@@ -143,13 +143,13 @@ GameObject * GameObject::FindChildObject(const std::string & name)
 
 void GameObject::SetObjectName(const std::string& _name)
 {
-    objectName = _name;
+    objectName_ = _name;
 }
 
 //オブジェクトの名前を取得
 const std::string& GameObject::GetObjectName(void) const
 {
-	return objectName;
+	return objectName_;
 }
 
 //子オブジェクトを追加（リストの最後へ）
@@ -218,17 +218,17 @@ void GameObject::KillObjectSub(GameObject * obj)
 void GameObject::AddCollider(Collider* collider)
 {
 	collider->SetGameObject(this);
-	colliderList.push_back(collider);
+	colliderList_.push_back(collider);
 }
 
 //コライダー（衝突判定）を削除
 void GameObject::DeleteCollider()
 {
-	for (auto it = colliderList.begin(); it != colliderList.end(); it++)
+	for (auto it = colliderList_.begin(); it != colliderList_.end(); it++)
 	{
 		SafeDelete(*it);
 	}
-	colliderList.clear();
+	colliderList_.clear();
 }
 
 //衝突判定
@@ -242,9 +242,9 @@ void GameObject::Collision(GameObject * pTarget)
 
 	//自分とpTargetのコリジョン情報を使って当たり判定
 	//1つのオブジェクトが複数のコリジョン情報を持ってる場合もあるので二重ループ
-	for (auto i = this->colliderList.begin(); i != this->colliderList.end(); i++)
+	for (auto i = this->colliderList_.begin(); i != this->colliderList_.end(); i++)
 	{
-		for (auto j = pTarget->colliderList.begin(); j != pTarget->colliderList.end(); j++)
+		for (auto j = pTarget->colliderList_.begin(); j != pTarget->colliderList_.end(); j++)
 		{
 			if ((*i)->IsHit(*j))
 			{
@@ -271,7 +271,7 @@ void GameObject::CollisionDraw()
 {
 	Direct3D::SetShader(Direct3D::SHADER_UNLIT);
 
-	for (auto i = this->colliderList.begin(); i != this->colliderList.end(); i++)
+	for (auto i = this->colliderList_.begin(); i != this->colliderList_.end(); i++)
 	{
 		(*i)->Draw(GetTransform()->position);
 	}
@@ -295,7 +295,7 @@ GameObject * GameObject::GetRootJob()
 void GameObject::UpdateSub()
 {
 	Update();
-	//Transform();
+	//transform_();
 
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
@@ -367,7 +367,5 @@ void GameObject::ReleaseSub()
 //ワールド行列の取得（親の影響を受けた最終的な行列）
 XMMATRIX GameObject::GetWorldMatrix(void)
 {
-	return transform.GetWorldMatrix();
+	return transform_.GetWorldMatrix();
 }
-
-

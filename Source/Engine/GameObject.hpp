@@ -24,116 +24,118 @@ class GameObject
 {
 public:
 
-	/// @brief コンストラクタ
-	/// @param _pParent 親
-	/// @param _name 名前
+    /// @brief コンストラクタ
+    /// @param _pParent 親
+    /// @param _name 名前
     /// @note  親というのは、親クラスのことではなく、
     ///        座標変換において、親子関係を持つ物のことを指す
-	GameObject(GameObject* _pParent, const std::string& _name);
+    GameObject(GameObject* _pParent, const std::string& _name);
 
-	virtual ~GameObject();
+    virtual ~GameObject();
 
 	/// @brief 初期化処理
 	virtual void Initialize(void) = 0;
 
-	/// @brief 更新処理
-	virtual void Update(void) = 0;
+    /// @brief 更新処理
+    virtual void Update(void) = 0;
 
-	/// @brief 描画処理
-	virtual void Draw() = 0;
+    /// @brief 描画処理
+    virtual void Draw() = 0;
 
-	/// @brief 解放処理
-	virtual void Release(void) = 0;
+    /// @brief 解放処理
+    virtual void Release(void) = 0;
 
-	//自分の該当関数を読んだ後、子供の関数も呼ぶ
-	void UpdateSub();
-	void DrawSub();
-	void ReleaseSub();
+    //自分の該当関数を読んだ後、子供の関数も呼ぶ
+    void UpdateSub();
+    void DrawSub();
+    void ReleaseSub();
 
-	//ワールド行列の取得（親の影響を受けた最終的な行列）
-	//戻値：ワールド行列
+    //ワールド行列の取得（親の影響を受けた最終的な行列）
+    //戻値：ワールド行列
     // これはダメだと思うわ、
     // 座標系の処理はtransformにいるべきよ。
     // (西麻布のママより)
-	XMMATRIX GetWorldMatrix();
+    XMMATRIX GetWorldMatrix();
 
-	//---各フラグの制御---//
-	/// @brief  オブジェクトがDeleteMeを呼んだのかを返す
+    //---各フラグの制御---//
+    /// @brief  オブジェクトがDeleteMeを呼んだのかを返す
     /// @detail このフラグがtrueのオブジェクトは削除される。
 	/// @return true: 呼んだ, false: 呼んでいない
 	bool IsDead();
 
-	/// @brief  自分を消す
+    /// @brief  自分を消す
     /// @detail オブジェクトのリストから削除される
 	void KillMe();
 
-	void EnableUpdate();
-	void DisableUpdate();
+    void EnableUpdate();
+    void DisableUpdate();
 
     void EnableDraw();
-	void DisableDraw();
+    void DisableDraw();
 
     /// @brief 初期化を終えたかどうか
     /// @return true: Initが呼ばれた
     bool IsFinishInit();
 
-	/// @brief 初期化済みにする
-	void CalledInit();
+    /// @brief 初期化済みにする
+    void CalledInit();
 
     bool IsEnableUpdate();
-	bool IsEnableDraw();
+    bool IsEnableDraw();
 
-	std::list<GameObject*>* GetChildList();
+    std::list<GameObject*>* GetChildList();
 
-	GameObject* GetParent();
+    GameObject* GetParent();
 
     Transform* GetTransform();
 
-	//名前でオブジェクトを検索（対象は自分の子供以下）
-	//引数：name	検索する名前
-	//戻値：見つけたオブジェクトのアドレス（見つからなければnullptr）
-	GameObject* FindChildObject(const std::string& name);
+    //名前でオブジェクトを検索（対象は自分の子供以下）
+    //引数：name	検索する名前
+    //戻値：見つけたオブジェクトのアドレス（見つからなければnullptr）
+    GameObject* FindChildObject(const std::string& name);
 
-	//名前でオブジェクトを検索（対象は全体）
-	//引数：検索する名前
-	//戻値：見つけたオブジェクトのアドレス
+    //名前でオブジェクトを検索（対象は全体）
+    //引数：検索する名前
+    //戻値：見つけたオブジェクトのアドレス
     template <typename T>
-	inline T* FindObject(const std::string& _name)
-    { 
+    inline T* FindObject(const std::string& _name)
+    {
         return static_cast<T*>(GetRootJob()->FindChildObject(_name));
     }
 
 
     void  SetObjectName(const std::string& _name);
-	const std::string& GetObjectName(void) const;
+    const std::string& GetObjectName(void) const;
 
-	void PushBackChild(GameObject* obj);
-	void PushFrontChild(GameObject* obj);
+    void PushBackChild(GameObject* obj);
+    void PushFrontChild(GameObject* obj);
 
-	void DeleteAllChildren();
+    void DeleteAllChildren();
 
-	//コライダー（衝突判定）を追加する
-	void AddCollider(Collider * collider);
+    //コライダー（衝突判定）を追加する
+    void AddCollider(Collider* collider);
 
     XMFLOAT3 GetBoxColliderSize(int _index = 0)
     {
         return colliderList_[_index]->GetBoxSize();
     }
 
-	//何かと衝突した場合に呼ばれる（オーバーライド用）
-	//引数：pTarget	衝突した相手
-	virtual void OnCollision(GameObject* pTarget) {};
+    //何かと衝突した場合に呼ばれる（オーバーライド用）
+    //引数：pTarget	衝突した相手
+    virtual void OnCollision(GameObject* pTarget)
+    {
+    };
 
-	void DeleteCollider();
+    void DeleteCollider();
 
-	//衝突判定
-	//引数：pTarget	衝突してるか調べる相手
-	void Collision(GameObject* pTarget);
+    //衝突判定
+    //引数：pTarget	衝突してるか調べる相手
+    void Collision(GameObject* pTarget);
 
-	//テスト用の衝突判定枠を表示
-	void CollisionDraw();
+    //テスト用の衝突判定枠を表示
+    void CollisionDraw();
 
-	GameObject* GetRootJob();
+    GameObject* GetRootJob();
 
     XMFLOAT3 GetPosition()
     {
@@ -218,36 +220,35 @@ protected:
     template <class T>
     T* Instantiate(GameObject* _pParent)
     {
-	    T* pNewObject = new T(_pParent);
-	    if (_pParent != nullptr)
-	    {
-		    _pParent->PushBackChild(pNewObject);
-	    }
-	    pNewObject->Init();
+        T* pNewObject = new T(_pParent);
+        if (_pParent != nullptr)
+        {
+            _pParent->PushBackChild(pNewObject);
+        }
+        pNewObject->Init();
         pNewObject->CalledInit();
-	    return pNewObject;
+        return pNewObject;
     }
 
 private:
 
-	//オブジェクト削除（再帰）
-	//引数：obj　削除するオブジェクト
-	void KillObjectSub(GameObject* obj);
+    //オブジェクト削除（再帰）
+    //引数：obj　削除するオブジェクト
+    void KillObjectSub(GameObject* obj);
 
 private:
-	//フラグ(bitfield)
-	struct OBJECT_STATE
-	{
-		unsigned initialized : 1;	//初期化済みか
-		unsigned entered : 1;		//更新するか
-		unsigned visible : 1;		//描画するか
-		unsigned dead : 1;			//削除するか
-	} state_;
+    //フラグ(bitfield)
+    struct OBJECT_STATE
+    {
+        unsigned initialized : 1;	//初期化済みか
+        unsigned entered : 1;		//更新するか
+        unsigned visible : 1;		//描画するか
+        unsigned dead : 1;			//削除するか
+    } state_;
 
-	//親オブジェクト
-	GameObject* pParent_;
+    //親オブジェクト
+    GameObject* pParent_;
 
-	//子オブジェクトリスト
-	std::list<GameObject*> childList_;
+    //子オブジェクトリスト
+    std::list<GameObject*> childList_;
 };
-
