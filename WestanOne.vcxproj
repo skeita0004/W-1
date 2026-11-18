@@ -198,17 +198,11 @@
     <ClCompile Include="Source\Game\ChickenRace\Table.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\TitleLogo.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\TitleMessage.cpp" />
-    <ClCompile Include="Source\Game\ChickenRace\TitleScene.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterFlow.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterFlowOrigin.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterLevelHider.cpp" />
-    <ClCompile Include="source\game\ClearScene.cpp" />
     <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
     <ClCompile Include="Source\Game\HorseRace\Race.cpp" />
-    <ClCompile Include="source\game\OverScene.cpp" />
-    <ClCompile Include="source\game\PlayScene.cpp" />
-    <ClCompile Include="source\game\TestScene.cpp" />
-    <ClCompile Include="source\game\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\glTF.hpp" />
@@ -273,22 +267,15 @@
     <ClInclude Include="Source\Game\ChickenRace\Player.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\PlayerAction.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\Puddle.hpp" />
-    <ClInclude Include="Source\Game\ChickenRace\ResultScene.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\Stage.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\Table.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\TitleLogo.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\TitleMessage.hpp" />
-    <ClInclude Include="Source\Game\ChickenRace\TitleScene.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\WaterFlow.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\WaterFlowOrigin.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\WaterLevelHider.hpp" />
-    <ClInclude Include="source\game\ClearScene.hpp" />
     <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
     <ClInclude Include="Source\Game\HorseRace\Race.hpp" />
-    <ClInclude Include="source\game\OverScene.hpp" />
-    <ClInclude Include="source\game\PlayScene.hpp" />
-    <ClInclude Include="source\game\TestScene.hpp" />
-    <ClInclude Include="source\game\TitleScene.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
   </ItemGroup>
   <ItemGroup>
