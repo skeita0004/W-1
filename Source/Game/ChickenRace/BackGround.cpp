@@ -11,7 +11,7 @@ BackGround::BackGround(GameObject* _pParent) :
 void BackGround::Initialize()
 {
     hImage_ = Image::Load("Picture/back_ground.png");
-    transform.scale = XMFLOAT3(3.35f, 3.35f, 1.f);
+    transform_.scale = XMFLOAT3(3.35f, 3.35f, 1.f);
 }
 
 void BackGround::Update()
@@ -20,7 +20,7 @@ void BackGround::Update()
 
 void BackGround::Draw()
 {
-    Image::SetTransform(hImage_, transform);
+    Image::SetTransform(hImage_, transform_);
     Image::Draw(hImage_);
 }
 

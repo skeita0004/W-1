@@ -1,6 +1,6 @@
-#include "Stage.h"
+﻿#include "Stage.hpp"
 
-#include "Table.h"
+#include "Table.hpp"
 
 Stage::Stage(GameObject *_pParent) :
 	GameObject(_pParent, "Stage"),

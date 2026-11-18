@@ -25,6 +25,9 @@
     <Filter Include="Library\effekseer">
       <UniqueIdentifier>{bb9fb69c-c1c1-4355-8393-5c4298975380}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\ChickenRace">
+      <UniqueIdentifier>{4bc7beb8-0b76-49b9-a6a0-53b5fbe01d03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\game\ClearScene.cpp">
@@ -117,11 +120,9 @@
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Timer.cpp">
+    <ClCompile Include="Source\Engine\DeltaTime.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
-    <ClCompile Include="Source\Game\HorseRace\Race.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui.cpp">
       <Filter>Library\ImGui</Filter>
     </ClCompile>
@@ -169,6 +170,57 @@
     </ClCompile>
     <ClCompile Include="Library\effekseerlib\EffekseerVFX.cpp">
       <Filter>Library\effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\ChickenRaceScene.cpp" />
+    <ClCompile Include="Source\Game\ChickenRace\ChickenRaceResultScene.cpp" />
+    <ClCompile Include="Source\Game\ChickenRace\TitleScene.cpp" />
+    <ClCompile Include="Source\Game\ChickenRace\BackGround.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\Beermug.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\Beverage.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\Bin.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\Judge.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\Player.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\Puddle.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\Stage.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\Table.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\TitleLogo.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\TitleMessage.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\WaterFlow.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\WaterFlowOrigin.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ChickenRace\WaterLevelHider.cpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\Horse.cpp">
+      <Filter>Game\HorseRace</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\Race.cpp">
+      <Filter>Game\HorseRace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,14 +320,9 @@
     <ClInclude Include="source\game\ClearScene.hpp">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\Timer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\Vertex.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Race.hpp" />
     <ClInclude Include="Source\Engine\RayCast.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -349,6 +396,63 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\InputBinding.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\ChickenRaceScene.hpp" />
+    <ClInclude Include="Source\Game\ChickenRace\ResultScene.hpp" />
+    <ClInclude Include="Source\Game\ChickenRace\TitleScene.hpp" />
+    <ClInclude Include="Source\Game\ChickenRace\BackGround.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\Beermug.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\Beverage.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\Bin.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\Judge.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\Player.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\PlayerAction.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\Puddle.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\Stage.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\Table.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\TitleLogo.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\TitleMessage.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\WaterFlow.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\WaterFlowOrigin.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ChickenRace\WaterLevelHider.hpp">
+      <Filter>Game\ChickenRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\Horse.hpp">
+      <Filter>Game\HorseRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\Race.hpp">
+      <Filter>Game\HorseRace</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\DeltaTime.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>

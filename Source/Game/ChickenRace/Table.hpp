@@ -1,8 +1,9 @@
 ﻿#pragma once
 
-#include "../Engine/GameObject.h"
+#include "GameObject.hpp"
+#include "Stage.hpp"
+
 #include <array>
-#include "Stage.h"
 
 class Beermug;
 class Player;
