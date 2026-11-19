@@ -12,7 +12,7 @@ RootObject::~RootObject()
 {
 }
 
-void RootObject::Init()
+void RootObject::Initialize()
 {
 	Instantiate<SceneManager>(this);
 }

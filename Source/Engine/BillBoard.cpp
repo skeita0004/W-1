@@ -6,8 +6,7 @@ BillBoard::BillBoard():
 	pVertexBuffer_(nullptr),
     pIndexBuffer_(nullptr),
     pConstantBuffer_(nullptr),
-    pTexture_(nullptr),
-    pCameraSet_(nullptr)
+    pTexture_(nullptr)
 {
 }
 
@@ -19,8 +18,6 @@ BillBoard::~BillBoard()
 HRESULT BillBoard::Load(std::string fileName)
 {
 	HRESULT hr;
-
-    pCameraSet_ = new CameraSet();
 
 	// 頂点情報
 	VERTEX vertices[] =
@@ -96,7 +93,9 @@ void BillBoard::Draw(XMMATRIX matWorld, XMFLOAT4 color)
 {
 	//コンスタントバッファに渡す情報
 	CONSTANT_BUFFER cb;
-	cb.matWVP = XMMatrixTranspose(matWorld * pCameraSet_->GetCurrent()->GetViewMat() * pCameraSet_->GetCurrent()->GetProjectionMat());
+	cb.matWVP = XMMatrixTranspose(matWorld *
+								  CameraSet::GetCurrent()->GetViewMat() *
+								  CameraSet::GetCurrent()->GetProjectionMat());
 	cb.color = color;
 
 	D3D11_MAPPED_SUBRESOURCE pdata;

@@ -38,8 +38,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace
 {
-    CameraSet* pCameraSet{nullptr};
-
     int centerX;
     int centerY;
 }
@@ -69,13 +67,13 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
     //Direct3D準備
     Direct3D::Initialize(hWnd, screenWidth, screenHeight);
 
-    Renderer::Init();
+    Renderer::Initialize();
 
     DeltaTime::Initialize();
 
     //カメラを準備
-    pCameraSet = new CameraSet();
-    pCameraSet->Init();
+    CameraSet::Initialize();
+    CameraSet::SetCurrent(CameraSet::hNormalCamera);
 
     //入力処理（キーボード、マウス、コントローラー）の準備
     Input::Initialize(hWnd);
@@ -86,6 +84,7 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
     EffekseerLib::gEfk = new EffekseerLib::EffekseerManager;
     EffekseerLib::gEfk->Initialize(Direct3D::pDevice_, Direct3D::pContext_);
 
+#pragma region ImGuiInitialize
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
 
@@ -95,6 +94,7 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
 
     ImGui_ImplWin32_Init(hWnd);
     ImGui_ImplDX11_Init(Direct3D::pDevice_, Direct3D::pContext_);
+#pragma endregion
 
     //ルートオブジェクト準備
     //すべてのゲームオブジェクトの親となるオブジェクト
@@ -159,7 +159,7 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
                 pRootObject->UpdateSub();
 
                 // 現在設定されているカメラの更新
-                pCameraSet->GetCurrent()->Update();
+                CameraSet::GetCurrent()->Update();
 
                 //エフェクトの更新
                 EffekseerLib::gEfk->Update(deltaTime / 1000);
@@ -190,8 +190,7 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
     SafeDelete(pRootObject);
     Direct3D::Release();
 
-    pCameraSet->Release();
-    SafeDelete(pCameraSet);
+    CameraSet::Release();
 
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();

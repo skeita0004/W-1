@@ -12,7 +12,7 @@ public:
                        const float      _nearClip,
                        const float      _farClip);
 
-    void Init()   override;
+    void Initialize()   override;
     void Update() override;
 
     Transform&      GetTransform()             override;
