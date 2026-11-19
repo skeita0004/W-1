@@ -5,15 +5,19 @@ VirtualCameraOrtho::VirtualCameraOrtho(const CameraType _type,
                                        const XMFLOAT2&  _viewSize,
                                        const float      _nearClip,
                                        const float      _farClip) :
-                                       cameraType(_type),
-                                       upDir_(_upDir),
-                                       viewSize_(_viewSize),
-                                       nearClip_(_nearClip),
-                                       farClip_(_farClip)
+                                       cameraType      (_type),
+                                       transform_      (),
+                                       targetTransform_(),
+                                       upDir_          (_upDir),
+                                       viewSize_       (_viewSize),
+                                       nearClip_       (_nearClip),
+                                       farClip_        (_farClip),
+                                       matProjection_  (),
+                                       matView_        ()
 {
 }
 
-void VirtualCameraOrtho::Init()
+void VirtualCameraOrtho::Initialize()
 {
     matProjection_ = XMMatrixIdentity();
     matView_ = XMMatrixIdentity();
