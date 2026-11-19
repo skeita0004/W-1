@@ -25,23 +25,11 @@
     <Filter Include="Library\effekseer">
       <UniqueIdentifier>{bb9fb69c-c1c1-4355-8393-5c4298975380}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\QuickDraw">
+      <UniqueIdentifier>{ea8306ef-81ce-482d-aeaa-74622592172a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\game\ClearScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\OverScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\PlayScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\TestScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\TitleScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="source\engine\Audio.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -117,11 +105,6 @@
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Timer.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
-    <ClCompile Include="Source\Game\HorseRace\Race.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui.cpp">
       <Filter>Library\ImGui</Filter>
     </ClCompile>
@@ -170,20 +153,42 @@
     <ClCompile Include="Library\effekseerlib\EffekseerVFX.cpp">
       <Filter>Library\effekseer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\DeltaTime.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\ClearScene.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\ControllerTest.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\FontText.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\Game01Player.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\GameoverScene.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\GameTimer.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\Ground.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\GuiButton.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\Infomation.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\PlayScene.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\QuickDraw\PlaySceneButton.cpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\game\TitleScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\TestScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\PlayScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\OverScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="source\engine\Audio.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -265,17 +270,9 @@
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="source\game\ClearScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Timer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\Vertex.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Race.hpp" />
     <ClInclude Include="Source\Engine\RayCast.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -350,6 +347,46 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\InputBinding.hpp">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
+    <ClInclude Include="Source\Game\QuickDraw\ClearScene.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\ControllerTest.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\FontText.hpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\Game01Player.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\GameoverScene.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\GameTimer.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\Ground.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\GuiButton.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\Infomation.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\PlayerAction.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\PlayScene.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\PlaySceneButton.h">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\resource.h">
+      <Filter>Game\QuickDraw</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

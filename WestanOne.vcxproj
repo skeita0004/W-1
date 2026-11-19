@@ -185,6 +185,17 @@
     <ClCompile Include="source\engine\Transform.cpp" />
     <ClCompile Include="source\engine\VirtualCameraOrtho.cpp" />
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\ClearScene.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\ControllerTest.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\FontText.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\Game01Player.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\GameoverScene.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\GameTimer.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\Ground.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\GuiButton.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\Infomation.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\PlayScene.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\PlaySceneButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\glTF.hpp" />
@@ -241,6 +252,19 @@
     <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
+    <ClInclude Include="Source\Game\QuickDraw\ClearScene.h" />
+    <ClInclude Include="Source\Game\QuickDraw\ControllerTest.h" />
+    <ClInclude Include="Source\Game\QuickDraw\FontText.hpp" />
+    <ClInclude Include="Source\Game\QuickDraw\Game01Player.h" />
+    <ClInclude Include="Source\Game\QuickDraw\GameoverScene.h" />
+    <ClInclude Include="Source\Game\QuickDraw\GameTimer.h" />
+    <ClInclude Include="Source\Game\QuickDraw\Ground.h" />
+    <ClInclude Include="Source\Game\QuickDraw\GuiButton.h" />
+    <ClInclude Include="Source\Game\QuickDraw\Infomation.h" />
+    <ClInclude Include="Source\Game\QuickDraw\PlayerAction.h" />
+    <ClInclude Include="Source\Game\QuickDraw\PlayScene.h" />
+    <ClInclude Include="Source\Game\QuickDraw\PlaySceneButton.h" />
+    <ClInclude Include="Source\Game\QuickDraw\resource.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
