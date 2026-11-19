@@ -157,6 +157,7 @@
     <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Engine\DeltaTime.cpp" />
     <ClCompile Include="Source\Engine\RayCast.cpp" />
     <ClCompile Include="Source\Engine\SkinInstance.cpp" />
     <ClCompile Include="source\engine\Audio.cpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="Source\Game\HorseRace\Tumbleweed.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
     <ClInclude Include="Source\Engine\glTF.hpp" />
     <ClInclude Include="Source\Engine\glTFParts.hpp" />
     <ClInclude Include="Source\Engine\InputBinding.hpp" />
@@ -257,7 +259,7 @@
     <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
     <ClInclude Include="Source\Game\HorseRace\Obstacle.hpp" />
     <ClInclude Include="Source\Game\HorseRace\RaceScene.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\ResultScene.h" />
+    <ClInclude Include="Source\Game\HorseRace\ResultScene.hpp" />
     <ClInclude Include="Source\Game\HorseRace\Rock.hpp" />
     <ClInclude Include="Source\Game\HorseRace\Stage.hpp" />
     <ClInclude Include="Source\Game\HorseRace\Tumbleweed.hpp" />

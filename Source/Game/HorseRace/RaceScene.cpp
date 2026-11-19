@@ -26,7 +26,7 @@ void RaceScene::Update()
 	if (pPos.z >= 25000.0f)
 	{
 		SceneManager* sceneManager = (SceneManager*)GetParent();
-		sceneManager->ChangeScene(SCENE_ID_CLEAR);
+		sceneManager->ChangeScene(SceneManager::SceneID::RESULT);
 	}
 }
 

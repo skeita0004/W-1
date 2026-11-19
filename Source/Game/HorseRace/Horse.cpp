@@ -66,18 +66,7 @@ void Horse::Update()
 		}
 	}
 
-	CameraSet cameraset;
-	auto& camera = cameraset.GetVirtualCamera(CameraSet::hNormalCamera);
-
-	constexpr float upPosition = 500.0f;
-	constexpr float backPosition = -500.0f;
-	CameraSet::SetPosition(XMFLOAT3(500, upPosition, transform_.position.z + backPosition));
 	
-
-	float targetPositionX = 0;
-	float targetPositionY = 200.0f;
-	float targetPositionZ = transform_.position.z + 100.0f;
-	CameraSet::SetTarget(XMFLOAT3(targetPositionX, targetPositionY, targetPositionZ));
 
 	ImGui::Begin("Horse Info");
 	ImGui::InputFloat("Position X", &transform_.position.x);

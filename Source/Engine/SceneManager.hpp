@@ -2,7 +2,7 @@
 #include "GameObject.hpp"
 
 #include "../Game/HorseRace/RaceScene.hpp"
-
+#include "../Game/HorseRace/ResultScene.hpp"
 
 #include <array>
 
@@ -26,8 +26,7 @@ public:
     //ゲームに登場するシーン
     enum class SceneID : int
     {
-        TEST = 0,
-        PLAY,
+        PLAY = 0,
         RESULT,
         MAX_SCENE_ID
     };
@@ -41,7 +40,7 @@ private:
     // 型の配列として扱う
     using SceneList = std::tuple<
         RaceScene,
-        ,
+        ResultScene
     >;
 
     // SceneIDとSceneListの対応付け
@@ -62,7 +61,6 @@ private:
     static inline const size_t sceneNum{static_cast<size_t>(SceneID::MAX_SCENE_ID)};
     static const inline std::array<SceneFactoryFn, sceneNum> sceneTable =
     {
-        &SceneManager::InstantiateByID<SceneID::TEST>,
         &SceneManager::InstantiateByID<SceneID::PLAY>,
         &SceneManager::InstantiateByID<SceneID::RESULT>
     };
@@ -70,7 +68,7 @@ private:
     GameObject* InstantiateScene(SceneID _sid,
                                  GameObject* _pParent);
 
-    static const inline SceneID INITIAL_SCENE{SceneID::TEST};
+    static const inline SceneID INITIAL_SCENE{SceneID::PLAY};
 
 	SceneID currentSceneID_;	//現在のシーン
 	SceneID nextSceneID_;		//次のシーン

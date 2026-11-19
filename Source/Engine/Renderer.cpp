@@ -18,7 +18,7 @@ namespace Renderer
 
     Texture* pNormalMap_;
 
-    void Init()
+    void Initialize()
     {
         HRESULT result = InitConstantBuffer();
         if (FAILED(result))
