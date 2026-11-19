@@ -19,8 +19,7 @@ void ChickenRaceScene::Initialize()
 	pSceneManager_ = (FindObject<SceneManager>("SceneManager"));
 
 	XMFLOAT3 camPos{0.f, 0.f, -10.f};
-	CameraSet cs{};
-	cs.GetVirtualCamera(CameraSet::hNormalCamera)->GetTransform().position = camPos;
+	CameraSet::GetVirtualCamera(CameraSet::hNormalCamera)->GetTransform().position = camPos;
 
 	Instantiate<BackGround>(this);
 	Instantiate<Stage>(this);
@@ -40,7 +39,7 @@ void ChickenRaceScene::Update()
 
 		if (changeCounter % (60 * changeSecond) == 0)
 		{
-			pSceneManager_->ChangeScene(SCENE_ID_RESULT);
+			//pSceneManager_->ChangeScene(SCENE_ID_RESULT);
 		}
 	}
 }

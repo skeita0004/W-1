@@ -9,7 +9,7 @@ WaterFlow::WaterFlow(GameObject *_pParent) :
 
 void WaterFlow::Initialize()
 {
-	hModel_ = Model::Load("model/water_flow.fbx");
+	hModel_ = Model::Load("Model/ChickenRace/water_flow.fbx");
 }
 
 void WaterFlow::Update()

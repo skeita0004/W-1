@@ -11,7 +11,7 @@
 #include "Text.hpp"
 #include "CameraSet.hpp"
 #include "Direct3D.hpp"
-#include "Timer.hpp"
+#include "DeltaTime.hpp"
 
 namespace
 {
@@ -84,7 +84,7 @@ void Player::Update()
 
     if (pBeermug_->IsOverFlow())
     {
-        overFlowTextTimer_ -= Timer::DeltaTime();
+        overFlowTextTimer_ -= DeltaTime::DeltaTime();
         if (overFlowTextTimer_ <= 0.f)
         {
             overFlowTextVisible_ = not overFlowTextVisible_;

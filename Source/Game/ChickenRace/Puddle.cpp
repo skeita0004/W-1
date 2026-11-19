@@ -20,7 +20,7 @@ Puddle::Puddle( GameObject* _pParent ) :
 
 void Puddle::Initialize()
 {
-	hModel_ = Model::Load( "Model/beverage.fbx" );
+	hModel_ = Model::Load( "Model/ChickenRace/beverage.fbx" );
 }
 
 void Puddle::Update()

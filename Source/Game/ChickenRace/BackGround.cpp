@@ -10,7 +10,7 @@ BackGround::BackGround(GameObject* _pParent) :
 
 void BackGround::Initialize()
 {
-    hImage_ = Image::Load("Picture/back_ground.png");
+    hImage_ = Image::Load("Picture/ChickenRace/back_ground.png");
     transform_.scale = XMFLOAT3(3.35f, 3.35f, 1.f);
 }
 

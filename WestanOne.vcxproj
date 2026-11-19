@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -193,15 +193,12 @@
     <ClCompile Include="Source\Game\ChickenRace\Judge.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\Player.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\Puddle.cpp" />
-    <ClCompile Include="Source\Game\ChickenRace\ChickenRaceResultScene.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\Stage.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\Table.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\TitleMessage.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterFlow.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterFlowOrigin.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterLevelHider.cpp" />
-    <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
-    <ClCompile Include="Source\Game\HorseRace\Race.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\glTF.hpp" />
@@ -272,8 +269,6 @@
     <ClInclude Include="Source\Game\ChickenRace\WaterFlow.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\WaterFlowOrigin.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\WaterLevelHider.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Race.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
   </ItemGroup>
   <ItemGroup>

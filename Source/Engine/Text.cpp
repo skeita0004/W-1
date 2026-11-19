@@ -38,7 +38,7 @@ HRESULT Text::Initialize(const char* fileName, const unsigned int charWidth, con
 XMFLOAT2 Text::GetScreenPos(Transform& _t)
 {
 	XMVECTOR worldPos = XMVector3Transform(XMVectorZero(), _t.GetWorldMatrix());
-	XMMATRIX vp = Camera::GetViewMatrix() * Camera::GetProjectionMatrix();
+	XMMATRIX vp = CameraSet::GetCurrent()->GetViewMat() * CameraSet::GetCurrent()->GetProjectionMat();
 
 	XMVECTOR clip = XMVector4Transform(XMVectorSetW(worldPos, 1.0f), vp);
 	float w = XMVectorGetW(clip);
@@ -56,9 +56,9 @@ XMFLOAT2 Text::GetScreenPos(Transform& _t)
 void Text::GetScreenPos(float& _x, float& _y)
 {
 	Transform t{};
-	t.position_ = XMFLOAT3(_x, _y, 0.0f);
+	t.position = XMFLOAT3(_x, _y, 0.0f);
 	XMVECTOR worldPos = XMVector3Transform(XMVectorZero(), t.GetWorldMatrix());
-	XMMATRIX vp = Camera::GetViewMatrix() * Camera::GetProjectionMatrix();
+	XMMATRIX vp = CameraSet::GetCurrent()->GetViewMat() * CameraSet::GetCurrent()->GetProjectionMat();
 
 	XMVECTOR clip = XMVector4Transform(XMVectorSetW(worldPos, 1.0f), vp);
 	float w = XMVectorGetW(clip);
@@ -104,8 +104,8 @@ void Text::Draw(int x, int y, const char* str)
 
 		//表示する位置
 		Transform transform;
-		transform.position_.x = px;
-		transform.position_.y = py;
+		transform.position.x = px;
+		transform.position.y = py;
 
 		Image::SetTransform(hPict_, transform);
 

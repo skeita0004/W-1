@@ -32,7 +32,7 @@ void Bin::Initialize()
 {
 	binID_ = binCount_ + 1;
 
-	hModel_ = Model::Load("Model/bin_mock.fbx");
+	hModel_ = Model::Load("Model/ChickenRace/bin_mock.fbx");
 
 	pWFO_ = Instantiate<WaterFlowOrigin>(this);
 	XMFLOAT3 wfoPos = Model::GetBonePosition(hModel_, "BottleMouse");

@@ -44,12 +44,30 @@ void Beermug::Initialize()
 
 void Beermug::Update()
 {
+#ifdef _DEBUG
+	std::string panelName{"ObjectTS" + objectName_};
+
+	ImGui::Begin(panelName.c_str());
+	ImGui::InputFloat("pos.x", &transform_.position.x);
+	ImGui::InputFloat("pos.y", &transform_.position.y);
+	ImGui::InputFloat("pos.z", &transform_.position.z);
+
+	ImGui::InputFloat("rot.x", &transform_.rotate.x);
+	ImGui::InputFloat("rot.y", &transform_.rotate.y);
+	ImGui::InputFloat("rot.z", &transform_.rotate.z);
+
+	ImGui::InputFloat("scl.x", &transform_.scale.x);
+	ImGui::InputFloat("scl.y", &transform_.scale.y);
+	ImGui::InputFloat("scl.z", &transform_.scale.z);
+	ImGui::End();
+#endif
+
 	// 注ぎ中
 	if (waterLevel_ <= OVERFLOW_RATE)
 	{
 		if (isFilling_)
 		{
-			waterLevel_ += 0.0025;
+			waterLevel_ += 0.0025f;
 			pBeverage_->SetScale(0.99f, MAX_WATER_LEVEL * waterLevel_, 0.99f);
 		}
 	}

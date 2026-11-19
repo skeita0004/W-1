@@ -35,8 +35,8 @@ void Judge::Judgement()
 	jr = NONE;
 
 	const int BEERMUG_CAPACITY_MILLILITER{ 1000 };
-	p1WaterLevel = BEERMUG_CAPACITY_MILLILITER * pPlayers_[0]->GetWaterLevel();
-	p2WaterLevel = BEERMUG_CAPACITY_MILLILITER * pPlayers_[1]->GetWaterLevel();
+	p1WaterLevel = (int)(BEERMUG_CAPACITY_MILLILITER * pPlayers_[0]->GetWaterLevel());
+	p2WaterLevel = (int)(BEERMUG_CAPACITY_MILLILITER * pPlayers_[1]->GetWaterLevel());
 
 	bool p1OverFlow = pPlayers_[0]->IsOverFlow();
 	bool p2OverFlow = pPlayers_[1]->IsOverFlow();
