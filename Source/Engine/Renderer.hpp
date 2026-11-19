@@ -16,7 +16,7 @@ struct Material;
 
 namespace Renderer
 {
-    void Init();
+    void Initialize();
 
     // いらなくね？
     void Release();
