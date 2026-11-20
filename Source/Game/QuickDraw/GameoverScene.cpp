@@ -1,34 +1,34 @@
-#include "GameoverScene.h"
-#include "Engine/Image.h"
+ï»¿#include "GameoverScene.hpp"
+#include "Image.hpp"
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 GameoverScene::GameoverScene(GameObject * parent)
 	: GameObject(parent, "GameoverScene"), hPict_(-1)
 {
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void GameoverScene::Initialize()
 {
-	//‰æ‘œƒf[ƒ^‚Ìƒ[ƒh
+	//ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
 	hPict_ = Image::Load("Picture/GameoverScreen.jpg");
 	assert(hPict_ >= 0);
 	Image::SetRect(hPict_, 0, 0, 1280, 720);
 }
 
-//XV
+//æ›´æ–°
 void GameoverScene::Update()
 {
 }
 
-//•`‰æ
+//æç”»
 void GameoverScene::Draw()
 {
 	Image::SetTransform(hPict_, transform_);
 	Image::Draw(hPict_);
 }
 
-//ŠJ•ú
+//é–‹æ”¾
 void GameoverScene::Release()
 {
 }

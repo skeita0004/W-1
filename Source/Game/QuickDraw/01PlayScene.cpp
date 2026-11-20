@@ -1,48 +1,48 @@
-#include "PlayScene.h"
-#include "Engine/Audio.h"
-//#include "Player_L.h"
-//#include "Player_R.h"
-#include "Game01Player.h"
-#include "Ground.h"
-//#include "Enemy.h"
-#include "Infomation.h"
-#include "Engine\\FontText.hpp"
-#include "Engine\\GUIbutton.h"
+Ôªø#include "01PlayScene.hpp"
+#include "Audio.hpp"
+//#include "Player_L.hpp"
+//#include "Player_R.hpp"
+#include "Game01Player.hpp"
+#include "01Ground.hpp"
+//#include "Enemy.hpp"
+#include "01Infomation.hpp"
+#include "FontText.hpp"
+#include "GUIbutton.hpp"
 #include <Imgui.h>
 
-//ÉRÉìÉXÉgÉâÉNÉ^
+//„Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø
 PlayScene::PlayScene(GameObject * parent)
 	: GameObject(parent, "PlayScene")
 {
 }
 
-//èâä˙âª
+//ÂàùÊúüÂåñ
 void PlayScene::Initialize()
 {
     bgmHandle_ = Audio::Load("Audio/Game01Bgm00.wav", true);
     Audio::Play(bgmHandle_);
-    //ç∂ÉvÉåÉCÉÑÅ[
+    //Â∑¶„Éó„É¨„Ç§„É§„Éº
     leftPlayer_ = new Game01Player(this,"Model/Cowboy01.fbx",-4.0f,90.0f);
 
     PushBackChild(leftPlayer_);
     leftPlayer_->Initialize();
 
-    //âEÉvÉåÉCÉÑÅ[
+    //Âè≥„Éó„É¨„Ç§„É§„Éº
     rightPlayer_ = new Game01Player(this,"Model/Cowboy02.fbx",4.0f,270.0f);
 
     PushBackChild(rightPlayer_);
     rightPlayer_->Initialize();
 
-    //ínñ 
+    //Âú∞Èù¢
     Instantiate<Ground>(this);
 
-    //UIèÓïÒ
+    //UIÊÉÖÂ†±
     Instantiate<Infomation>(this);
 
-    //âpêîéöópÉtÉHÉìÉg
+    //Ëã±Êï∞Â≠óÁî®„Éï„Ç©„É≥„Éà
     text_.Initialize("Fonts/Rye-Regular.ttf", 42.0f);
 
-    //ì˙ñ{åÍópÉtÉHÉìÉg
+    //Êó•Êú¨Ë™ûÁî®„Éï„Ç©„É≥„Éà
     japaneseText_.Initialize(
         "Fonts/aoyagireisyosimo_ttf_2_01.ttf", 62.0f);
 
@@ -57,36 +57,36 @@ void PlayScene::Initialize()
     );
 }
 
-//çXêV
+//Êõ¥Êñ∞
 void PlayScene::Update()
 {
 }
 
-//ï`âÊ
+//ÊèèÁîª
 void PlayScene::Draw()
 {
     const ImVec2 size = ImGui::GetIO().DisplaySize;
     playSceneButton_.SetScreenSize(size.x, size.y);
     playSceneButton_.Draw();
 
-    //ééçáèIóπéûÇÃèàóù
+    //Ë©¶ÂêàÁµÇ‰∫ÜÊôÇ„ÅÆÂá¶ÁêÜ
     if (playSceneButton_.IsGameFinished())
     {
         const int winner = playSceneButton_.GetWinnerSide();
 
-        //ç∂Ç™èüóò Å® âEÇ™ì|ÇÍÇÈ
+        //Â∑¶„ÅåÂãùÂà© ‚Üí Âè≥„ÅåÂÄí„Çå„Çã
         if (winner == -1)
         {
             leftPlayer_->SetFallen(false);
             rightPlayer_->SetFallen(true);
         }
-        //âEÇ™èüóò Å® ç∂Ç™ì|ÇÍÇÈ
+        //Âè≥„ÅåÂãùÂà© ‚Üí Â∑¶„ÅåÂÄí„Çå„Çã
         else if (winner == 1)
         {
             leftPlayer_->SetFallen(true);
             rightPlayer_->SetFallen(false);
         }
-        //à¯Ç´ï™ÇØ
+        //Âºï„ÅçÂàÜ„Åë
         else
         {
             leftPlayer_->SetFallen(false);
@@ -95,13 +95,13 @@ void PlayScene::Draw()
     }
     else
     {
-        //ééçáíÜÇÕóºé“ãNóß
+        //Ë©¶Âêà‰∏≠„ÅØ‰∏°ËÄÖËµ∑Á´ã
         leftPlayer_->SetFallen(false);
         rightPlayer_->SetFallen(false);
     }
 }
 
-//äJï˙
+//ÈñãÊîæ
 void PlayScene::Release()
 {
     if (bgmHandle_ >= 0)

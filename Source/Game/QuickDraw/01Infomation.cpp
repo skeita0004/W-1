@@ -1,42 +1,42 @@
-#include "Infomation.h"
-#include "Engine/Image.h"
+ï»¿#include "01Infomation.hpp"
+#include "Image.hpp"
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Infomation::Infomation(GameObject * parent)
 	:GameObject(parent, "Infomation"), hPict_(-1)
 {
-	//‰æ‘œƒf[ƒ^‚Ìƒ[ƒh
+	//ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
 	hPict_ = Image::Load("Picture/info.png");
 	assert(hPict_ >= 0);
 
-	//ˆÊ’u
-	transform_.position_ = XMFLOAT3(-0.75f, 0.8f, 0.0f);
+	//ä½ç½®
+	transform_.position = XMFLOAT3(-0.75f, 0.8f, 0.0f);
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Infomation::~Infomation()
 {
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void Infomation::Initialize()
 {
 
 }
 
-//XV
+//æ›´æ–°
 void Infomation::Update()
 {
 }
 
-//•`‰æ
+//æç”»
 void Infomation::Draw()
 {
 	Image::SetTransform(hPict_, transform_);
 	Image::Draw(hPict_);
 }
 
-//ŠJ•ú
+//é–‹æ”¾
 void Infomation::Release()
 {
 }

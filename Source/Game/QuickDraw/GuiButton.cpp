@@ -1,4 +1,4 @@
-//#ifdef isButtonHovered
+﻿//#ifdef isButtonHovered
 //#undef isButtonHovered
 //#endif
 //
@@ -10,7 +10,7 @@
 //#undef hovered
 //#endif
 #include <algorithm>
-#include "GuiButton.h"
+#include "GuiButton.hpp"
 
 #include <imgui.h>
 #include <cstdio>
@@ -91,8 +91,8 @@ void GuiButton::Draw()
         ImGuiWindowFlags_NoScrollbar |
         ImGuiWindowFlags_NoSavedSettings |
         ImGuiWindowFlags_NoBackground |
-        ImGuiWindowFlags_NoCollapse |
-        ImGuiWindowFlags_NoDocking;
+        ImGuiWindowFlags_NoCollapse;
+        //ImGuiWindowFlags_NoDocking; 
 
     if (!ImGui::Begin(windowName, nullptr, flags))
     {
@@ -117,16 +117,16 @@ void GuiButton::Draw()
 
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
-    // マウスがボタンの範囲内にあるか
+    //マウスがボタンの範囲内にあるか
     const bool isButtonHovered =
         ImGui::IsMouseHoveringRect(buttonMin, buttonMax);
 
-    // ホバー中に左クリックされたか
+    //ホバー中に左クリックされたか
     const bool clicked =
         isButtonHovered &&
         ImGui::IsMouseClicked(ImGuiMouseButton_Left);
 
-    // 背景色
+    //背景色
     unsigned int backgroundColor = normalColor_;
 
     if (isButtonHovered)
@@ -138,18 +138,19 @@ void GuiButton::Draw()
         backgroundColor = activeColor_;
     }
 
-    // ボタン背景を描画
+    //ボタン背景を描画
     drawList->AddRectFilled(
         buttonMin,
         buttonMax,
         ToImU32(backgroundColor)
     );
 
-    // 画像を描画
+    //画像を描画
     if (textureId_ != nullptr)
     {
         drawList->AddImage(
-            static_cast<ImTextureID>(textureId_),
+            ImTextureRef(static_cast<ImTextureID>(
+            reinterpret_cast<std::uintptr_t>(textureId_))),
             buttonMin,
             buttonMax,
             ImVec2(0.0f, 0.0f),
@@ -158,7 +159,7 @@ void GuiButton::Draw()
         );
     }
 
-    // テキストを描画
+    //テキストを描画
     if (!label.empty())
     {
         const ImVec2 textSize = ImGui::CalcTextSize(
@@ -177,7 +178,7 @@ void GuiButton::Draw()
         );
     }
 
-    // 説明を表示
+    //説明を表示
     if (isButtonHovered && !description_.empty())
     {
         ImGui::SetTooltip(
@@ -186,7 +187,7 @@ void GuiButton::Draw()
         );
     }
 
-    // ボタンの入力領域
+    //ボタンの入力領域
     ImGui::SetCursorPos(ImVec2(0.0f, 0.0f));
 
     ImGui::InvisibleButton(
@@ -194,7 +195,7 @@ void GuiButton::Draw()
         buttonSize
     );
 
-    // フォーカス枠
+    //フォーカス枠
     if (focused_)
     {
         drawList->AddRect(
@@ -209,7 +210,7 @@ void GuiButton::Draw()
 
     ImGui::End();
 
-    // クリック時のコールバック
+    //クリック時のコールバック
     if (clicked && onClick)
     {
         onClick();

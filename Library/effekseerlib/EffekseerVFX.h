@@ -83,8 +83,8 @@ namespace EffekseerLib
     inline DirectX::XMFLOAT4X4 GetProjMat(bool transpose)
     {
         //DirectX::XMMATRIX mat = DirectX::XMMatrixPerspectiveFovLH(Camera::DefCam.fov_,
-        //    Camera::DefCam.aspect_,
-        //    Camera::DefCam.near_, Camera::DefCam.far_);
+        //  Camera::DefCam.aspect_,
+        //  Camera::DefCam.near_, Camera::DefCam.far_);
         const auto DefaultCamera{CameraSet::GetCurrent()};
         DirectX::XMMATRIX mat = DefaultCamera->GetProjectionMat();
 
@@ -97,7 +97,7 @@ namespace EffekseerLib
     inline DirectX::XMFLOAT4X4 GetViewMat(bool transpose)
     {
         //DirectX::XMMATRIX mat = DirectX::XMMatrixLookAtLH(
-        //    Camera::DefCam.position_, Camera::DefCam.target_, Camera::DefCam.upvector_
+        //  Camera::DefCam.position_, Camera::DefCam.target_, Camera::DefCam.upvector_
         //);
         const auto DefaultCamera{CameraSet::GetCurrent()};
         DirectX::XMMATRIX mat = DefaultCamera->GetViewMat();

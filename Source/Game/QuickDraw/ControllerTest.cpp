@@ -1,7 +1,5 @@
-#include "ControllerTest.h"
-
-#include "Engine/Input.h"
-
+﻿#include "ControllerTest.hpp"
+#include "Input.hpp"
 #include <imgui.h>
 
 //振動の強さ

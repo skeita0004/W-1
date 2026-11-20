@@ -1,40 +1,40 @@
-#include "Ground.h"
-#include "Engine/Model.h"
-#include "Engine/Input.h"
+ï»¿#include "01Ground.hpp"
+#include "Model.hpp"
+#include "Input.hpp"
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Ground::Ground(GameObject * parent)
 	:GameObject(parent, "Ground"), hModel_(-1)
 {
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Ground::~Ground()
 {
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void Ground::Initialize()
 {
-	//ƒ‚ƒfƒ‹ƒf[ƒ^‚Ìƒ[ƒh
+	//ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
 	hModel_ = Model::Load("Model/Game01_Bg00.fbx");
-	transform_.scale_ = XMFLOAT3(5.0f, 0.01f, 2.0f);
+	transform_.scale = XMFLOAT3(5.0f, 0.01f, 2.0f);
 	assert(hModel_ >= 0);
 }
 
-//XV
+//æ›´æ–°
 void Ground::Update()
 {
 }
 
-//•`‰æ
+//æç”»
 void Ground::Draw()
 {
 	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	Renderer::Draw(hModel_);
 }
 
-//ŠJ•ú
+//é–‹æ”¾
 void Ground::Release()
 {
 }

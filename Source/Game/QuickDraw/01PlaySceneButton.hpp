@@ -2,12 +2,13 @@
 #pragma once
 
 #include "GuiButton.hpp"
-#include "Source\Engine\FontText.hpp"
-#include "GameTimer.hpp"
-#include "ControllerTest.h"
+#include "FbxParts.hpp"
+#include "01GameTimer.hpp"
+#include "ControllerTest.hpp"
 #include <chrono>
 #include <memory>
 #include <string>
+#include <FontText.hpp>
 
 class PlaySceneButton
 {

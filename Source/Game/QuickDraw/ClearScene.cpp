@@ -1,34 +1,34 @@
-#include "ClearScene.h"
-#include "Engine/Image.h"
+ï»¿#include "ClearScene.hpp"
+#include "Image.hpp"
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 ClearScene::ClearScene(GameObject * parent)
 	: GameObject(parent, "ClearScene"), hPict_(-1)
 {
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void ClearScene::Initialize()
 {
-	//‰æ‘œƒf[ƒ^‚Ìƒ[ƒh
+	//ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
 	hPict_ = Image::Load("Picture/ClearScreen.jpg");
 	assert(hPict_ >= 0);
 	Image::SetRect(hPict_, 0, 0, 1280, 720);
 }
 
-//XV
+//æ›´æ–°
 void ClearScene::Update()
 {
 }
 
-//•`‰æ
+//æç”»
 void ClearScene::Draw()
 {
 		Image::SetTransform(hPict_, transform_);
 		Image::Draw(hPict_);
 }
 
-//ŠJ•ú
+//é–‹æ”¾
 void ClearScene::Release()
 {
 }

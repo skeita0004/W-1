@@ -1,27 +1,27 @@
-#pragma once
-#include "Engine/GameObject.h"
+ï»¿#pragma once
+#include "GameObject.hpp"
 
-//’n–Ê‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+//åœ°é¢ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class Infomation : public GameObject
 {
-	int hPict_;    //‰æ‘œ”Ô†
+	int hPict_;    //ç”»åƒç•ªå·
 
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Infomation(GameObject* parent);
 
-	//ƒfƒXƒgƒ‰ƒNƒ^
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~Infomation();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize() override;
 
-	//XV
+	//æ›´æ–°
 	void Update() override;
 
-	//•`‰æ
+	//æç”»
 	void Draw() override;
 
-	//ŠJ•ú
+	//é–‹æ”¾
 	void Release() override;
 };
