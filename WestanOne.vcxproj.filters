@@ -25,23 +25,11 @@
     <Filter Include="Library\effekseer">
       <UniqueIdentifier>{bb9fb69c-c1c1-4355-8393-5c4298975380}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Clay_Shooting">
+      <UniqueIdentifier>{47877cfa-7ab3-4ce1-947f-cb8ec531cfef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\game\ClearScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\OverScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\PlayScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\TestScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\TitleScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="source\engine\Audio.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -117,11 +105,6 @@
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Timer.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\HorseRace\Horse.cpp" />
-    <ClCompile Include="Source\Game\HorseRace\Race.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui.cpp">
       <Filter>Library\ImGui</Filter>
     </ClCompile>
@@ -170,20 +153,27 @@
     <ClCompile Include="Library\effekseerlib\EffekseerVFX.cpp">
       <Filter>Library\effekseer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\DeltaTime.cpp" />
+    <ClCompile Include="Source\Clay_Shooting\Clay.cpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Clay_Shooting\ClearScene.cpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Clay_Shooting\Gun.cpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Clay_Shooting\PlayScene.cpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Clay_Shooting\Reticle.cpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Clay_Shooting\UI.cpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\game\TitleScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\TestScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\PlayScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\OverScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="source\engine\Audio.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -265,17 +255,9 @@
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="source\game\ClearScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Timer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\Vertex.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Race.hpp" />
     <ClInclude Include="Source\Engine\RayCast.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -350,6 +332,28 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\InputBinding.hpp">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
+    <ClInclude Include="Source\Clay_Shooting\Clay.hpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Clay_Shooting\ClearScene.hpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Clay_Shooting\Config.hpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Clay_Shooting\Gun.hpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Clay_Shooting\PlayScene.hpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Clay_Shooting\Reticle.hpp">
+      <Filter>Game\Clay_Shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Clay_Shooting\UI.hpp">
+      <Filter>Game\Clay_Shooting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

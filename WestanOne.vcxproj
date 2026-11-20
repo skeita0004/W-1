@@ -157,6 +157,12 @@
     <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Clay_Shooting\Clay.cpp" />
+    <ClCompile Include="Source\Clay_Shooting\ClearScene.cpp" />
+    <ClCompile Include="Source\Clay_Shooting\Gun.cpp" />
+    <ClCompile Include="Source\Clay_Shooting\PlayScene.cpp" />
+    <ClCompile Include="Source\Clay_Shooting\Reticle.cpp" />
+    <ClCompile Include="Source\Clay_Shooting\UI.cpp" />
     <ClCompile Include="Source\Engine\RayCast.cpp" />
     <ClCompile Include="Source\Engine\SkinInstance.cpp" />
     <ClCompile Include="source\engine\Audio.cpp" />
@@ -187,6 +193,13 @@
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Clay_Shooting\Clay.hpp" />
+    <ClInclude Include="Source\Clay_Shooting\ClearScene.hpp" />
+    <ClInclude Include="Source\Clay_Shooting\Config.hpp" />
+    <ClInclude Include="Source\Clay_Shooting\Gun.hpp" />
+    <ClInclude Include="Source\Clay_Shooting\PlayScene.hpp" />
+    <ClInclude Include="Source\Clay_Shooting\Reticle.hpp" />
+    <ClInclude Include="Source\Clay_Shooting\UI.hpp" />
     <ClInclude Include="Source\Engine\glTF.hpp" />
     <ClInclude Include="Source\Engine\glTFParts.hpp" />
     <ClInclude Include="Source\Engine\InputBinding.hpp" />
