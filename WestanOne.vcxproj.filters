@@ -25,8 +25,8 @@
     <Filter Include="Library\effekseer">
       <UniqueIdentifier>{bb9fb69c-c1c1-4355-8393-5c4298975380}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Clay_Shooting">
-      <UniqueIdentifier>{47877cfa-7ab3-4ce1-947f-cb8ec531cfef}</UniqueIdentifier>
+    <Filter Include="Game\ClayShooting">
+      <UniqueIdentifier>{c02d4046-05b8-434d-85c7-b1e6dad0a5e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -154,23 +154,23 @@
       <Filter>Library\effekseer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Engine\DeltaTime.cpp" />
-    <ClCompile Include="Source\Clay_Shooting\Clay.cpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClCompile Include="Source\Game\ClayShooting\Clay.cpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Clay_Shooting\ClearScene.cpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClCompile Include="Source\Game\ClayShooting\ClearScene.cpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Clay_Shooting\Gun.cpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClCompile Include="Source\Game\ClayShooting\Gun.cpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Clay_Shooting\PlayScene.cpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClCompile Include="Source\Game\ClayShooting\PlayScene.cpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Clay_Shooting\Reticle.cpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClCompile Include="Source\Game\ClayShooting\Reticle.cpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Clay_Shooting\UI.cpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClCompile Include="Source\Game\ClayShooting\UI.cpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -334,26 +334,26 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\DeltaTime.hpp" />
-    <ClInclude Include="Source\Clay_Shooting\Clay.hpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClInclude Include="Source\Game\ClayShooting\Clay.hpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Clay_Shooting\ClearScene.hpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClInclude Include="Source\Game\ClayShooting\ClearScene.hpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Clay_Shooting\Config.hpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClInclude Include="Source\Game\ClayShooting\Config.hpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Clay_Shooting\Gun.hpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClInclude Include="Source\Game\ClayShooting\Gun.hpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Clay_Shooting\PlayScene.hpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClInclude Include="Source\Game\ClayShooting\PlayScene.hpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Clay_Shooting\Reticle.hpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClInclude Include="Source\Game\ClayShooting\Reticle.hpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Clay_Shooting\UI.hpp">
-      <Filter>Game\Clay_Shooting</Filter>
+    <ClInclude Include="Source\Game\ClayShooting\UI.hpp">
+      <Filter>Game\ClayShooting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
