@@ -157,6 +157,7 @@
     <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Engine\FontText.cpp" />
     <ClCompile Include="Source\Engine\RayCast.cpp" />
     <ClCompile Include="Source\Engine\SkinInstance.cpp" />
     <ClCompile Include="source\engine\Audio.cpp" />
@@ -187,7 +188,6 @@
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\ClearScene.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\ControllerTest.cpp" />
-    <ClCompile Include="Source\Game\QuickDraw\FontText.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\Game01Player.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\GameoverScene.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\GameTimer.cpp" />
@@ -198,6 +198,7 @@
     <ClCompile Include="Source\Game\QuickDraw\PlaySceneButton.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Engine\FontText.hpp" />
     <ClInclude Include="Source\Engine\glTF.hpp" />
     <ClInclude Include="Source\Engine\glTFParts.hpp" />
     <ClInclude Include="Source\Engine\InputBinding.hpp" />
@@ -254,10 +255,9 @@
     <ClInclude Include="Source\Engine\Vertex.hpp" />
     <ClInclude Include="Source\Game\QuickDraw\ClearScene.h" />
     <ClInclude Include="Source\Game\QuickDraw\ControllerTest.h" />
-    <ClInclude Include="Source\Game\QuickDraw\FontText.hpp" />
     <ClInclude Include="Source\Game\QuickDraw\Game01Player.h" />
     <ClInclude Include="Source\Game\QuickDraw\GameoverScene.h" />
-    <ClInclude Include="Source\Game\QuickDraw\GameTimer.h" />
+    <ClInclude Include="Source\Game\QuickDraw\GameTimer.hpp" />
     <ClInclude Include="Source\Game\QuickDraw\Ground.h" />
     <ClInclude Include="Source\Game\QuickDraw\GuiButton.h" />
     <ClInclude Include="Source\Game\QuickDraw\Infomation.h" />

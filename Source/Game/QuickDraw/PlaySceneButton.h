@@ -1,9 +1,9 @@
-
+﻿
 #pragma once
 
-#include "Engine/GuiButton.h"
-#include "Engine/FontText.hpp"
-#include "Engine/GameTimer.h"
+#include "GuiButton.hpp"
+#include "Source\Engine\FontText.hpp"
+#include "GameTimer.hpp"
 #include "ControllerTest.h"
 #include <chrono>
 #include <memory>

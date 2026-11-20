@@ -153,14 +153,10 @@
     <ClCompile Include="Library\effekseerlib\EffekseerVFX.cpp">
       <Filter>Library\effekseer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\DeltaTime.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\ClearScene.cpp">
       <Filter>Game\QuickDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\QuickDraw\ControllerTest.cpp">
-      <Filter>Game\QuickDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\QuickDraw\FontText.cpp">
       <Filter>Game\QuickDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\QuickDraw\Game01Player.cpp">
@@ -187,6 +183,10 @@
     <ClCompile Include="Source\Game\QuickDraw\PlaySceneButton.cpp">
       <Filter>Game\QuickDraw</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\DeltaTime.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\FontText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\engine\Audio.hpp">
@@ -348,23 +348,16 @@
     <ClInclude Include="Source\Engine\InputBinding.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
     <ClInclude Include="Source\Game\QuickDraw\ClearScene.h">
       <Filter>Game\QuickDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\QuickDraw\ControllerTest.h">
       <Filter>Game\QuickDraw</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\QuickDraw\FontText.hpp">
-      <Filter>Game\QuickDraw</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game\QuickDraw\Game01Player.h">
       <Filter>Game\QuickDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\QuickDraw\GameoverScene.h">
-      <Filter>Game\QuickDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\QuickDraw\GameTimer.h">
       <Filter>Game\QuickDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\QuickDraw\Ground.h">
@@ -388,6 +381,13 @@
     <ClInclude Include="Source\Game\QuickDraw\resource.h">
       <Filter>Game\QuickDraw</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\QuickDraw\GameTimer.hpp">
+      <Filter>Game\QuickDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\DeltaTime.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\FontText.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
