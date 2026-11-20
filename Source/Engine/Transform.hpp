@@ -40,8 +40,8 @@ public:
     }
 
 private:
-    XMMATRIX matTranslate{ XMMatrixIdentity() };
-    XMMATRIX matRotate{ XMMatrixIdentity() };
-    XMMATRIX matScale{ XMMatrixIdentity() };
+    XMMATRIX matTranslate;
+    XMMATRIX matRotate;
+    XMMATRIX matScale;
 };
 
