@@ -237,7 +237,7 @@ float4 PS(PS_IN _psInput) : SV_Target
         specularFactor = pow(saturate(dot(reflection, eyeVector)), cb_shininess);
     }
     
-    float ambientFactor = 0.0f;
+    float ambientFactor = 0.4f;
     float3 ambientLight = float3(ambientFactor, ambientFactor, ambientFactor) * diffuse.xyz;
     
     float3 specularLight = saturate(specularFactor * cb_specularColor);
