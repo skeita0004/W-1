@@ -18,7 +18,7 @@ namespace Renderer
 
     Texture* pNormalMap_;
 
-    void Init()
+    void Initialize()
     {
         HRESULT result = InitConstantBuffer();
         if (FAILED(result))
@@ -101,8 +101,6 @@ namespace Renderer
 
         for (int i = 0; i < _materialCount; i++) // materialCountのゲッタを用意すること。
         {
-            CameraSet cameraSet{};
-
             // インデックスバッファー
             stride = sizeof(UINT);
             offset = 0;
@@ -115,9 +113,9 @@ namespace Renderer
 
             size_t bufferSize = sizeof(MatrixBuffer);
 
-            const auto& normalCamera = cameraSet.GetVirtualCamera(CameraSet::hNormalCamera);
-            const auto& shadowCamera = cameraSet.GetVirtualCamera(CameraSet::hShadowCamera);
-            const auto& reflectionCamera = cameraSet.GetVirtualCamera(CameraSet::hReflectionCamera);
+            const auto& normalCamera = CameraSet::GetVirtualCamera(CameraSet::hNormalCamera);
+            const auto& shadowCamera = CameraSet::GetVirtualCamera(CameraSet::hShadowCamera);
+            const auto& reflectionCamera = CameraSet::GetVirtualCamera(CameraSet::hReflectionCamera);
 
             MatrixBuffer mCb{};
 
@@ -261,8 +259,6 @@ namespace Renderer
     {
         Direct3D::SetShader(Direct3D::SHADER_SHADOW_MAP);
 
-        CameraSet cameraSet{};
-
         //頂点バッファ
         UINT stride = sizeof(Vertex);
         UINT offset = 0;
@@ -288,7 +284,7 @@ namespace Renderer
             pdata.RowPitch = sizeof(ShadowMatrixBuffer);
 
 
-            const auto& shadowCamera = cameraSet.GetVirtualCamera(CameraSet::hShadowCamera);
+            const auto& shadowCamera = CameraSet::GetVirtualCamera(CameraSet::hShadowCamera);
 
             // ワールド変換行列に、ライトからのビューと射影変換行列をかける
             mCb.matWVP = worldMat * shadowCamera->GetViewMat() * shadowCamera->GetProjectionMat();
@@ -310,8 +306,6 @@ namespace Renderer
                                      const std::vector<Material>& _materialList)
     {
         Direct3D::SetShader(Direct3D::SHADER_REFLECTION_MAP);
-
-        CameraSet cameraSet{};
 
         //頂点バッファ
         UINT stride = sizeof(Vertex);
@@ -336,8 +330,8 @@ namespace Renderer
                 D3D11_MAPPED_SUBRESOURCE pdata;
                 size_t bufferSize = sizeof(ShadowMatrixBuffer);
 
-                const auto& normalCamera = cameraSet.GetVirtualCamera(CameraSet::hNormalCamera);
-                const auto& reflectionCamera = cameraSet.GetVirtualCamera(CameraSet::hReflectionCamera);
+                const auto& normalCamera = CameraSet::GetVirtualCamera(CameraSet::hNormalCamera);
+                const auto& reflectionCamera = CameraSet::GetVirtualCamera(CameraSet::hReflectionCamera);
 
                 ShadowMatrixBuffer mCb{};
                 mCb.matWVP = worldMat * reflectionCamera->GetViewMat() * normalCamera->GetProjectionMat();

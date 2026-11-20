@@ -13,7 +13,7 @@ WaterLevelHider::WaterLevelHider(GameObject *_pParent) :
 
 void WaterLevelHider::Initialize()
 {
-	hImage_ = Model::Load("Model/question_mark.fbx");
+	hImage_ = Model::Load("Model/ChickenRace/question_mark.fbx");
 	SetScale(2.25f, 2.25f, 1.0f);
 }
 

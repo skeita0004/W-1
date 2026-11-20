@@ -12,7 +12,7 @@ Beverage::Beverage(GameObject *_pParent) :
 
 void Beverage::Initialize()
 {
-	hModel_ = Model::Load("Model/beverage.fbx");
+	hModel_ = Model::Load("Model/ChickenRace/beverage.fbx");
 }
 
 void Beverage::Update()

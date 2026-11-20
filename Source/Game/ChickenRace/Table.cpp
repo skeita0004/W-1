@@ -17,7 +17,7 @@ Table::Table(GameObject *_pParent) :
 
 void Table::Initialize()
 {
-	hModel_ = Model::Load("Model/table_mock.fbx");
+	hModel_ = Model::Load("Model/ChickenRace/table_mock.fbx");
 
 	transform_.scale = XMFLOAT3(7, 7, 7);
 	transform_.position.y = -3;
@@ -49,11 +49,11 @@ void Table::Initialize()
 											Input::UNASSIGNED,
 											Pad(p2->GetPlayerID(), Input::UNASSIGNED))));
 
-	p1->SetPosition(XMFLOAT3(-0.55f, 0.1, 0));
+	p1->SetPosition(XMFLOAT3(-0.55f, 0.1f, 0));
 	p1->SetRotate(XMFLOAT3(0, 0, 0));
 	p1->InputSet() = pIS1;
 
-	p2->SetPosition(XMFLOAT3(0.55f, 0.1, 0));
+	p2->SetPosition(XMFLOAT3(0.55f, 0.1f, 0));
 	p2->SetRotate(XMFLOAT3(0, 180, 0));
 	p2->InputSet() = pIS2;
 }

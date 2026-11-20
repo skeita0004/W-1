@@ -7,7 +7,7 @@ class IVirtualCamera
 public:
     virtual ~IVirtualCamera() = default;
 
-    virtual void Init()   = 0;
+    virtual void Initialize()   = 0;
     virtual void Update() = 0;
 
     virtual Transform      &GetTransform()           = 0;

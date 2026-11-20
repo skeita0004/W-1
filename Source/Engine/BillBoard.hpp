@@ -19,8 +19,6 @@ struct VERTEX
 	XMFLOAT3 uv;
 };
 
-class CameraSet;
-
 //常にカメラの方を向く四角形ポリゴン
 class BillBoard
 {
@@ -49,6 +47,4 @@ private:
 	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
 
 	Texture* pTexture_;	//画像
-
-    CameraSet* pCameraSet_;
 };

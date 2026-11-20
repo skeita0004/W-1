@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "GameObject.hpp"
 
+#include "../Game/ChickenRace/ChickenRaceScene.hpp"
+
 #include <array>
 
 //-----------------------------------------------------------
@@ -22,6 +24,7 @@ public:
     //ゲームに登場するシーン
     enum class SceneID : int
     {
+        CHICKEN_RACE_SCENE = 0,
         MAX_SCENE_ID
     };
 
@@ -33,7 +36,7 @@ private:
 
     // 型の配列として扱う
     using SceneList = std::tuple<
-        
+        ChickenRaceScene
     >;
 
     // SceneIDとSceneListの対応付け
@@ -54,17 +57,13 @@ private:
     static inline const size_t sceneNum{static_cast<size_t>(SceneID::MAX_SCENE_ID)};
     static const inline std::array<SceneFactoryFn, sceneNum> sceneTable =
     {
-        &SceneManager::InstantiateByID<SceneID::>,
-        &SceneManager::InstantiateByID<SceneID::>,
-        &SceneManager::InstantiateByID<SceneID::>,
-        &SceneManager::InstantiateByID<SceneID::>,
-        &SceneManager::InstantiateByID<SceneID::>
+        &SceneManager::InstantiateByID<SceneID::CHICKEN_RACE_SCENE>
     };
 
     GameObject* InstantiateScene(SceneID _sid,
                                  GameObject* _pParent);
 
-    static const inline SceneID INITIAL_SCENE{SceneID::};
+    static const inline SceneID INITIAL_SCENE{SceneID::CHICKEN_RACE_SCENE};
 
 	SceneID currentSceneID_;	//現在のシーン
 	SceneID nextSceneID_;		//次のシーン

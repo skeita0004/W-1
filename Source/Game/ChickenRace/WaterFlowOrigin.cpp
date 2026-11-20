@@ -11,7 +11,7 @@ WaterFlowOrigin::WaterFlowOrigin(GameObject *_pParent) :
 
 void WaterFlowOrigin::Initialize()
 {
-	hModel_ = Model::Load("model/water_flow_origin.fbx");
+	hModel_ = Model::Load("Model/ChickenRace/water_flow_origin.fbx");
 
 	pWaterFlow_ = Instantiate<WaterFlow>(this);
 
