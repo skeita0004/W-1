@@ -1,25 +1,30 @@
-#include "Clay.h"
-#include "Engine/Input.h"
-#include "Engine/Model.h"
-#include "Engine/Audio.h"
-#include "Engine/SceneManager.h"
-#include "ImGui/imgui.h"
+ï»¿// Engine
+#include "../Engine/Input.hpp"
+#include "../Engine/Model.hpp"
+#include "../Engine/Audio.hpp"
+#include "../Engine/SceneManager.hpp"
+#include "../Engine/CameraSet.hpp"
 
+// Game
+#include "Clay.hpp"
+
+// ãã®ä»–
 #include <DirectXMath.h>
-#include "Engine/Camera.h"
+#include "../include/imgui.h"
+
 using namespace DirectX;
 using namespace Config;
 
-// staticƒƒ“ƒo‚ÌÀ‘Ì ¦‚±‚ê‘‚©‚È‚¢‚ÆƒXƒRƒA‰ÁZ‚³‚ê‚È‚¢
+// staticãƒ¡ãƒ³ãƒã®å®Ÿä½“ â€»ã“ã‚Œæ›¸ã‹ãªã„ã¨ã‚¹ã‚³ã‚¢åŠ ç®—ã•ã‚Œãªã„
 int Clay::TotalScore_[PLAYER_NUM] = {};
 
 namespace
 {
-    // ƒNƒŒ[‚Ì‰Šú’l
-    const float CLAY_SCALE = 0.2f;   // Šg‘å—¦iXYZ‹¤’Êj
-    const int   CLAY_SCORE = 50;     // 1–‡‚ ‚½‚è‚ÌƒXƒRƒA
+    // ã‚¯ãƒ¬ãƒ¼ã®åˆæœŸå€¤
+    const float CLAY_SCALE = 0.2f;   // æ‹¡å¤§ç‡ï¼ˆXYZå…±é€šï¼‰
+    const int   CLAY_SCORE = 50;     // 1æšã‚ãŸã‚Šã®ã‚¹ã‚³ã‚¢
 
-    // ƒNƒŒ[0`2‚Ì‰ŠúˆÊ’u
+    // ã‚¯ãƒ¬ãƒ¼0ï½2ã®åˆæœŸä½ç½®
     /*
     const XMFLOAT3 Init_Pos[Clay_Max] = {
         {  0.0f, 3.0f, 1.0f },
@@ -28,41 +33,47 @@ namespace
     };
     */
 
-    // ˆÚ“®”ÍˆÍ
-    const float Field_Left  = -12.0f;  // ‚±‚ê‚æ‚è¶‚Ös‚­‚Æ‰E’[‚Ö–ß‚é
-    const float Field_Right = 12.0f;   // ‚±‚ê‚æ‚è‰E‚Ös‚­‚Æ¶’[‚Ö–ß‚é
-    const float Field_Up    = 2.5f;    // ãŒÀi‚±‚±‚Å‰º~‚ÉØ‚è‘Ö‚¦j
-    const float Field_Down  = -2.5f;   // ‰ºŒÀi‚±‚±‚Åã¸‚ÉØ‚è‘Ö‚¦j
+    // ç§»å‹•ç¯„å›²
+    const float Field_Left  = -12.0f;  // ã“ã‚Œã‚ˆã‚Šå·¦ã¸è¡Œãã¨å³ç«¯ã¸æˆ»ã‚‹
+    const float Field_Right = 12.0f;   // ã“ã‚Œã‚ˆã‚Šå³ã¸è¡Œãã¨å·¦ç«¯ã¸æˆ»ã‚‹
+    const float Field_Up    = 2.5f;    // ä¸Šé™ï¼ˆã“ã“ã§ä¸‹é™ã«åˆ‡ã‚Šæ›¿ãˆï¼‰
+    const float Field_Down  = -2.5f;   // ä¸‹é™ï¼ˆã“ã“ã§ä¸Šæ˜‡ã«åˆ‡ã‚Šæ›¿ãˆï¼‰
 }
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Clay::Clay(GameObject* parent)
     :GameObject(parent, "Clay"),
-    position_{ { 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f } },
-    hModel_{ (-1,-1,-1) }, hSound_{ (-1,-1,-1,-1,-1) }, OnDown_{ true, true, false }, IsDead_{ false, false, false },
-    Score_{ (0, 0, 0) }
+    position_ {{ 0.0f,0.0f,0.0f }}, // ä½ç½®
+    rotate_   {{ 0.0f,0.0f,0.0f }}, // å›è»¢
+    scale_    {{ 0.0f,0.0f,0.0f }}, // æ‹¡å¤§ç‡
+    HitRange  {(0.5f)}, // å½“ãŸã‚Šåˆ¤å®šã®å¤§ãã•
+    hModel_   {(-1)},   // ãƒ¢ãƒ‡ãƒ«ç•ªå·
+    hSound_   {(-1)},   // ã‚µã‚¦ãƒ³ãƒ‰èª­ã¿è¾¼ã¿
+    OnDown_   {true},   // ä¸‹ãŒã‚‹ã‹ä¸ŠãŒã‚‹ã‹ã®ãƒ•ãƒ©ã‚°ã€€    â€» trueï¼šä¸‹ãŒã‚‹ / falseï¼šä¸ŠãŒã‚‹
+    IsDead_   {false},  // ã‚¯ãƒ¬ãƒ¼ã®æ­»äº¡ã—ã¦ã„ã‚‹ã‹ãƒ•ãƒ©ã‚°  â€» trueï¼šæ­»äº¡ / falseï¼šç”Ÿå­˜
+    Score_    {(0)}     // ã‚¹ã‚³ã‚¢
 {
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Clay::~Clay()
 {
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void Clay::Initialize()
 {
-    // ‚±‚±‚Å‡ŒvƒXƒRƒA‚ğƒŠƒZƒbƒg
+    // ã“ã“ã§åˆè¨ˆã‚¹ã‚³ã‚¢ã‚’ãƒªã‚»ãƒƒãƒˆ
     ScoreReset();
 
-    //ƒ‚ƒfƒ‹ƒf[ƒ^‚Ìƒ[ƒh
+    //ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
     /*
     hModel_[0] = Model::Load("/Model/Dish00.fbx");
     assert(hModel_[0] >= 0);
-    //ƒ‚ƒfƒ‹ƒf[ƒ^‚Ìƒ[ƒh
+    //ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
     hModel_[1] = Model::Load("/Model/Dish00.fbx");
     assert(hModel_[1] >= 0);
-    //ƒ‚ƒfƒ‹ƒf[ƒ^‚Ìƒ[ƒh
+    //ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
     hModel_[2] = Model::Load("/Model/Dish00.fbx");
     assert(hModel_[2] >= 0);
     */
@@ -72,167 +83,167 @@ void Clay::Initialize()
         assert(hModel_[i] >= 0);
     }
 
-    // ƒTƒEƒ“ƒhƒf[ƒ^‚Ìƒ[ƒh
+    // ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
     /*
-    hSound_[0] = Audio::Load("Audio/ƒKƒ‰ƒX‚ªŠ„‚ê‚é3.wav"); // ƒNƒŒ[‚ª‰ó‚ê‚é‰¹
+    hSound_[0] = Audio::Load("Audio/ã‚¬ãƒ©ã‚¹ãŒå‰²ã‚Œã‚‹3.wav"); // ã‚¯ãƒ¬ãƒ¼ãŒå£Šã‚Œã‚‹éŸ³
     assert(hSound_[0] >= 0);
-    hSound_[1] = Audio::Load("Audio/‹ó‚«•r‚ªÓ‚¯‚é.wav");  // ‹ó‚«•r‚ªŠ„‚ê‚é‰¹
+    hSound_[1] = Audio::Load("Audio/ç©ºãç“¶ãŒç •ã‘ã‚‹.wav");  // ç©ºãç“¶ãŒå‰²ã‚Œã‚‹éŸ³
     assert(hSound_[1] >= 0);
-    hSound_[2] = Audio::Load("Audio/”š”­1.wav");           // ”š’e‚Ì”š”­‰¹
+    hSound_[2] = Audio::Load("Audio/çˆ†ç™º1.wav");           // çˆ†å¼¾ã®çˆ†ç™ºéŸ³
     assert(hSound_[2] >= 0);
     */
     for (int i = 0; i < Clay_Max; i++)
     {
-        hSound_[i] = Audio::Load("Audio/ƒKƒ‰ƒX‚ªŠ„‚ê‚é3.wav"); // ƒNƒŒ[‚ª‰ó‚ê‚é‰¹
+        hSound_[i] = Audio::Load("Audio/ã‚¬ãƒ©ã‚¹ãŒå‰²ã‚Œã‚‹3.wav"); // ã‚¯ãƒ¬ãƒ¼ãŒå£Šã‚Œã‚‹éŸ³
         assert(hSound_[i] >= 0);
     }
 
-    // ˆê‰‚ ‚é‚ÆŠy‚¾‚©‚ç‚±‚±‚É
-    // === ˆÊ’u‚Ìƒƒ‚ ===
+    // ä¸€å¿œã‚ã‚‹ã¨æ¥½ã ã‹ã‚‰ã“ã“ã«
+    // === ä½ç½®ã®ãƒ¡ãƒ¢ ===
     // (float)(rand() % 10 - 5)
-    // X - 1.2`1.2
-    // Y 2.0`3.0
-    // Z - 6.5` - 8.0
+    // X - 1.2ï½1.2
+    // Y 2.0ï½3.0
+    // Z - 6.5ï½ - 8.0
 
-    position_[0] = { 0.0f, 3.0f, 1.0f }; // ˆÊ’u
-    rotate_[0] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-    scale_[0] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-    Score_[0] = 50; // ƒXƒRƒA
+    position_[0] = { 0.0f, 3.0f, 1.0f }; // ä½ç½®
+    rotate_[0] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+    scale_[0] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+    Score_[0] = 50; // ã‚¹ã‚³ã‚¢
 
-    position_[1] = { 0.8f, 1.0f, 0.0f }; // ˆÊ’u
-    rotate_[1] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-    scale_[1] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-    Score_[1] = 50; // ƒXƒRƒA
+    position_[1] = { 0.8f, 1.0f, 0.0f }; // ä½ç½®
+    rotate_[1] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+    scale_[1] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+    Score_[1] = 50; // ã‚¹ã‚³ã‚¢
 
-    position_[2] = { -0.4f, 0.0f, 0.2f }; // ˆÊ’u
-    rotate_[2] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-    scale_[2] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-    Score_[2] = 50; // ƒXƒRƒA
+    position_[2] = { -0.4f, 0.0f, 0.2f }; // ä½ç½®
+    rotate_[2] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+    scale_[2] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+    Score_[2] = 50; // ã‚¹ã‚³ã‚¢
 
-    // ƒfƒoƒbƒN—p
+    // ãƒ‡ãƒãƒƒã‚¯ç”¨
     {
         for (int i = 3; i < Clay_Max; i++)
         {
-            position_[i] = { 1.0f + ((float)(i - 3) * 1.0f), -2.5f + ((float)(i - 3) * 1.0f), 0.0f }; // ˆÊ’u
-            rotate_[i] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-            scale_[i] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-            Score_[i] = 50; // ƒXƒRƒA
+            position_[i] = { 1.0f + ((float)(i - 3) * 1.0f), -2.5f + ((float)(i - 3) * 1.0f), 0.0f }; // ä½ç½®
+            rotate_[i] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+            scale_[i] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+            Score_[i] = 50; // ã‚¹ã‚³ã‚¢
         }
 
         /*
-        position_[3] = { 0.0f, 1.0f, 0.0f }; // ˆÊ’u
-        rotate_[3] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-        scale_[3] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-        Score_[3] = 50; // ƒXƒRƒA
+        position_[3] = { 0.0f, 1.0f, 0.0f }; // ä½ç½®
+        rotate_[3] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+        scale_[3] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+        Score_[3] = 50; // ã‚¹ã‚³ã‚¢
 
-        position_[4] = { 0.0f, 1.2f, 0.0f }; // ˆÊ’u
-        rotate_[4] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-        scale_[4] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-        Score_[4] = 50; // ƒXƒRƒA
+        position_[4] = { 0.0f, 1.2f, 0.0f }; // ä½ç½®
+        rotate_[4] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+        scale_[4] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+        Score_[4] = 50; // ã‚¹ã‚³ã‚¢
 
-        position_[5] = { 0.0f, 0.8f, 0.0f }; // ˆÊ’u
-        rotate_[5] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-        scale_[5] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-        Score_[5] = 50; // ƒXƒRƒA
+        position_[5] = { 0.0f, 0.8f, 0.0f }; // ä½ç½®
+        rotate_[5] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+        scale_[5] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+        Score_[5] = 50; // ã‚¹ã‚³ã‚¢
 
-        position_[6] = { 0.0f, 1.4f, 0.0f }; // ˆÊ’u
-        rotate_[6] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-        scale_[6] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-        Score_[6] = 50; // ƒXƒRƒA
+        position_[6] = { 0.0f, 1.4f, 0.0f }; // ä½ç½®
+        rotate_[6] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+        scale_[6] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+        Score_[6] = 50; // ã‚¹ã‚³ã‚¢
 
-        position_[7] = { 0.0f, 0.6f, 0.0f }; // ˆÊ’u
-        rotate_[7] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-        scale_[7] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-        Score_[7] = 50; // ƒXƒRƒA
+        position_[7] = { 0.0f, 0.6f, 0.0f }; // ä½ç½®
+        rotate_[7] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+        scale_[7] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+        Score_[7] = 50; // ã‚¹ã‚³ã‚¢
 
-        position_[8] = { 0.0f, 1.6f, 0.0f }; // ˆÊ’u
-        rotate_[8] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-        scale_[8] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-        Score_[8] = 50; // ƒXƒRƒA
+        position_[8] = { 0.0f, 1.6f, 0.0f }; // ä½ç½®
+        rotate_[8] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+        scale_[8] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+        Score_[8] = 50; // ã‚¹ã‚³ã‚¢
 
-        position_[9] = { 0.0f, 0.4f, 0.0f }; // ˆÊ’u
-        rotate_[9] = { 0.0f, 0.0f, 0.0f }; // ‰ñ“]
-        scale_[9] = { 0.2f, 0.2f, 0.2f }; // Šg‘å—¦
-        Score_[9] = 50; // ƒXƒRƒA
+        position_[9] = { 0.0f, 0.4f, 0.0f }; // ä½ç½®
+        rotate_[9] = { 0.0f, 0.0f, 0.0f }; // å›è»¢
+        scale_[9] = { 0.2f, 0.2f, 0.2f }; // æ‹¡å¤§ç‡
+        Score_[9] = 50; // ã‚¹ã‚³ã‚¢
         */
     }
 
-    //“–‚½‚è”»’è’Ç‰Á
+    //å½“ãŸã‚Šåˆ¤å®šè¿½åŠ 
     //SphereCollider* collision = new SphereCollider(XMFLOAT3(0.0f, 0.1f, 0.0f), 0.8f);
     //AddCollider(collision);
 
     textClay_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
 }
 
-//XV
+//æ›´æ–°
 void Clay::Update()
 {
     Move();
 
-    // e‚Ì‰ñ“]‚ÌãŒÀw’è
+    // éŠƒã®å›è»¢ã®ä¸Šé™æŒ‡å®š
     {
-        // ƒNƒŒ[‚P
+        // ã‚¯ãƒ¬ãƒ¼ï¼‘
         {
-            if (position_[0].x < Field_Left) position_[0].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[0].x > Field_Right) position_[0].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[0].x < Field_Left) position_[0].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[0].x > Field_Right) position_[0].x = Field_Left; // å³ã‹ã‚‰å·¦
         }
 
-        // ƒNƒŒ[‚Q
+        // ã‚¯ãƒ¬ãƒ¼ï¼’
         {
-            if (position_[1].x < Field_Left) position_[1].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[1].x > Field_Right) position_[1].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[1].x < Field_Left) position_[1].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[1].x > Field_Right) position_[1].x = Field_Left; // å³ã‹ã‚‰å·¦
             if (position_[1].y > Field_Up) {
-                OnDown_[1] = true; // ~‰º’†
-                position_[1].y = Field_Up; // ã‚©‚ç‰º
+                OnDown_[1] = true; // é™ä¸‹ä¸­
+                position_[1].y = Field_Up; // ä¸Šã‹ã‚‰ä¸‹
             }
             if (position_[1].y < Field_Down) {
-                OnDown_[1] = false; // ã¸
-                position_[1].y = Field_Down; // ‰º‚©‚çã
+                OnDown_[1] = false; // ä¸Šæ˜‡
+                position_[1].y = Field_Down; // ä¸‹ã‹ã‚‰ä¸Š
             }
         }
 
-        // ƒNƒŒ[‚R
+        // ã‚¯ãƒ¬ãƒ¼ï¼“
         {
-            if (position_[2].x < Field_Left) position_[2].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[2].x > Field_Right) position_[2].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[2].x < Field_Left) position_[2].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[2].x > Field_Right) position_[2].x = Field_Left; // å³ã‹ã‚‰å·¦
             if (position_[2].y > Field_Up) {
-                OnDown_[2] = true; // ~‰º’†
-                position_[2].y = Field_Up; // ã‚©‚ç‰º
+                OnDown_[2] = true; // é™ä¸‹ä¸­
+                position_[2].y = Field_Up; // ä¸Šã‹ã‚‰ä¸‹
             }
             if (position_[2].y < Field_Down) {
-                OnDown_[2] = false; // ã¸
-                position_[2].y = Field_Down; // ‰º‚©‚çã
+                OnDown_[2] = false; // ä¸Šæ˜‡
+                position_[2].y = Field_Down; // ä¸‹ã‹ã‚‰ä¸Š
             }
         }
 
-        // ƒfƒoƒbƒN—pƒNƒŒ[
+        // ãƒ‡ãƒãƒƒã‚¯ç”¨ã‚¯ãƒ¬ãƒ¼
         {
             for (int i = 3; i < Clay_Max; i++)
             {
-                if (position_[i].x < Field_Left) position_[i].x = Field_Right; // ¶‚©‚ç‰E
-                if (position_[i].x > Field_Right) position_[i].x = Field_Left; // ‰E‚©‚ç¶
+                if (position_[i].x < Field_Left) position_[i].x = Field_Right; // å·¦ã‹ã‚‰å³
+                if (position_[i].x > Field_Right) position_[i].x = Field_Left; // å³ã‹ã‚‰å·¦
             }
             /*
-            if (position_[3].x < Field_Left) position_[3].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[3].x > Field_Right) position_[3].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[3].x < Field_Left) position_[3].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[3].x > Field_Right) position_[3].x = Field_Left; // å³ã‹ã‚‰å·¦
 
-            if (position_[4].x < Field_Left) position_[4].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[4].x > Field_Right) position_[4].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[4].x < Field_Left) position_[4].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[4].x > Field_Right) position_[4].x = Field_Left; // å³ã‹ã‚‰å·¦
 
-            if (position_[5].x < Field_Left) position_[5].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[5].x > Field_Right) position_[5].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[5].x < Field_Left) position_[5].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[5].x > Field_Right) position_[5].x = Field_Left; // å³ã‹ã‚‰å·¦
 
-            if (position_[6].x < Field_Left) position_[6].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[6].x > Field_Right) position_[6].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[6].x < Field_Left) position_[6].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[6].x > Field_Right) position_[6].x = Field_Left; // å³ã‹ã‚‰å·¦
 
-            if (position_[7].x < Field_Left) position_[7].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[7].x > Field_Right) position_[7].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[7].x < Field_Left) position_[7].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[7].x > Field_Right) position_[7].x = Field_Left; // å³ã‹ã‚‰å·¦
 
-            if (position_[8].x < Field_Left) position_[8].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[8].x > Field_Right) position_[8].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[8].x < Field_Left) position_[8].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[8].x > Field_Right) position_[8].x = Field_Left; // å³ã‹ã‚‰å·¦
 
-            if (position_[9].x < Field_Left) position_[9].x = Field_Right; // ¶‚©‚ç‰E
-            if (position_[9].x > Field_Right) position_[9].x = Field_Left; // ‰E‚©‚ç¶
+            if (position_[9].x < Field_Left) position_[9].x = Field_Right; // å·¦ã‹ã‚‰å³
+            if (position_[9].x > Field_Right) position_[9].x = Field_Left; // å³ã‹ã‚‰å·¦
             */
         }
 
@@ -262,24 +273,24 @@ void Clay::Move()
     }
 }
 
-//•`‰æ
+//æç”»
 void Clay::Draw()
 {
-    // ƒNƒŒ[•\¦
+    // ã‚¯ãƒ¬ãƒ¼è¡¨ç¤º
     for (int i = 0; i < Clay_Max; i++)
     {
-        // ŠeƒNƒŒ[‚ª”j‰ó‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î•`‰æ
+        // å„ã‚¯ãƒ¬ãƒ¼ãŒç ´å£Šã•ã‚Œã¦ã„ãªã‘ã‚Œã°æç”»
         if (IsDead_[i]) continue;
-        transform_.position_ = position_[i];  // ˆÊ’u
-        transform_.rotate_   = rotate_[i];    // ‰ñ“]
-        transform_.scale_    = scale_[i];     // Šg‘å—¦
+        transform_.position_ = position_[i];  // ä½ç½®
+        transform_.rotate_   = rotate_[i];    // å›è»¢
+        transform_.scale_    = scale_[i];     // æ‹¡å¤§ç‡
         Model::SetTransform(hModel_[i], transform_);
         Model::Draw(hModel_[i]);
     }
 
-    // ImGui (ƒfƒoƒbƒN—p)
+    // ImGui (ãƒ‡ãƒãƒƒã‚¯ç”¨)
     {
-        //// ======= ƒNƒŒ[‚ÌˆÊ’uÀ•W =======
+        //// ======= ã‚¯ãƒ¬ãƒ¼ã®ä½ç½®åº§æ¨™ =======
         //ImGui::Begin("Clay_position");
         //ImGui::InputFloat("pos.X1", &position_[0].x);
         //ImGui::InputFloat("pos.Y1", &position_[0].y);
@@ -301,10 +312,10 @@ void Clay::Release()
 /*
 void Clay::OnCollision(GameObject* pTarget)
 {
-    //’e‚É“–‚½‚Á‚½
+    //å¼¾ã«å½“ãŸã£ãŸ
     if (pTarget->GetObjectName() == "Bullet")
     {
-        //©•ª‚ğÁ‚·
+        //è‡ªåˆ†ã‚’æ¶ˆã™
         KillMe();
     }
 }
@@ -332,12 +343,12 @@ int Clay::FindOverlap(const XMFLOAT2& reticleNdc) const
     {
         if (IsDead_[i]) continue;
 
-        // ƒ[ƒ‹ƒhÀ•W‚ğƒrƒ…[À•W‚É•ÏŠ·
+        // ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’ãƒ“ãƒ¥ãƒ¼åº§æ¨™ã«å¤‰æ›
         XMVECTOR world = XMVector3TransformCoord(XMLoadFloat3(&position_[i]), view);
         float depth = XMVectorGetZ(world);
-        if (depth <= 0.01f) continue; // ƒJƒƒ‰‚ÌŒã‚ë‚Í‘ÎÛŠO
+        if (depth <= 0.01f) continue; // ã‚«ãƒ¡ãƒ©ã®å¾Œã‚ã¯å¯¾è±¡å¤–
 
-        // ƒrƒ…[À•W‚©‚ç‰æ–ÊÀ•W‚É•ÏŠ·
+        // ãƒ“ãƒ¥ãƒ¼åº§æ¨™ã‹ã‚‰ç”»é¢åº§æ¨™ã«å¤‰æ›
         XMVECTOR center = XMVector3TransformCoord(world, proj);
         XMVECTOR edgeX = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(HitRange, 0.0f, 0.0f, 0.0f)), proj);
         XMVECTOR edgeY = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(0.0f, HitRange, 0.0f, 0.0f)), proj);
@@ -347,11 +358,11 @@ int Clay::FindOverlap(const XMFLOAT2& reticleNdc) const
         float rx = fabsf(XMVectorGetX(edgeX) - cx);
         float ry = fabsf(XMVectorGetY(edgeY) - cy);
 
-        // ƒŒƒeƒBƒNƒ‹’†S‚ÌŠm”F
+        // ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ä¸­å¿ƒã®ç¢ºèª
         float dx = (reticleNdc.x - cx) / rx;
         float dy = (reticleNdc.y - cy) / ry;
         if ((dx * dx + dy * dy) <= 1.0f) {
-            // •¡”d‚È‚Á‚Ä‚¢‚½‚çAƒJƒƒ‰‚É‹ß‚¢‚à‚Ì‚ğ—Dæ“I‚É”j‰ó
+            // è¤‡æ•°é‡ãªã£ã¦ã„ãŸã‚‰ã€ã‚«ãƒ¡ãƒ©ã«è¿‘ã„ã‚‚ã®ã‚’å„ªå…ˆçš„ã«ç ´å£Š
             if (depth < hitDepth) {
                 hitDepth = depth;
                 hit = i;
@@ -368,13 +379,13 @@ bool Clay::TryBreak(int player, const XMFLOAT2& reticleNdc)
     int hit = FindOverlap(reticleNdc);
     if (hit < 0) return false;
 
-    // –½’†‚µ‚½ƒNƒŒ[‚ğ‰ó‚·
+    // å‘½ä¸­ã—ãŸã‚¯ãƒ¬ãƒ¼ã‚’å£Šã™
     IsDead_[hit] = true;
 
-    // ‡ŒvƒXƒRƒA‚É‰ÁZ
+    // åˆè¨ˆã‚¹ã‚³ã‚¢ã«åŠ ç®—
     TotalScore_[player] += Score_[hit];
 
-    // ‘S•”‰ó‚ê‚½‚ç©•ª‚ğÁ‚·
+    // å…¨éƒ¨å£Šã‚ŒãŸã‚‰è‡ªåˆ†ã‚’æ¶ˆã™
     if (AllBroken()) {
         Audio::Play(hSound_[hit]);
         KillMe();

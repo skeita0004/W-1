@@ -1,17 +1,18 @@
-#include "UI.h"
+ï»¿#include "UI.h"
 #include "Engine/Input.h"
 #include "Engine/Image.h"
 #include "Engine/Audio.h"
 #include "Engine/SceneManager.h"
-#include "ImGui/imgui.h"
 #include "Clay.h"
 
 #include <DirectXMath.h>
 
+#include "../include/imgui.h"
+
 using namespace DirectX;
 using namespace std;
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 UI::UI(GameObject* parent)
     : GameObject(parent, "Reticle"),
     position_{ { 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f },{ 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f } },
@@ -22,62 +23,62 @@ UI::UI(GameObject* parent)
 {
 }
 
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 UI::~UI()
 {
 }
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void UI::Initialize()
 {
-    // UI‚Ì‰æ‘œ‚Ìƒ[ƒh
-    hImage_[0] = Image::Load("Image/Bullet.png"); // ’e
+    // UIã®ç”»åƒã®ãƒ­ãƒ¼ãƒ‰
+    hImage_[0] = Image::Load("Image/Bullet.png"); // å¼¾
     assert(hImage_[0] >= 0);
-    hImage_[1] = Image::Load("Image/UI_1.png");   // –ØŞ
+    hImage_[1] = Image::Load("Image/UI_1.png");   // æœ¨æ
     assert(hImage_[1] >= 0);
 
-    // ƒTƒEƒ“ƒhƒf[ƒ^‚Ìƒ[ƒh
-    hSound_ = Audio::Load("Audio/Œe‚ğŒ‚‚Â.wav"); // ’e
+    // ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
+    hSound_ = Audio::Load("Audio/æ‹³éŠƒã‚’æ’ƒã¤.wav"); // å¼¾
     assert(hSound_ >= 0);
 
-    // ˆê‰‚ ‚é‚ÆŠy‚¾‚©‚ç‚±‚±‚É
-    position_[0] = { -0.92f, -0.75f, 0.0f }; // ˆÊ’u
-    rotate_[0]   = {   0.0f,   0.0f, 0.0f }; // ‰ñ“]
-    scale_[0]    = {   0.3f,   0.3f, 0.0f }; // Šg‘å—¦
+    // ä¸€å¿œã‚ã‚‹ã¨æ¥½ã ã‹ã‚‰ã“ã“ã«
+    position_[0] = { -0.92f, -0.75f, 0.0f }; // ä½ç½®
+    rotate_[0]   = {   0.0f,   0.0f, 0.0f }; // å›è»¢
+    scale_[0]    = {   0.3f,   0.3f, 0.0f }; // æ‹¡å¤§ç‡
 
-    position_[1] = {  0.63f, -0.75f,  0.0f }; // ˆÊ’u
-    rotate_[1]   = {  0.0f,    0.0f,  0.0f }; // ‰ñ“]
-    scale_[1]    = {  0.3f,    0.3f, 0.00f }; // Šg‘å—¦
+    position_[1] = {  0.63f, -0.75f,  0.0f }; // ä½ç½®
+    rotate_[1]   = {  0.0f,    0.0f,  0.0f }; // å›è»¢
+    scale_[1]    = {  0.3f,    0.3f, 0.00f }; // æ‹¡å¤§ç‡
 
-    position_[2] = { -0.6f,  0.85f,  0.0f }; // ˆÊ’u
-    rotate_[2]   = {  0.0f,   0.0f,  0.0f }; // ‰ñ“]
-    scale_[2]    = {  0.7f,   0.4f, 0.00f }; // Šg‘å—¦
+    position_[2] = { -0.6f,  0.85f,  0.0f }; // ä½ç½®
+    rotate_[2]   = {  0.0f,   0.0f,  0.0f }; // å›è»¢
+    scale_[2]    = {  0.7f,   0.4f, 0.00f }; // æ‹¡å¤§ç‡
 
-    position_[3] = { 0.6f,   0.85f,  0.0f }; // ˆÊ’u
-    rotate_[3]   = { 0.0f,    0.0f,  0.0f }; // ‰ñ“]
-    scale_[3]    = { 0.7f,    0.4f, 0.00f }; // Šg‘å—¦
+    position_[3] = { 0.6f,   0.85f,  0.0f }; // ä½ç½®
+    rotate_[3]   = { 0.0f,    0.0f,  0.0f }; // å›è»¢
+    scale_[3]    = { 0.7f,    0.4f, 0.00f }; // æ‹¡å¤§ç‡
 
     textB_num_.Initialize("Fonts/Rye-Regular.ttf", 64.0f);
     textScore_.Initialize("Fonts/Rye-Regular.ttf", 64.0f);
     textTimer_.Initialize("Fonts/Rye-Regular.ttf", 86.0f);
 }
 
-// XV
+// æ›´æ–°
 void UI::Update()
 {
-    // ŠÔ‰¼’u‚«
+    // æ™‚é–“ä»®ç½®ã
     if (Game_Timer >= 0.0f)
     {
         Game_Timer -= 0.02f;
 
-        //“G‚ª‚à‚¤‚¢‚È‚©‚Á‚½‚çƒNƒŠƒA‰æ–Ê‚Ö
+        //æ•µãŒã‚‚ã†ã„ãªã‹ã£ãŸã‚‰ã‚¯ãƒªã‚¢ç”»é¢ã¸
         if (Game_Timer <= 0.0f) {
             SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
             pSceneManager->ChangeScene(SCENE_ID_CLEAR);
         }
     }
 
-    // ”­–C‚²‚Æ‚Éc’e”Á”ï
+    // ç™ºç ²ã”ã¨ã«æ®‹å¼¾æ•°æ¶ˆè²»
     {
         bool triggerNow[2] = { Input::GetPadTrrigerR(0) > 0.5f, Input::GetPadTrrigerR(1) > 0.5f };
 
@@ -100,46 +101,46 @@ void UI::Update()
     }
 }
 
-// •`‰æ
+// æç”»
 void UI::Draw()
 {
-    // UI•\¦i’ej
+    // UIè¡¨ç¤ºï¼ˆå¼¾ï¼‰
     {
         // 1P
-        transform_.position_ = { position_[0].x,position_[0].y,position_[0].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[0].x,scale_[0].y,scale_[0].z };  // Šg‘å—¦
+        transform_.position_ = { position_[0].x,position_[0].y,position_[0].z };  // ä½ç½®
+        transform_.scale_ = { scale_[0].x,scale_[0].y,scale_[0].z };  // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[0], transform_);
         Image::Draw(hImage_[0]);
 
-        transform_.position_ = { position_[2].x,position_[2].y,position_[2].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[2].x,scale_[2].y,scale_[2].z };  // Šg‘å—¦
+        transform_.position_ = { position_[2].x,position_[2].y,position_[2].z };  // ä½ç½®
+        transform_.scale_ = { scale_[2].x,scale_[2].y,scale_[2].z };  // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[1], transform_);
         Image::Draw(hImage_[1]);
 
         // 2P
-        transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[1].x,scale_[1].y,scale_[1].z };  // Šg‘å—¦
+        transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ä½ç½®
+        transform_.scale_ = { scale_[1].x,scale_[1].y,scale_[1].z };  // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[0], transform_);
         Image::Draw(hImage_[0]);
 
-        transform_.position_ = { position_[3].x,position_[3].y,position_[3].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[3].x,scale_[3].y,scale_[3].z };  // Šg‘å—¦
+        transform_.position_ = { position_[3].x,position_[3].y,position_[3].z };  // ä½ç½®
+        transform_.scale_ = { scale_[3].x,scale_[3].y,scale_[3].z };  // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[1], transform_);
         Image::Draw(hImage_[1]);
 
-        // ’e‚Ìc”
+        // å¼¾ã®æ®‹æ•°
         char str[64];
         sprintf_s(str, "x %d", Bullet_num[0]);
         // sprintf_s(str, "x ---");
         textB_num_.Draw(90, 600, str);
 
-        // ’e‚Ìc”
+        // å¼¾ã®æ®‹æ•°
         sprintf_s(str, "x %d", Bullet_num[1]);
         // sprintf_s(str, "x ---");
         textB_num_.Draw(1080, 600, str);
     }
 
-    // ƒ^ƒCƒ}[•\¦
+    // ã‚¿ã‚¤ãƒãƒ¼è¡¨ç¤º
     {
         char str[64];
         sprintf_s(str, "%.1f", Game_Timer);
@@ -153,7 +154,7 @@ void UI::Draw()
         textTimer_.Draw(720, 10, str);
     }
 
-    // ƒXƒRƒA•\¦
+    // ã‚¹ã‚³ã‚¢è¡¨ç¤º
     {
         char str[64];
         sprintf_s(str, "1P :%.5d", sc->GetTotalScore_1P());
@@ -164,16 +165,16 @@ void UI::Draw()
         textScore_.Draw(880, 20, str);
     }
 
-    // ƒŒƒeƒBƒNƒ‹•\¦
-    //transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ˆÊ’u
-    //transform_.scale_ = { scale_[1].x,scale_[1].y,scale_[1].z };  // Šg‘å—¦
+    // ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«è¡¨ç¤º
+    //transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ä½ç½®
+    //transform_.scale_ = { scale_[1].x,scale_[1].y,scale_[1].z };  // æ‹¡å¤§ç‡
     //Image::SetTransform(hImage_[1], transform_);
     //Image::Draw(hImage_[1]);
 
-    // ImGui (ƒfƒoƒbƒN—p)
+    // ImGui (ãƒ‡ãƒãƒƒã‚¯ç”¨)
     {
         /*
-        // ======= UI‚ÌˆÊ’uÀ•W =======
+        // ======= UIã®ä½ç½®åº§æ¨™ =======
         ImGui::Begin("UI_position");
         ImGui::InputFloat("pos.X1", &position_[0].x);
         ImGui::InputFloat("pos.Y1", &position_[0].y);
@@ -186,7 +187,7 @@ void UI::Draw()
     }
 }
 
-// ŠJ•ú
+// é–‹æ”¾
 void UI::Release()
 {
 }

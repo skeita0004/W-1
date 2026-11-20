@@ -1,80 +1,80 @@
-#pragma once
-#include "Engine/GameObject.h"
-#include "Engine/FontText.hpp"
-#include "Config.h"
+ï»¿#pragma once
+// Engine
+#include "../Engine/GameObject.hpp"
+//#include "../Engine/FontText.hpp"
 
-// ƒNƒŒ[‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// Game
+#include "Config.hpp"
+
+// ã‚¯ãƒ¬ãƒ¼ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class Clay : public GameObject
 {
 public:
-    static const int Clay_Max = 10;   // ƒNƒŒ[‚ÌÅ‘å”
-
-private:
-    FontText textClay_;       //ƒeƒLƒXƒg•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒg
-
-    // ƒNƒŒ[‚ÌÀ•W
-    XMFLOAT3 position_[Clay_Max]; // ˆÊ’u
-    XMFLOAT3 rotate_[Clay_Max];   // ‰ñ“]
-    XMFLOAT3 scale_[Clay_Max];    // Šg‘å—¦
-
-    int hModel_[Clay_Max];  // ƒ‚ƒfƒ‹”Ô†
-    int hSound_[Clay_Max];  // ƒTƒEƒ“ƒh“Ç‚İ‚İ
-
-    bool OnDown_[Clay_Max]; // ‰º‚ª‚é‚©ã‚ª‚é‚©‚Ìƒtƒ‰ƒO@    ¦ trueF‰º‚ª‚é / falseFã‚ª‚é
-    bool IsDead_[Clay_Max]; // ƒNƒŒ[‚Ì€–S‚µ‚Ä‚¢‚é‚©ƒtƒ‰ƒO  ¦ trueF€–S / falseF¶‘¶
-
-    const float HitRange = 0.5f; // “–‚½‚è”»’è‚Ì‘å‚«‚³
-
-    // ŠeƒNƒŒ[‚²‚Æ‚ÉƒXƒRƒA
-    int Score_[Clay_Max];
-    // ‡Œv‚ÌƒXƒRƒA
-    static int TotalScore_[Config::PLAYER_NUM];
-
-    //ˆÚ“®
-    void Move();
-
-    // ‘S‚Ä‚ÌƒNƒŒ[‚ª‰ó‚ê‚Ä‚¢‚é‚©
-    bool AllBroken() const;
-
-public:
-
-    //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     Clay(GameObject* parent);
 
-    //ƒfƒXƒgƒ‰ƒNƒ^
+    //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     ~Clay();
 
-    //‰Šú‰»
+    //åˆæœŸåŒ–
     void Initialize() override;
 
-    //XV
+    //æ›´æ–°
     void Update() override;
 
-    //•`‰æ
+    //æç”»
     void Draw() override;
 
-    //ŠJ•ú
+    //é–‹æ”¾
     void Release() override;
 
-    //‰½‚©‚É“–‚½‚Á‚½
-    //ˆø”FpTarget@“–‚½‚Á‚½‘Šè
-    //void OnCollision(GameObject* pTarget) override;
-
-    // ƒŒƒeƒBƒNƒ‹‚Ì’†S‚ªƒNƒŒ[‚Éd‚È‚Á‚Ä‚¢‚é‚©‚ÌŠm”Fˆ—
+    // ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®ä¸­å¿ƒãŒã‚¯ãƒ¬ãƒ¼ã«é‡ãªã£ã¦ã„ã‚‹ã‹ã®ç¢ºèªå‡¦ç†
     int FindOverlap(const XMFLOAT2& reticleNdc) const;
 
-    // ”­–CAƒŒƒeƒBƒNƒ‹‚ªd‚È‚Á‚Ä‚¢‚éƒNƒŒ[‚ª‚ ‚ê‚Î‰ó‚·
+    // ç™ºç ²æ™‚ã€ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ãŒé‡ãªã£ã¦ã„ã‚‹ã‚¯ãƒ¬ãƒ¼ãŒã‚ã‚Œã°å£Šã™
     bool TryBreak(int player, const XMFLOAT2& reticleNdc);
     bool TryBreak_1P(const XMFLOAT2& reticleNdc) { return TryBreak(Config::PLAYER_1, reticleNdc); }
     bool TryBreak_2P(const XMFLOAT2& reticleNdc) { return TryBreak(Config::PLAYER_2, reticleNdc); }
 
-    // ‡ŒvƒXƒRƒA‚ğæ“¾
+    // åˆè¨ˆã‚¹ã‚³ã‚¢ã‚’å–å¾—
     static int GetTotalScore_1P() { return TotalScore_[Config::PLAYER_1]; }
     static int GetTotalScore_2P() { return TotalScore_[Config::PLAYER_2]; }
 
-    // ‡ŒvƒXƒRƒA‚ğƒŠƒZƒbƒg
+    // åˆè¨ˆã‚¹ã‚³ã‚¢ã‚’ãƒªã‚»ãƒƒãƒˆ
     static void ScoreReset()
     {
         for (int i = 0; i < Config::PLAYER_NUM; i++) TotalScore_[i] = 0;
     }
+
+    // ã‚¯ãƒ¬ãƒ¼ã®æœ€å¤§æ•°
+    static const int Clay_Max = 10;
+
+private:
+    // ãƒ†ã‚­ã‚¹ãƒˆæç”»ç”¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    //FontText textClay_;
+
+    // ã‚¯ãƒ¬ãƒ¼ã®åº§æ¨™
+    XMFLOAT3 position_[Clay_Max]; // ä½ç½®
+    XMFLOAT3 rotate_[Clay_Max];   // å›è»¢
+    XMFLOAT3 scale_[Clay_Max];    // æ‹¡å¤§ç‡
+
+    int hModel_[Clay_Max];  // ãƒ¢ãƒ‡ãƒ«ç•ªå·
+    int hSound_[Clay_Max];  // ã‚µã‚¦ãƒ³ãƒ‰èª­ã¿è¾¼ã¿
+
+    bool OnDown_[Clay_Max]; // ä¸‹ãŒã‚‹ã‹ä¸ŠãŒã‚‹ã‹ã®ãƒ•ãƒ©ã‚°ã€€    â€» trueï¼šä¸‹ãŒã‚‹ / falseï¼šä¸ŠãŒã‚‹
+    bool IsDead_[Clay_Max]; // ã‚¯ãƒ¬ãƒ¼ã®æ­»äº¡ã—ã¦ã„ã‚‹ã‹ãƒ•ãƒ©ã‚°  â€» trueï¼šæ­»äº¡ / falseï¼šç”Ÿå­˜
+
+    // å½“ãŸã‚Šåˆ¤å®šã®å¤§ãã•
+    const float HitRange;
+
+    // å„ã‚¯ãƒ¬ãƒ¼ã”ã¨ã«ã‚¹ã‚³ã‚¢
+    int Score_[Clay_Max];
+    // åˆè¨ˆã®ã‚¹ã‚³ã‚¢
+    static int TotalScore_[Config::PLAYER_NUM];
+
+    //ç§»å‹•
+    void Move();
+
+    // å…¨ã¦ã®ã‚¯ãƒ¬ãƒ¼ãŒå£Šã‚Œã¦ã„ã‚‹ã‹
+    bool AllBroken() const;
 };

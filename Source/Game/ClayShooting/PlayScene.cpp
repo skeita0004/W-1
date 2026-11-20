@@ -1,4 +1,4 @@
-#include "PlayScene.h"
+ï»¿#include "PlayScene.h"
 #include "Reticle.hpp"
 #include "Clay.h"
 #include "UI.h"
@@ -10,16 +10,18 @@
 #include "Gun.h"
 #include "Engine/Image.h"
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+#include "../include/imgui.h"
+
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 PlayScene::PlayScene(GameObject * parent)
     : GameObject(parent, "PlayScene"), hBackGround_(-1)//, ENEMY_NUM(5)
 {
 }
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void PlayScene::Initialize()
 {
-    // ƒŒƒeƒBƒNƒ‹‚Ì‰æ‘œ‚Ìƒ[ƒh
+    // ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®ç”»åƒã®ãƒ­ãƒ¼ãƒ‰
     hBackGround_ = Image::Load("Image/BG.jpg");
     assert(hBackGround_ >= 0);
     Image::SetRect(hBackGround_, 0, 0, 1280, 720);
@@ -29,7 +31,7 @@ void PlayScene::Initialize()
     Instantiate<Clay>(this);
     Instantiate<Reticle>(this);
 
-    // e•\¦ie‚ÍƒŒƒeƒBƒNƒ‹‚ÌqƒNƒ‰ƒXj
+    // éŠƒè¡¨ç¤ºï¼ˆéŠƒã¯ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®å­ã‚¯ãƒ©ã‚¹ï¼‰
     Instantiate<Gun>(this);
 
     Instantiate<UI>(this);
@@ -43,12 +45,12 @@ void PlayScene::Initialize()
     textPlay_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
 }
 
-// XV
+// æ›´æ–°
 void PlayScene::Update()
 {
 }
 
-// •`‰æ
+// æç”»
 void PlayScene::Draw()
 {
     Image::SetTransform(hBackGround_, transform_);
@@ -57,11 +59,11 @@ void PlayScene::Draw()
     // text_.Draw(32, 32, "Yes!TakasuClinic");
     // textPlay_.Draw(32, 32, "Clay shooting");
 
-    // ’e‚Ìc”
+    // å¼¾ã®æ®‹æ•°
     //text_.Draw(80, 80, "x %.f",UI::Bullet);
 }
 
-// ŠJ•ú
+// é–‹æ”¾
 void PlayScene::Release()
 {
 }

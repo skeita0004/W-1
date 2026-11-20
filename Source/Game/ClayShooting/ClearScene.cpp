@@ -1,15 +1,15 @@
-#include "ClearScene.h"
+ï»¿#include "ClearScene.h"
 #include "Engine/Image.h"
-#include "ImGui/imgui.h"
 #include "Engine//FontText.hpp"
-
 #include "Clay.h"
 
-// «‚±‚¢‚Â‚ª‚È‚¢‚Æ•¶š‚ª•\¦‚³‚ê‚È‚¢
+#include "../include/imgui.h"
+
+// â†“ã“ã„ã¤ãŒãªã„ã¨æ–‡å­—ãŒè¡¨ç¤ºã•ã‚Œãªã„
 namespace
 {
-    // PlayScene‚È‚Ç‚ÅŠù‚Éƒ[ƒhÏ‚İ‚ÌƒtƒHƒ“ƒg(Rye-Regular)‚ğ’T‚·
-    // Œ©‚Â‚©‚ç‚È‚¯‚ê‚ÎImGui‚ÌƒfƒtƒHƒ‹ƒgƒtƒHƒ“ƒg‚ğ•Ô‚·
+    // PlaySceneãªã©ã§æ—¢ã«ãƒ­ãƒ¼ãƒ‰æ¸ˆã¿ã®ãƒ•ã‚©ãƒ³ãƒˆ(Rye-Regular)ã‚’æ¢ã™
+    // è¦‹ã¤ã‹ã‚‰ãªã‘ã‚Œã°ImGuiã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ•ã‚©ãƒ³ãƒˆã‚’è¿”ã™
     ImFont* FindLoadedFont()
     {
         ImGuiIO& io = ImGui::GetIO();
@@ -25,7 +25,7 @@ namespace
         return ImGui::GetFont();
     }
 
-    // •¶š‚ğ•`‰æ‚·‚é(ƒtƒHƒ“ƒg’Ç‰Á‚ÍˆêØ‚µ‚È‚¢)
+    // æ–‡å­—ã‚’æç”»ã™ã‚‹(ãƒ•ã‚©ãƒ³ãƒˆè¿½åŠ ã¯ä¸€åˆ‡ã—ãªã„)
     void DrawTextAt(float x, float y, float size, const char* text)
     {
         ImFont* font = FindLoadedFont();
@@ -34,16 +34,16 @@ namespace
     }
 }
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 ClearScene::ClearScene(GameObject * parent)
     : GameObject(parent, "ClearScene"), hImage_{ -1,-1,-1,-1 }
 {
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void ClearScene::Initialize()
 {
-    //‰æ‘œƒf[ƒ^‚Ìƒ[ƒh
+    //ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
     hImage_[0] = Image::Load("Image/BG.jpg");
     assert(hImage_[0] >= 0);
     hImage_[1] = Image::Load("Image/WIN.png");
@@ -53,78 +53,78 @@ void ClearScene::Initialize()
     hImage_[3] = Image::Load("Image/UI_1.png");
     assert(hImage_[3] >= 0);
 
-    // ˆê‰‚ ‚é‚ÆŠy‚¾‚©‚ç‚±‚±‚É
+    // ä¸€å¿œã‚ã‚‹ã¨æ¥½ã ã‹ã‚‰ã“ã“ã«
     Image::SetRect(hImage_[0], 0, 0, 1280, 720);
 
-    position_[1] = { -0.25f, -0.3f, 0.0f }; // ˆÊ’u(ƒvƒŒƒCƒ„[‚P)
-    position_[2] = { 0.25f, -0.3f,  0.0f }; // ˆÊ’u(ƒvƒŒƒCƒ„[‚Q)
-    position_[3] = { 0.0f, 0.0f,  0.0f }; // Œã‚ë‚Ì˜g
+    position_[1] = { -0.25f, -0.3f, 0.0f }; // ä½ç½®(ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼‘)
+    position_[2] = { 0.25f, -0.3f,  0.0f }; // ä½ç½®(ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼’)
+    position_[3] = { 0.0f, 0.0f,  0.0f }; // å¾Œã‚ã®æ 
 
-    scale_[1]    = {  0.5f, 0.5f, 0.0f }; // Šg‘å—¦iuWINv,uLOSEv•\¦—pj
-    scale_[2]    = {  1.2f, 3.0f, 0.0f }; // Šg‘å—¦iŒã‚ë‚Ì˜g•\¦—pj
+    scale_[1]    = {  0.5f, 0.5f, 0.0f }; // æ‹¡å¤§ç‡ï¼ˆã€ŒWINã€,ã€ŒLOSEã€è¡¨ç¤ºç”¨ï¼‰
+    scale_[2]    = {  1.2f, 3.0f, 0.0f }; // æ‹¡å¤§ç‡ï¼ˆå¾Œã‚ã®æ è¡¨ç¤ºç”¨ï¼‰
 
     //textP_num_.Initialize("Fonts/Rye-Regular.ttf", 72.0f);
     //textFinal_S_.Initialize("Fonts/Rye-Regular.ttf", 72.0f);
 }
 
-//XV
+//æ›´æ–°
 void ClearScene::Update()
 {
 }
 
-//•`‰æ
+//æç”»
 void ClearScene::Draw()
 {
-    // ”wŒi•\¦
+    // èƒŒæ™¯è¡¨ç¤º
     Image::Draw(hImage_[0]);
 
-    // Œ‹‰Ê”­•\‚Ì˜g
-    transform_.position_ = { position_[3].x,position_[3].y,position_[3].z };  // ˆÊ’u
-    transform_.scale_ = { scale_[2].x, scale_[2].y, scale_[2].z };          // Šg‘å—¦
+    // çµæœç™ºè¡¨ã®æ 
+    transform_.position_ = { position_[3].x,position_[3].y,position_[3].z };  // ä½ç½®
+    transform_.scale_ = { scale_[2].x, scale_[2].y, scale_[2].z };          // æ‹¡å¤§ç‡
     Image::SetTransform(hImage_[3], transform_);
     Image::Draw(hImage_[3]);
 
-    // ƒvƒŒƒCƒ„[‚P‚ÌŸ‚¿
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼‘ã®å‹ã¡
     if (Clay::GetTotalScore_1P() > Clay::GetTotalScore_2P()) {
-        // ƒvƒŒƒCƒ„[‚P‚ÉuWINv•\¦
-        transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // Šg‘å—¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼‘ã«ã€ŒWINã€è¡¨ç¤º
+        transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ä½ç½®
+        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[1], transform_);
         Image::Draw(hImage_[1]);
-        // ƒvƒŒƒCƒ„[‚Q‚ÉuLOSEv•\¦
-        transform_.position_ = { position_[2].x,position_[2].y,position_[2].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // Šg‘å—¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼’ã«ã€ŒLOSEã€è¡¨ç¤º
+        transform_.position_ = { position_[2].x,position_[2].y,position_[2].z };  // ä½ç½®
+        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[2], transform_);
         Image::Draw(hImage_[2]);
     }
-    // ƒvƒŒƒCƒ„[‚Q‚ÌŸ‚¿
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼’ã®å‹ã¡
     else if (Clay::GetTotalScore_1P() < Clay::GetTotalScore_2P()) {
-        // ƒvƒŒƒCƒ„[‚P‚ÉuLOSEv•\¦
-        transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // Šg‘å—¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼‘ã«ã€ŒLOSEã€è¡¨ç¤º
+        transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ä½ç½®
+        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[2], transform_);
         Image::Draw(hImage_[2]);
-        // ƒvƒŒƒCƒ„[‚Q‚ÉuWINv•\¦
-        transform_.position_ = { position_[2].x,position_[2].y,position_[2].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // Šg‘å—¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼’ã«ã€ŒWINã€è¡¨ç¤º
+        transform_.position_ = { position_[2].x,position_[2].y,position_[2].z };  // ä½ç½®
+        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[1], transform_);
         Image::Draw(hImage_[1]);
     }
-    // ˆø‚«•ª‚¯
+    // å¼•ãåˆ†ã‘
     else {
-        // ƒvƒŒƒCƒ„[‚P‚ÉuWINv•\¦
-        transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // Šg‘å—¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼‘ã«ã€ŒWINã€è¡¨ç¤º
+        transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // ä½ç½®
+        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[1], transform_);
         Image::Draw(hImage_[1]);
-        // ƒvƒŒƒCƒ„[‚Q‚ÉuWINv•\¦
-        transform_.position_ = { position_[2].x,position_[2].y,position_[2].z };  // ˆÊ’u
-        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // Šg‘å—¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼’ã«ã€ŒWINã€è¡¨ç¤º
+        transform_.position_ = { position_[2].x,position_[2].y,position_[2].z };  // ä½ç½®
+        transform_.scale_ = { scale_[1].x, scale_[1].y, scale_[1].z };          // æ‹¡å¤§ç‡
         Image::SetTransform(hImage_[1], transform_);
         Image::Draw(hImage_[1]);
     }
 
-    // ƒXƒRƒA•\¦
+    // ã‚¹ã‚³ã‚¢è¡¨ç¤º
     {
         char str[64];
         sprintf_s(str, "%.5d", Clay::GetTotalScore_1P());
@@ -143,7 +143,7 @@ void ClearScene::Draw()
     DrawTextAt(680, 140, 72.0f, "Player2");
 }
 
-//ŠJ•ú
+//é–‹æ”¾
 void ClearScene::Release()
 {
 }

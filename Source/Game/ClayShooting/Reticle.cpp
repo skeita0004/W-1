@@ -1,8 +1,7 @@
-#include "Reticle.hpp"
+ï»¿#include "Reticle.hpp"
 #include "Engine/Input.h"
 #include "Engine/Image.h"
 #include "Engine/SceneManager.h"
-#include "ImGui/imgui.h"
 
 #include <DirectXMath.h>
 //#include "Bullet.h"
@@ -11,27 +10,29 @@
 #include "UI.h"
 #include "Clay.h"
 
+#include "../include/imgui.h"
+
 using namespace DirectX;
 using namespace std;
 using namespace Config;
 
 namespace
 {
-    // ƒŒƒeƒBƒNƒ‹‚Ì‰Šú’l
+    // ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®åˆæœŸå€¤
     const XMFLOAT3 Init_Pos[PLAYER_NUM] = { { -0.3f, 0.0f, 0.0f }, { 0.3f, 0.0f, 0.0f } };
-    const float    Reticle_scale = 0.2f; // Šg‘å—¦
+    const float    Reticle_scale = 0.2f; // æ‹¡å¤§ç‡
 
-    // ƒŒƒeƒBƒNƒ‹‚ÌˆÚ“®‘¬“x
+    // ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®ç§»å‹•é€Ÿåº¦
     const float Speed = 0.02f;
 
-    // ˆÚ“®‚Ì”ÍˆÍ
+    // ç§»å‹•ã®ç¯„å›²
     const float Limit_X_Left  = -0.9f;
     const float Limit_X_Right =  0.9f;
     const float Limit_Y_Up    =  0.82f;
     const float Limit_Y_Down  = -0.5f;
 }
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Reticle::Reticle(GameObject* parent)
     :GameObject(parent, "Reticle"),
     position_{ {0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} },
@@ -41,63 +42,63 @@ Reticle::Reticle(GameObject* parent)
 {
 }
 
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Reticle::~Reticle()
 {
 }
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void Reticle::Initialize()
 {
-    // ƒŒƒeƒBƒNƒ‹‚Ì‰æ‘œ‚Ìƒ[ƒh
+    // ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®ç”»åƒã®ãƒ­ãƒ¼ãƒ‰
     hImage_[0] = Image::Load("Image/Reticle_1P.png");
     assert(hImage_[0] >= 0);
     hImage_[1] = Image::Load("Image/Reticle_2P.png");
     assert(hImage_[1] >= 0);
 
-    // ˆê‰‚ ‚é‚ÆŠy‚¾‚©‚ç‚±‚±‚É
-    rotate_ = { 0.0f, 0.0f, 0.0f };                            // ‰ñ“]
-    scale_  = { Reticle_scale, Reticle_scale, Reticle_scale }; // Šg‘å—¦
+    // ä¸€å¿œã‚ã‚‹ã¨æ¥½ã ã‹ã‚‰ã“ã“ã«
+    rotate_ = { 0.0f, 0.0f, 0.0f };                            // å›è»¢
+    scale_  = { Reticle_scale, Reticle_scale, Reticle_scale }; // æ‹¡å¤§ç‡
 
     textReticle_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
 }
 
-// XV
+// æ›´æ–°
 void Reticle::Update()
 {
-    // •W€ˆÚ“®
+    // æ¨™æº–ç§»å‹•
     Move();
 
-    // “ñl•ª
+    // äºŒäººåˆ†
     for (int i = 0; i < PLAYER_NUM; i++) {
-        // ”­Ë
+        // ç™ºå°„
         Shoot(i);
 
-        // ‰æ–Ê‚ğ’´‚¦‚È‚¢‚æ‚¤‚Éw’è
-        if (position_[i].x <= Limit_X_Left)  position_[i].x = Limit_X_Left;  // ¶
-        if (position_[i].x >= Limit_X_Right) position_[i].x = Limit_X_Right; // ‰E
-        if (position_[i].y >= Limit_Y_Up)    position_[i].y = Limit_Y_Up;    // ã
-        if (position_[i].y <= Limit_Y_Down)  position_[i].y = Limit_Y_Down;  // ‰º
+        // ç”»é¢ã‚’è¶…ãˆãªã„ã‚ˆã†ã«æŒ‡å®š
+        if (position_[i].x <= Limit_X_Left)  position_[i].x = Limit_X_Left;  // å·¦
+        if (position_[i].x >= Limit_X_Right) position_[i].x = Limit_X_Right; // å³
+        if (position_[i].y >= Limit_Y_Up)    position_[i].y = Limit_Y_Up;    // ä¸Š
+        if (position_[i].y <= Limit_Y_Down)  position_[i].y = Limit_Y_Down;  // ä¸‹
     }
 }
 
-// •`‰æ
+// æç”»
 void Reticle::Draw()
 {
-    transform_.rotate_ = rotate_;   // ‰ñ“]
-    transform_.scale_  = scale_;    // Šg‘å—¦
+    transform_.rotate_ = rotate_;   // å›è»¢
+    transform_.scale_  = scale_;    // æ‹¡å¤§ç‡
 
-    // ƒŒƒeƒBƒNƒ‹•\¦
+    // ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«è¡¨ç¤º
     for (int i = 0; i < PLAYER_NUM; i++) {
-        transform_.position_ = position_[i];  // ˆÊ’u
+        transform_.position_ = position_[i];  // ä½ç½®
         Image::SetTransform(hImage_[i], transform_);
         Image::Draw(hImage_[i]);
     }
 
-    // ImGui (ƒfƒoƒbƒN—p)
+    // ImGui (ãƒ‡ãƒãƒƒã‚¯ç”¨)
     {
         /*
-        // ======= ƒŒƒeƒBƒNƒ‹‚ÌˆÊ’uÀ•W =======
+        // ======= ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®ä½ç½®åº§æ¨™ =======
         ImGui::Begin("Reticle_position");
         ImGui::InputFloat("pos1P.X", &position_[0].x);
         ImGui::InputFloat("pos1P.Y", &position_[0].y);
@@ -105,8 +106,8 @@ void Reticle::Draw()
         ImGui::InputFloat("pos2P.Y", &position_[1].y);
         //ImGui::InputFloat("pos.Z", &position_.z);
         ImGui::End();
-        // ======= ”­Ë‚Ìó‹µ =======
-        // ‰EƒgƒŠƒK[‚ğˆêu‚¾‚¯‰Ÿ‚µ‚½‚Æ‚«‚Ég‚¤Aƒƒ“ƒo•Ï”
+        // ======= ç™ºå°„ã®çŠ¶æ³ =======
+        // å³ãƒˆãƒªã‚¬ãƒ¼ã‚’ä¸€ç¬ã ã‘æŠ¼ã—ãŸã¨ãã«ä½¿ã†ã€ãƒ¡ãƒ³ãƒå¤‰æ•°
         bool triggerNow[2] = { Input::GetPadTrrigerR(0) > 0.5f, Input::GetPadTrrigerR(1) > 0.5f };
 
         ImGui::Begin("Shoot_status");
@@ -134,70 +135,70 @@ void Reticle::Draw()
     }
 }
 
-// ŠJ•ú
+// é–‹æ”¾
 void Reticle::Release()
 {
 }
 
-// •W€ˆÚ“®
+// æ¨™æº–ç§»å‹•
 void Reticle::Move()
 {
-    // ƒRƒ“ƒgƒ[ƒ‰[‘Î‰
+    // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼å¯¾å¿œ
     for (int i = 0; i < PLAYER_NUM; i++)
     {
-        //ˆÚ“®ƒxƒNƒgƒ‹
+        //ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«
         XMFLOAT3 moveVector = Input::GetPadStickL(i);
 
-        // XMFLOAT3 ‚©‚ç float ‚Ö‚Ì•ÏŠ·‚ª•K—v
+        // XMFLOAT3 ã‹ã‚‰ float ã¸ã®å¤‰æ›ãŒå¿…è¦
         position_[i].x += moveVector.x * Speed;
         position_[i].y += moveVector.y * Speed;
     }
 
     // 1P
-    if (Input::IsKey(DIK_W)) position_[PLAYER_1].y += Speed;  // ã
-    if (Input::IsKey(DIK_S)) position_[PLAYER_1].y -= Speed;  // ‰º
-    if (Input::IsKey(DIK_D)) position_[PLAYER_1].x += Speed;  // ‰E
-    if (Input::IsKey(DIK_A)) position_[PLAYER_1].x -= Speed;  // ¶
+    if (Input::IsKey(DIK_W)) position_[PLAYER_1].y += Speed;  // ä¸Š
+    if (Input::IsKey(DIK_S)) position_[PLAYER_1].y -= Speed;  // ä¸‹
+    if (Input::IsKey(DIK_D)) position_[PLAYER_1].x += Speed;  // å³
+    if (Input::IsKey(DIK_A)) position_[PLAYER_1].x -= Speed;  // å·¦
 
-    // 2P ¦ƒfƒoƒbƒO—p
-    if (Input::IsKey(DIK_I)) position_[PLAYER_2].y += Speed;  // ã
-    if (Input::IsKey(DIK_K)) position_[PLAYER_2].y -= Speed;  // ‰º
-    if (Input::IsKey(DIK_L)) position_[PLAYER_2].x += Speed;  // ‰E
-    if (Input::IsKey(DIK_J)) position_[PLAYER_2].x -= Speed;  // ¶
+    // 2P â€»ãƒ‡ãƒãƒƒã‚°ç”¨
+    if (Input::IsKey(DIK_I)) position_[PLAYER_2].y += Speed;  // ä¸Š
+    if (Input::IsKey(DIK_K)) position_[PLAYER_2].y -= Speed;  // ä¸‹
+    if (Input::IsKey(DIK_L)) position_[PLAYER_2].x += Speed;  // å³
+    if (Input::IsKey(DIK_J)) position_[PLAYER_2].x -= Speed;  // å·¦
 }
 
-// ”­Ë
+// ç™ºå°„
 void Reticle::Shoot(int player)
 {
     if (player < 0 || player >= PLAYER_NUM) return;
 
-    // ‰EƒgƒŠƒK[‚ğˆêu‚¾‚¯‰Ÿ‚µ‚½‚Æ‚«‚Ég‚¤Aƒƒ“ƒo•Ï”
+    // å³ãƒˆãƒªã‚¬ãƒ¼ã‚’ä¸€ç¬ã ã‘æŠ¼ã—ãŸã¨ãã«ä½¿ã†ã€ãƒ¡ãƒ³ãƒå¤‰æ•°
     bool triggerNow = Input::GetPadTrrigerR(player) > 0.5f;
 
     if (Input::IsMouseButtonDown(player)
         || Input::IsPadButtonDown(XINPUT_GAMEPAD_B, player)
         || triggerNow && !triggerOld_[player])
     {
-        // ƒNƒŒ[‚Æ‚Ì“–‚½‚è”»’è
+        // ã‚¯ãƒ¬ãƒ¼ã¨ã®å½“ãŸã‚Šåˆ¤å®š
         Clay* pClay = static_cast<Clay*>(FindObject("Clay"));
         if (pClay != nullptr) {
             pClay->TryBreak(player,XMFLOAT2(position_[player].x, position_[player].y));
         }
 
-        //’e‚ğƒV[ƒ“‚É’Ç‰Á
+        //å¼¾ã‚’ã‚·ãƒ¼ãƒ³ã«è¿½åŠ 
         //GameObject* playScene = FindObject("PlayScene");
         //Bullet* pBullet = Instantiate<Bullet>(FindObject("PlayScene"));
 
-        //”­Ë•ûŒü = æ’[ - ª–{
+        //ç™ºå°„æ–¹å‘ = å…ˆç«¯ - æ ¹æœ¬
         //XMFLOAT3 dir;
         //XMStoreFloat3(&dir, XMLoadFloat3(&position_) - XMLoadFloat3(&rotate_));
 
-        //–C‘ä‚Ìæ’[‚Æª–{‚ÌˆÊ’u‚ğæ“¾
-        //XMMATRIX shotPos = Image::GetMatrix(hImage_);    //æ’[
-        //XMMATRIX cannonRoot = Image::GetMatrix(hImage_); //ª–{
+        //ç ²å°ã®å…ˆç«¯ã¨æ ¹æœ¬ã®ä½ç½®ã‚’å–å¾—
+        //XMMATRIX shotPos = Image::GetMatrix(hImage_);    //å…ˆç«¯
+        //XMMATRIX cannonRoot = Image::GetMatrix(hImage_); //æ ¹æœ¬
         // position_.x;
 
-        //Œ‚‚Â
+        //æ’ƒã¤
         //pBullet->Shot(position_, dir);
     }
 

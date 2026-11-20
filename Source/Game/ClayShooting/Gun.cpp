@@ -1,9 +1,10 @@
-#include "Gun.h"
-#include "ImGui/imgui.h"
+ï»¿#include "Gun.h"
 
 #include <DirectXMath.h>
 #include "Engine/Model.h"
 #include "Engine/Input.h"
+
+#include "../include/imgui.h"
 
 using namespace DirectX;
 using namespace std;
@@ -11,23 +12,23 @@ using namespace Config;
 
 namespace
 {
-    // e‚Ì‰Šú’l
+    // éŠƒã®åˆæœŸå€¤
     const XMFLOAT3 Init_Pos[PLAYER_NUM] = { { -3.5f, -7.0f, -6.0f }, { 3.8f, -7.0f, -6.0f } };
     const XMFLOAT3 Init_Rot[PLAYER_NUM] = { { 0.0f, -103.0f, -12.0f }, { 0.0f, -77.0f, -12.0f } };
-    const float    Gun_scale = 0.5f; // Šg‘å—¦
+    const float    Gun_scale = 0.5f; // æ‹¡å¤§ç‡
 
-    // ‰ñ“]‚Ì”ÍˆÍ
-    const float Rot_Y_Left_Limit  = -124.0f; // ¶‚ÖŒü‚¯‚éŒÀŠE
-    const float Rot_Y_Right_Limit =  -60.0f; // ‰E‚ÖŒü‚¯‚éŒÀŠE
-    const float Rot_Z_UP_Limit    =    8.0f; // ã‚ÖŒü‚¯‚éŒÀŠE
-    const float Rot_Z_Down_Limit  =  -24.0f; // ‰º‚ÖŒü‚¯‚éŒÀŠE
+    // å›è»¢ã®ç¯„å›²
+    const float Rot_Y_Left_Limit  = -124.0f; // å·¦ã¸å‘ã‘ã‚‹é™ç•Œ
+    const float Rot_Y_Right_Limit =  -60.0f; // å³ã¸å‘ã‘ã‚‹é™ç•Œ
+    const float Rot_Z_UP_Limit    =    8.0f; // ä¸Šã¸å‘ã‘ã‚‹é™ç•Œ
+    const float Rot_Z_Down_Limit  =  -24.0f; // ä¸‹ã¸å‘ã‘ã‚‹é™ç•Œ
 
-    // ‰ñ“]‘¬“x
-    const float Rot_Z_Speed = 0.5f; // ã‰º
-    const float Rot_Y_Speed = 0.7f; // ¶‰E
+    // å›è»¢é€Ÿåº¦
+    const float Rot_Z_Speed = 0.5f; // ä¸Šä¸‹
+    const float Rot_Y_Speed = 0.7f; // å·¦å³
 }
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Gun::Gun(GameObject* parent)
     :GameObject(parent, "Reticle"),
     position_{ {0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} },
@@ -37,19 +38,19 @@ Gun::Gun(GameObject* parent)
 {
 }
 
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Gun::~Gun()
 {
 }
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void Gun::Initialize()
 {
-    //ƒ‚ƒfƒ‹ƒf[ƒ^‚Ìƒ[ƒh
+    //ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
     hModel_ = Model::Load("/Model/Gun00.fbx");
     assert(hModel_ >= 0);
     
-    // ˆê‰‚ ‚é‚ÆŠy‚¾‚©‚ç‚±‚±‚É
+    // ä¸€å¿œã‚ã‚‹ã¨æ¥½ã ã‹ã‚‰ã“ã“ã«
     for (int i = 0; i < PLAYER_NUM; i++)
     {
         position_[i] = Init_Pos[i];
@@ -60,50 +61,50 @@ void Gun::Initialize()
     textGun_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
 }
 
-// XV
+// æ›´æ–°
 void Gun::Update()
 {
     Move();
 
-    // e‚Ì‰ñ“]‚ÌãŒÀw’è
+    // éŠƒã®å›è»¢ã®ä¸Šé™æŒ‡å®š
     {
         for (int i = 0; i < PLAYER_NUM; i++) {
-            if (rotate_[i].y <= Rot_Y_Left_Limit)  rotate_[i].y = Rot_Y_Left_Limit;  // ¶
-            if (rotate_[i].y >= Rot_Y_Right_Limit) rotate_[i].y = Rot_Y_Right_Limit; // ‰E
-            if (rotate_[i].z >= Rot_Z_UP_Limit)    rotate_[i].z = Rot_Z_UP_Limit;    // ã
-            if (rotate_[i].z <= Rot_Z_Down_Limit)  rotate_[i].z = Rot_Z_Down_Limit;  // ‰º
+            if (rotate_[i].y <= Rot_Y_Left_Limit)  rotate_[i].y = Rot_Y_Left_Limit;  // å·¦
+            if (rotate_[i].y >= Rot_Y_Right_Limit) rotate_[i].y = Rot_Y_Right_Limit; // å³
+            if (rotate_[i].z >= Rot_Z_UP_Limit)    rotate_[i].z = Rot_Z_UP_Limit;    // ä¸Š
+            if (rotate_[i].z <= Rot_Z_Down_Limit)  rotate_[i].z = Rot_Z_Down_Limit;  // ä¸‹
         }
     }
 }
 
-// •`‰æ
+// æç”»
 void Gun::Draw()
 {
     for (int i = 0; i < PLAYER_NUM; i++)
     {
-        transform_.position_ = position_[i]; // ˆÊ’u
-        transform_.rotate_   = rotate_[i];   // ‰ñ“]
-        transform_.scale_    = scale_[i];    // Šg‘å—¦
+        transform_.position_ = position_[i]; // ä½ç½®
+        transform_.rotate_   = rotate_[i];   // å›è»¢
+        transform_.scale_    = scale_[i];    // æ‹¡å¤§ç‡
 
         Model::SetTransform(hModel_, transform_);
         Model::Draw(hModel_);
     }
 
-    // ImGui (ƒfƒoƒbƒN—p)
+    // ImGui (ãƒ‡ãƒãƒƒã‚¯ç”¨)
     {
-        //// ======= e‚ÌˆÊ’uÀ•W =======
+        //// ======= éŠƒã®ä½ç½®åº§æ¨™ =======
         //ImGui::Begin("Gun_position");
         //ImGui::InputFloat("pos.X", &position_[0].x);
         //ImGui::InputFloat("pos.Y", &position_[0].y);
         //ImGui::InputFloat("pos.Z", &position_[0].z);
         //ImGui::End();
-        //// ======= e‚Ì‰ñ“] =======
+        //// ======= éŠƒã®å›è»¢ =======
         //ImGui::Begin("Gun_rotate");
         //ImGui::InputFloat("rot.X", &rotate_[0].x);
         //ImGui::InputFloat("rot.Y", &rotate_[0].y);
         //ImGui::InputFloat("rot.Z", &rotate_[0].z);
         //ImGui::End();
-        //// ======= e‚ÌŠg‘å—¦ =======
+        //// ======= éŠƒã®æ‹¡å¤§ç‡ =======
         //ImGui::Begin("Gun_scale");
         //ImGui::InputFloat("sca.X", &scale_[0].x);
         //ImGui::InputFloat("sca.Y", &scale_[0].y);
@@ -118,26 +119,26 @@ void Gun::Release()
 
 void Gun::Move()
 {
-    // ƒRƒ“ƒgƒ[ƒ‰[‘Î‰
+    // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼å¯¾å¿œ
     for (int i = 0; i < PLAYER_NUM; i++)
     {
-        //ˆÚ“®ƒxƒNƒgƒ‹
+        //ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«
         XMFLOAT3 moveVector = Input::GetPadStickL(i);
 
-        // XMFLOAT3 ‚©‚ç float ‚Ö‚Ì•ÏŠ·‚ª•K—v
+        // XMFLOAT3 ã‹ã‚‰ float ã¸ã®å¤‰æ›ãŒå¿…è¦
         rotate_[i].z += moveVector.y * Rot_Z_Speed;
         rotate_[i].y += moveVector.x * Rot_Y_Speed;
     }
 
     // 1P
-    if (Input::IsKey(DIK_W)) rotate_[PLAYER_1].z += Rot_Z_Speed; //ã
-    if (Input::IsKey(DIK_S)) rotate_[PLAYER_1].z -= Rot_Z_Speed; //‰º
-    if (Input::IsKey(DIK_D)) rotate_[PLAYER_1].y += Rot_Y_Speed; //‰Eù‰ñ
-    if (Input::IsKey(DIK_A)) rotate_[PLAYER_1].y -= Rot_Y_Speed; //¶ù‰ñ
+    if (Input::IsKey(DIK_W)) rotate_[PLAYER_1].z += Rot_Z_Speed; //ä¸Š
+    if (Input::IsKey(DIK_S)) rotate_[PLAYER_1].z -= Rot_Z_Speed; //ä¸‹
+    if (Input::IsKey(DIK_D)) rotate_[PLAYER_1].y += Rot_Y_Speed; //å³æ—‹å›
+    if (Input::IsKey(DIK_A)) rotate_[PLAYER_1].y -= Rot_Y_Speed; //å·¦æ—‹å›
 
-    // 2P ¦ƒfƒoƒbƒO—p
-    if (Input::IsKey(DIK_I)) rotate_[PLAYER_2].z += Rot_Z_Speed; //ã
-    if (Input::IsKey(DIK_K)) rotate_[PLAYER_2].z -= Rot_Z_Speed; //‰º
-    if (Input::IsKey(DIK_L)) rotate_[PLAYER_2].y += Rot_Y_Speed; //‰Eù‰ñ
-    if (Input::IsKey(DIK_J)) rotate_[PLAYER_2].y -= Rot_Y_Speed; //¶ù‰ñ
+    // 2P â€»ãƒ‡ãƒãƒƒã‚°ç”¨
+    if (Input::IsKey(DIK_I)) rotate_[PLAYER_2].z += Rot_Z_Speed; //ä¸Š
+    if (Input::IsKey(DIK_K)) rotate_[PLAYER_2].z -= Rot_Z_Speed; //ä¸‹
+    if (Input::IsKey(DIK_L)) rotate_[PLAYER_2].y += Rot_Y_Speed; //å³æ—‹å›
+    if (Input::IsKey(DIK_J)) rotate_[PLAYER_2].y -= Rot_Y_Speed; //å·¦æ—‹å›
 }
