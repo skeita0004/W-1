@@ -8,15 +8,20 @@ VirtualCameraPersp::VirtualCameraPersp(const CameraType _type,
                                        const float      _fovAngleDeg,
                                        const float      _nearClip,
                                        const float      _farClip) :
-                                       cameraType  (_type),
-                                       upDir_      (_upDir),
-                                       fovAngleDeg_(_fovAngleDeg),
-                                       nearClip_   (_nearClip),
-                                       farClip_    (_farClip)
+                                       cameraType      (_type),
+                                       transform_      (),
+                                       targetTransform_(),
+                                       upDir_          (_upDir),
+                                       fovAngleDeg_    (_fovAngleDeg),
+                                       nearClip_       (_nearClip),
+                                       farClip_        (_farClip),
+                                       matProjection_  (),
+                                       matView_        (),
+                                       matBillboard_   ()
 {
 }
 
-void VirtualCameraPersp::Init()
+void VirtualCameraPersp::Initialize()
 {
     matProjection_ = XMMatrixIdentity();
     matView_       = XMMatrixIdentity();

@@ -85,8 +85,7 @@ namespace EffekseerLib
         //DirectX::XMMATRIX mat = DirectX::XMMatrixPerspectiveFovLH(Camera::DefCam.fov_,
         //    Camera::DefCam.aspect_,
         //    Camera::DefCam.near_, Camera::DefCam.far_);
-        CameraSet cameraSet{};
-        const auto DefaultCamera{cameraSet.GetVirtualCamera(cameraSet.hNormalCamera)};
+        const auto DefaultCamera{CameraSet::GetCurrent()};
         DirectX::XMMATRIX mat = DefaultCamera->GetProjectionMat();
 
         if (transpose)
@@ -100,8 +99,7 @@ namespace EffekseerLib
         //DirectX::XMMATRIX mat = DirectX::XMMatrixLookAtLH(
         //    Camera::DefCam.position_, Camera::DefCam.target_, Camera::DefCam.upvector_
         //);
-        CameraSet cameraSet{};
-        const auto DefaultCamera{cameraSet.GetVirtualCamera(cameraSet.hNormalCamera)};
+        const auto DefaultCamera{CameraSet::GetCurrent()};
         DirectX::XMMATRIX mat = DefaultCamera->GetViewMat();
 
         if (transpose)

@@ -3,11 +3,16 @@
 #include "VirtualCameraOrtho.hpp"
 #include "SafeCleaning.hpp"
 
-CameraSet::CameraSet()
+namespace
 {
+    // このハンドルは、任意のクラスで作成したカメラを、
+    // クラスを横断して使えるようにするためのもの
+    int hCurrent_{0};
+
+    std::vector<IVirtualCamera*> instances_{};
 }
 
-void CameraSet::Init()
+void CameraSet::Initialize()
 {
     hNormalCamera = Create(NORMAL,
                            XMFLOAT3(0, 1, 0),
@@ -25,9 +30,9 @@ void CameraSet::Init()
                                0.1f,
                                1000.f);
 
-    instances_[hNormalCamera]->Init();
-    instances_[hShadowCamera]->Init();
-    instances_[hReflectionCamera]->Init();
+    instances_[hNormalCamera]->Initialize();
+    instances_[hShadowCamera]->Initialize();
+    instances_[hReflectionCamera]->Initialize();
 }
 
 void CameraSet::Release()
@@ -51,7 +56,7 @@ int CameraSet::Create(const CameraType _type,
                                                 _nearClip,
                                                 _farClip));
     int handle = instances_.size() - 1;
-    instances_[handle]->Init();
+    instances_[handle]->Initialize();
 
     return handle;
 }
@@ -68,7 +73,7 @@ int CameraSet::CreateOrtho(const CameraType _type,
                                                 _nearClip,
                                                 _farClip));
     int handle = instances_.size() - 1;
-    instances_[handle]->Init();
+    instances_[handle]->Initialize();
 
     return handle;
 }
