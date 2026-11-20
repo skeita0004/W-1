@@ -30,21 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\game\ClearScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\OverScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\PlayScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\TestScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\TitleScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="source\engine\Audio.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -224,18 +209,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\game\TitleScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\TestScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\PlayScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\OverScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="source\engine\Audio.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
