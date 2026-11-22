@@ -157,8 +157,6 @@
       <Filter>Library\effekseer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\ChickenRace\ChickenRaceScene.cpp" />
-    <ClCompile Include="Source\Game\ChickenRace\ChickenRaceResultScene.cpp" />
-    <ClCompile Include="Source\Game\ChickenRace\TitleScene.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\BackGround.cpp">
       <Filter>Game\ChickenRace</Filter>
     </ClCompile>
@@ -186,9 +184,6 @@
     <ClCompile Include="Source\Game\ChickenRace\Table.cpp">
       <Filter>Game\ChickenRace</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\ChickenRace\TitleLogo.cpp">
-      <Filter>Game\ChickenRace</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game\ChickenRace\TitleMessage.cpp">
       <Filter>Game\ChickenRace</Filter>
     </ClCompile>
@@ -201,12 +196,7 @@
     <ClCompile Include="Source\Game\ChickenRace\WaterLevelHider.cpp">
       <Filter>Game\ChickenRace</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\HorseRace\Horse.cpp">
-      <Filter>Game\HorseRace</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\HorseRace\Race.cpp">
-      <Filter>Game\HorseRace</Filter>
-    </ClCompile>
+    <ClCompile Include="Source\Engine\FontText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\engine\Audio.hpp">
@@ -290,9 +280,6 @@
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="source\game\ClearScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\Vertex.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -372,8 +359,6 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\ChickenRace\ChickenRaceScene.hpp" />
-    <ClInclude Include="Source\Game\ChickenRace\ResultScene.hpp" />
-    <ClInclude Include="Source\Game\ChickenRace\TitleScene.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\BackGround.hpp">
       <Filter>Game\ChickenRace</Filter>
     </ClInclude>
@@ -404,9 +389,6 @@
     <ClInclude Include="Source\Game\ChickenRace\Table.hpp">
       <Filter>Game\ChickenRace</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\ChickenRace\TitleLogo.hpp">
-      <Filter>Game\ChickenRace</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game\ChickenRace\TitleMessage.hpp">
       <Filter>Game\ChickenRace</Filter>
     </ClInclude>
@@ -419,15 +401,10 @@
     <ClInclude Include="Source\Game\ChickenRace\WaterLevelHider.hpp">
       <Filter>Game\ChickenRace</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\HorseRace\Horse.hpp">
-      <Filter>Game\HorseRace</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\HorseRace\Race.hpp">
-      <Filter>Game\HorseRace</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\DeltaTime.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\FontText.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
