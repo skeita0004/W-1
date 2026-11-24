@@ -15,7 +15,7 @@ Stage::Stage(GameObject* parent)
 
 void Stage::Initialize()
 {
-	hModel_ = Model::Load("Model/Game04_StageFloor00.fbx");
+	hModel_ = Model::Load("Model/HorseRace/Game04_StageFloor00.fbx");
 	//assert(hModel_ >= 0);
 	transform_.position = XMFLOAT3(0, 0, 0);
 	transform_.scale = XMFLOAT3(1, 1, 50);

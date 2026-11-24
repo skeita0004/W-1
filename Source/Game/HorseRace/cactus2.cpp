@@ -1,4 +1,4 @@
-#include "cactus2.hpp"
+﻿#include "cactus2.hpp"
 
 cactus2::cactus2(GameObject* parent)
 	:Obstacle(parent, "cactus2")
@@ -7,7 +7,7 @@ cactus2::cactus2(GameObject* parent)
 
 void cactus2::Initialize()
 {
-	hModel_ = Model::Load("Model/cactus01.fbx");
+	hModel_ = Model::Load("Model/HorseRace/cactus01.fbx");
 
 	SetBoxCollider(XMFLOAT3(0.0f, 0.0f, 0.0f), { 200, 200, 100 });
 }

@@ -1,4 +1,4 @@
-#include "Tumbleweed.hpp"
+﻿#include "Tumbleweed.hpp"
 
 Tumbleweed::Tumbleweed(GameObject* parent)
 	:Obstacle(parent, "Tumbleweed")
@@ -7,7 +7,7 @@ Tumbleweed::Tumbleweed(GameObject* parent)
 
 void Tumbleweed::Initialize()
 {
-	hModel_ = Model::Load("Model/Tumbleweed00.fbx");
+	hModel_ = Model::Load("Model/HorseRace/Tumbleweed00.fbx");
 }
 
 void Tumbleweed::Update()

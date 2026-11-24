@@ -201,6 +201,8 @@
     <ClCompile Include="Source\Game\HorseRace\Tumbleweed.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
+    <ClInclude Include="Source\Engine\FontText.hpp" />
     <ClInclude Include="Source\Engine\glTF.hpp" />
     <ClInclude Include="Source\Engine\glTFParts.hpp" />
     <ClInclude Include="Source\Engine\InputBinding.hpp" />

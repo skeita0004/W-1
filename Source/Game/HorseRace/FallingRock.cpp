@@ -1,4 +1,4 @@
-#include "FallingRock.hpp"
+﻿#include "FallingRock.hpp"
 
 FallingRock::FallingRock(GameObject* parent)
 	:Obstacle(parent, "FallingRock")
@@ -7,7 +7,7 @@ FallingRock::FallingRock(GameObject* parent)
 
 void FallingRock::Initialize()
 {
-	hModel_ = Model::Load("Assets/Model/Rock01.fbx");
+	hModel_ = Model::Load("Model/HorseRace/Rock01.fbx");
 }
 
 void FallingRock::Update()

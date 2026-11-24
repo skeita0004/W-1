@@ -2,6 +2,7 @@
 #include "Model.hpp"
 #include "CameraSet.hpp"
 #include "Input.hpp"
+#include "DeltaTime.hpp"
 #include <imgui.h>
 
 Horse::Horse(GameObject* parent)
@@ -12,9 +13,10 @@ Horse::Horse(GameObject* parent)
 
 void Horse::Initialize()
 {
-	hModel_ = Model::Load("Model/Horse00.fbx");
+	hModel_ = Model::Load("Model/HorseRace/HorsePlush.fbx");
 	assert(hModel_ >= 0);
 	transform_.position = XMFLOAT3(0, 0, 0);
+    transform_.scale = XMFLOAT3(10, 10, 10);
 
 	speed_ = 0.5f;
 
@@ -29,7 +31,7 @@ void Horse::Initialize()
 void Horse::Update()
 {
 	static float dt;
-	dt += ;
+	dt += DeltaTime::DeltaTime();
 
 	if (knockbackTime_ > 0.0f)
 	{
@@ -66,13 +68,14 @@ void Horse::Update()
 		}
 	}
 
-	
+	const auto& camera{CameraSet::GetVirtualCamera(CameraSet::hNormalCamera)};
+    camera->GetTransform().position = XMFLOAT3(transform_.position.x, transform_.position.y + 200.0f, transform_.position.z - 500.0f);
+    camera->GetTargetTransform().position = XMFLOAT3(transform_.position.x, transform_.position.y + 100.0f, transform_.position.z + 500.0f);
 
 	ImGui::Begin("Horse Info");
 	ImGui::InputFloat("Position X", &transform_.position.x);
 	ImGui::InputFloat("Position Y", &transform_.position.y);
 	ImGui::InputFloat("Position Z", &transform_.position.z);
-	ImGui::InputFloat("delta",&deltaTime);
 	ImGui::InputFloat("Speed", &speed_);
 	ImGui::Text("Is Hit: %s", isHit_ ? "true" : "false");
 	ImGui::End();
@@ -114,10 +117,10 @@ void Horse::Jump()
 		isGround_ = false;
 	}
 	// 重力
-	velocity_ += gravity_ * deltaTime;
+	velocity_ += gravity_ * DeltaTime::DeltaTime();
 
 	// 座標更新
-	transform_.position.y += velocity_ * deltaTime;
+	transform_.position.y += velocity_ * DeltaTime::DeltaTime();
 
 	// 着地判定
 	if (transform_.position.y <= 0.0f)
@@ -132,10 +135,10 @@ void Horse::NockBack()
 {
 	if (knockbackTime_ > 0.0f)
 	{
-		transform_.position.x += knockbackVelocity_.x * deltaTime;
-		transform_.position.z += knockbackVelocity_.z * deltaTime;
+		transform_.position.x += knockbackVelocity_.x * DeltaTime::DeltaTime();
+		transform_.position.z += knockbackVelocity_.z * DeltaTime::DeltaTime();
 
-		knockbackTime_ -= deltaTime;
+		knockbackTime_ -= DeltaTime::DeltaTime();
 
 		return; // 通常移動を行わない
 	}

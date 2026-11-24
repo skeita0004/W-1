@@ -7,7 +7,7 @@ Fence::Fence(GameObject* parent)
 
 void Fence::Initialize()
 {
-	hModel_ = Model::Load("Model/HalfFence.fbx");
+	hModel_ = Model::Load("Model/HorseRace/HalfFence.fbx");
 	assert(hModel_ >= 0);
 	transform_.position = XMFLOAT3(0, 0, 1000);
 

@@ -25,6 +25,15 @@
     <Filter Include="Library\effekseer">
       <UniqueIdentifier>{bb9fb69c-c1c1-4355-8393-5c4298975380}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\HorseRace\PlayScene">
+      <UniqueIdentifier>{514b6d37-33b9-4aff-82c3-8fe32c8787ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\HorseRace\ResultScene">
+      <UniqueIdentifier>{2037076a-be16-4597-b58e-a8f508fa7711}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\HorseRace\PlayScene\Obstacle">
+      <UniqueIdentifier>{94090429-182e-4833-95c7-12edbc9eafae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\engine\Audio.cpp">
@@ -150,8 +159,45 @@
     <ClCompile Include="Library\effekseerlib\EffekseerVFX.cpp">
       <Filter>Library\effekseer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\FontText.cpp" />
-    <ClCompile Include="Source\Engine\DeltaTime.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\cactus1.cpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\cactus2.cpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\DeltaTime.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\FallingRock.cpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\Fence.cpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\FontText.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\Horse.cpp">
+      <Filter>Game\HorseRace\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\Obstacle.cpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\RaceScene.cpp">
+      <Filter>Game\HorseRace\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\ResultScene.cpp">
+      <Filter>Game\HorseRace\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\Rock.cpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\Stage.cpp">
+      <Filter>Game\HorseRace\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HorseRace\Tumbleweed.cpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\engine\Audio.hpp">
@@ -313,8 +359,45 @@
     <ClInclude Include="Source\Engine\InputBinding.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\FontText.hpp" />
-    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\cactus1.hpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\cactus2.hpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\DeltaTime.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\FallingRock.hpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\Fence.hpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\FontText.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\Horse.hpp">
+      <Filter>Game\HorseRace\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\Obstacle.hpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\RaceScene.hpp">
+      <Filter>Game\HorseRace\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\ResultScene.hpp">
+      <Filter>Game\HorseRace\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\Rock.hpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\Stage.hpp">
+      <Filter>Game\HorseRace\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HorseRace\Tumbleweed.hpp">
+      <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

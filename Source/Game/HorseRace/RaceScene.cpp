@@ -10,7 +10,7 @@ RaceScene::RaceScene(GameObject* parent)
 
 void RaceScene::Initialize()
 {
-	hImage_ = Image::Load("Picture/yuuhi.jpg");
+	hImage_ = Image::Load("Picture/HorseRace/yuuhi.jpg");
 
 	Instantiate<Stage>(this);
 

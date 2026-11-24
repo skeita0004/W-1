@@ -16,7 +16,7 @@ void CameraSet::Initialize()
 {
     hNormalCamera = Create(NORMAL,
                            XMFLOAT3(0, 1, 0),
-                           120.f,
+                           90.0f,
                            0.1f,
                            1000.f);
     hShadowCamera = CreateOrtho(SHADOW,
