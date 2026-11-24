@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Obstacle.hpp"
 
 class Tumbleweed : public Obstacle

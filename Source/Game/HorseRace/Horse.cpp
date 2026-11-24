@@ -69,8 +69,8 @@ void Horse::Update()
 	}
 
 	const auto& camera{CameraSet::GetVirtualCamera(CameraSet::hNormalCamera)};
-    camera->GetTransform().position = XMFLOAT3(transform_.position.x, 500.0f, transform_.position.z - 100.0f);
-    camera->GetTargetTransform().position = XMFLOAT3(transform_.position.x, 100.0f, transform_.position.z + 200.0f);
+    camera->GetTransform().position = XMFLOAT3(0.0f,  500.0f, transform_.position.z - 100.0f);
+    camera->GetTargetTransform().position = XMFLOAT3(0.0f, 100.0f, transform_.position.z + 200.0f);
 
 	ImGui::Begin("Horse Info");
 	ImGui::InputFloat("Position X", &transform_.position.x);

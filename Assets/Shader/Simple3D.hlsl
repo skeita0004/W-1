@@ -134,11 +134,11 @@ typedef PS_IN VS_OUT;
 //───────────────────────────────────────
 VS_OUT VS(const VS_IN _vsInput)
 {
-	//ピクセルシェーダーへ渡す情報
+ //ピクセルシェーダーへ渡す情報
     VS_OUT vsOutput;
 
-	//ローカル座標に、ワールド・ビュー・プロジェクション行列をかけて
-	//スクリーン座標に変換し、ピクセルシェーダーへ
+ //ローカル座標に、ワールド・ビュー・プロジェクション行列をかけて
+ //スクリーン座標に変換し、ピクセルシェーダーへ
     vsOutput.pos = _vsInput.pos;
     vsOutput.pos = mul(vsOutput.pos, cb_matWVP);
     
@@ -237,7 +237,7 @@ float4 PS(PS_IN _psInput) : SV_Target
         specularFactor = pow(saturate(dot(reflection, eyeVector)), cb_shininess);
     }
     
-    float ambientFactor = 0.0f;
+    float ambientFactor = 0.4f;
     float3 ambientLight = float3(ambientFactor, ambientFactor, ambientFactor) * diffuse.xyz;
     
     float3 specularLight = saturate(specularFactor * cb_specularColor);
@@ -258,3 +258,5 @@ float4 PS(PS_IN _psInput) : SV_Target
     
     return outPutColor;
 }
+
+ 
