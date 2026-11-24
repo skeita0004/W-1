@@ -123,7 +123,7 @@ private:
     Weight* pWeightArray_;	// ウェイト情報（頂点の対する各関節の影響度合い）
 
     /////////privateな関数（Init関数から呼ばれる）//////////////////////////
-    void InitVertex(fbxsdk::FbxMesh* mesh);	//頂点バッファ準備
+    void InitVertex(fbxsdk::FbxMesh* mesh, fbxsdk::FbxNode* node);	//頂点バッファ準備
     void InitMaterial(fbxsdk::FbxNode* pNode);	//マテリアル準備
     void InitTexture(fbxsdk::FbxSurfaceMaterial* pMaterial, const int32_t& i);	//テクスチャ準備(InitMaterial内から呼び出される)
     void InitIndex(fbxsdk::FbxMesh* mesh);		//インデックスバッファ準備

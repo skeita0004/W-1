@@ -89,8 +89,12 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
     ImGui::CreateContext();
 
     ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags or_eq ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags or_eq ImGuiConfigFlags_ViewportsEnable;
     io.ConfigFlags or_eq ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags or_eq ImGuiConfigFlags_NavEnableGamepad;
+    io.ConfigViewportsNoAutoMerge = true;
+    io.ConfigViewportsNoTaskBarIcon = true;
 
     ImGui_ImplWin32_Init(hWnd);
     ImGui_ImplDX11_Init(Direct3D::pDevice_, Direct3D::pContext_);
@@ -174,6 +178,8 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
                 // ImGui描画 TODO:ウィンドウ外にも出せるようにしろ
                 ImGui::Render();
                 ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+                ImGui::UpdatePlatformWindows();
+                ImGui::RenderPlatformWindowsDefault();
 
                 Direct3D::EndDraw();
 

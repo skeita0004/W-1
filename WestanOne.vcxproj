@@ -102,6 +102,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(ProjectDir)\Library\effekseerlib\effekseer\include\Effekseer;$(ProjectDir)\Library\effekseerlib;$(Projectdir)\Library\fastgltf;$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;$(ProjectDir)\Library\ImGui\include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -131,6 +132,7 @@
       <OpenMPSupport>false</OpenMPSupport>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(ProjectDir)\Library\effekseerlib\effekseer\include\Effekseer;$(ProjectDir)\Library\effekseerlib;$(Projectdir)\Library\fastgltf;$(ProjectDir)\Source\Engine;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.9\include;$(ProjectDir)\Library\ImGui\include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -186,6 +188,7 @@
     <ClCompile Include="source\engine\Transform.cpp" />
     <ClCompile Include="source\engine\VirtualCameraOrtho.cpp" />
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
+    <ClCompile Include="Source\Game\TestScene.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\ClearScene.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\ControllerTest.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\Game01Player.cpp" />
@@ -253,6 +256,7 @@
     <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
+    <ClInclude Include="Source\Game\TestScene.hpp" />
     <ClInclude Include="Source\Game\QuickDraw\ClearScene.hpp" />
     <ClInclude Include="Source\Game\QuickDraw\ControllerTest.hpp" />
     <ClInclude Include="Source\Game\QuickDraw\Game01Player.hpp" />

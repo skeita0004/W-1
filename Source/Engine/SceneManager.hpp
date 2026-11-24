@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include "GameObject.hpp"
 
-//#include "../Game/TestScene.hpp"
-//#include "../Game/TitleScene.hpp"
-#include "../Game/QuickDraw/01PlayScene.hpp"
-//#include "../Game/ClearScene.hpp"
-//#include "../Game/OverScene.hpp"
+#include "../Game/TestScene.hpp"
+#include "../Game/TitleScene.hpp"
+#include "../Game/PlayScene.hpp"
+#include "../Game/ClearScene.hpp"
+#include "../Game/OverScene.hpp"
 
 
 #include <array>
@@ -30,6 +30,7 @@ public:
     //ゲームに登場するシーン
     enum class SceneID : int
     {
+        TEST = 0,
         //TEST = 0,
         //TITLE,
         QUICK_DRAW_SCENE=0,
@@ -51,6 +52,7 @@ private:
         QuickDrawScene
         //ClearScene,
         //OverScene
+        TestScene
     >;
 
     // SceneIDとSceneListの対応付け
@@ -71,6 +73,7 @@ private:
     static inline const size_t sceneNum{static_cast<size_t>(SceneID::MAX_SCENE_ID)};
     static const inline std::array<SceneFactoryFn, sceneNum> sceneTable =
     {
+        &SceneManager::InstantiateByID<SceneID::TEST>
         //&SceneManager::InstantiateByID<SceneID::TEST>,
         //&SceneManager::InstantiateByID<SceneID::TITLE>,
         //&SceneManager::InstantiateByID<SceneID::PLAY>,

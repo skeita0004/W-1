@@ -100,5 +100,5 @@ void Collider::Draw(XMFLOAT3 position)
 	transform.scale = size_;
 	transform.Calculation();
 	Model::SetTransform(hDebugModel_, transform);
-	Renderer::Draw(hDebugModel_);
+	Renderer::DrawDebug(hDebugModel_);
 }
