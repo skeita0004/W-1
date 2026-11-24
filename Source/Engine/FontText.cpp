@@ -1,4 +1,4 @@
-#include "FontText.hpp"
+﻿#include "FontText.hpp"
 #include <imgui.h>
 
 /*
@@ -58,8 +58,15 @@ void FontText::Draw(float x, float y, const char* text, unsigned int color) cons
 	if (!font_ || !text || !ImGui::GetCurrentContext())
 		return;
 
-	ImGui::GetForegroundDrawList()->AddText(
-		font_, fontSize_, ImVec2(x, y), static_cast<ImU32>(color), text);
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+	ImGui::GetForegroundDrawList(viewport)->AddText(
+		font_,
+		fontSize_,
+		ImVec2(viewport->Pos.x + x, viewport->Pos.y + y),
+		static_cast<ImU32>(color),
+		text
+	);
 }
 
 void FontText::Release()

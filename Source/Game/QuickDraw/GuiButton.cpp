@@ -74,8 +74,11 @@ void GuiButton::Draw()
         static_cast<void*>(this)
     );
 
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+    ImGui::SetNextWindowViewport(viewport->ID);
     ImGui::SetNextWindowPos(
-        ToImVec2(x, y),
+        ImVec2(viewport->Pos.x + x, viewport->Pos.y + y),
         ImGuiCond_Always
     );
 
