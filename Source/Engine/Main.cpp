@@ -89,6 +89,7 @@ int WINAPI WinMain(_In_     HINSTANCE hInstance,
     ImGui::CreateContext();
 
     ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags or_eq 
     io.ConfigFlags or_eq ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags or_eq ImGuiConfigFlags_NavEnableGamepad;
 
