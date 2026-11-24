@@ -28,10 +28,8 @@ public:
     enum class SceneID : int
     {
         TEST = 0,
-        TITLE,
         PLAY,
-        CLEAR,
-        OVER,
+        RESULT,
         MAX_SCENE_ID
     };
 
@@ -44,10 +42,8 @@ private:
     // 型の配列として扱う
     using SceneList = std::tuple<
         TestScene,
-        TitleScene,
-        PlayScene,
-        ClearScene,
-        OverScene
+        RaceScene,
+        ResultScene
     >;
 
     // SceneIDとSceneListの対応付け
@@ -69,10 +65,8 @@ private:
     static const inline std::array<SceneFactoryFn, sceneNum> sceneTable =
     {
         &SceneManager::InstantiateByID<SceneID::TEST>,
-        &SceneManager::InstantiateByID<SceneID::TITLE>,
         &SceneManager::InstantiateByID<SceneID::PLAY>,
-        &SceneManager::InstantiateByID<SceneID::CLEAR>,
-        &SceneManager::InstantiateByID<SceneID::OVER>
+        &SceneManager::InstantiateByID<SceneID::RESULT>
     };
 
     GameObject* InstantiateScene(SceneID _sid,
