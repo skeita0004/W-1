@@ -26,7 +26,7 @@ public:
     enum class SceneID : int
     {
         TEST = 0,
-        CHICKEN_RACE_SCENE = 0,
+        CHICKEN_RACE_SCENE,
         MAX_SCENE_ID
     };
 
@@ -38,7 +38,7 @@ private:
 
     // 型の配列として扱う
     using SceneList = std::tuple<
-        TestScene
+        TestScene,
         ChickenRaceScene
     >;
 
@@ -60,7 +60,7 @@ private:
     static inline const size_t sceneNum{static_cast<size_t>(SceneID::MAX_SCENE_ID)};
     static const inline std::array<SceneFactoryFn, sceneNum> sceneTable =
     {
-        &SceneManager::InstantiateByID<SceneID::TEST>
+        &SceneManager::InstantiateByID<SceneID::TEST>,
         &SceneManager::InstantiateByID<SceneID::CHICKEN_RACE_SCENE>
     };
 
