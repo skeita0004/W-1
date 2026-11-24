@@ -761,6 +761,20 @@ namespace Direct3D
         if (NULL == pRenderTargetView_) return;
         if (NULL == pSwapChain_) return;
 
+        // ビューポートの設定
+//レンダリング結果を表示する範囲
+        D3D11_VIEWPORT vp;
+        vp.Width = (float)screenWidth_;			//幅
+        vp.Height = (float)screenHeight_;		//高さ
+        vp.MinDepth = 0.0f;		//手前
+        vp.MaxDepth = 1.0f;		//奥
+        vp.TopLeftX = 0;		//左
+        vp.TopLeftY = 0;		//上
+
+
+        pContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView);            // 描画先を設定（今後はレンダーターゲットビューを介して描画してね）
+        pContext_->RSSetViewports(1, &vp);                                      // ビューポートのセット
+
         //背景の色
         const float clearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f };//R,G,B,A
 

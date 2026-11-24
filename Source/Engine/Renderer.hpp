@@ -124,9 +124,9 @@ namespace Renderer
 
     void DrawReflectionMap(Transform& _transform,
                            int32_t                           _materialCount,
-                           ID3D11Buffer* _pVertexBuffer,
-                           std::span<ID3D11Buffer*>          _pIndexBuffer,
-                           std::span<int32_t>                _indexCountArr,
+                           ID3D11Buffer*         _pVertexBuffer,
+                           std::span<ID3D11Buffer*>     _pIndexBuffer,
+                           std::span<int32_t>           _indexCountArr,
                            const std::vector<Material>& _materialList);
 
     //void DrawReflect(Transform& _transform,

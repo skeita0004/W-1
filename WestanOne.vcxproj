@@ -199,6 +199,7 @@
     <ClCompile Include="Source\Game\HorseRace\Rock.cpp" />
     <ClCompile Include="Source\Game\HorseRace\Stage.cpp" />
     <ClCompile Include="Source\Game\HorseRace\Tumbleweed.cpp" />
+    <ClCompile Include="Source\Game\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\DeltaTime.hpp" />
@@ -256,17 +257,6 @@
     <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\cactus1.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\cactus2.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\FallingRock.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Fence.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Horse.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Obstacle.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\RaceScene.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\ResultScene.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Rock.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Stage.hpp" />
-    <ClInclude Include="Source\Game\HorseRace\Tumbleweed.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
