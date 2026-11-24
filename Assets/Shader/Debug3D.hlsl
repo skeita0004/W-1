@@ -1,16 +1,16 @@
-// ’è”ƒoƒbƒtƒ@(CPU‘¤‚©‚ç‚Ì’ló‚¯æ‚èê)
+// å®šæ•°ãƒãƒƒãƒ•ã‚¡(CPUå´ã‹ã‚‰ã®å€¤å—ã‘å–ã‚Šå ´)
 cbuffer global
 {
-	float4x4	WVP;    // •ÏŠ·s—ñ
+	row_major float4x4	WVP;    // å¤‰æ›è¡Œåˆ—
 };
 
-// ’¸“_ƒVƒF[ƒ_
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€
 float4 VS(float4 pos : POSITION) : SV_POSITION
 {
 	return mul(pos, WVP);	
 }
 
-// ƒsƒNƒZƒ‹ƒVƒF[ƒ_
+// ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€
 float4 PS(float4 pos : SV_POSITION) : SV_Target
 {
 	return float4(1, 1, 1, 0.3);
