@@ -2,12 +2,13 @@
 #include "GameObject.hpp"
 
 #include "../Game/TestScene.hpp"
-#include "../Game/TitleScene.hpp"
-#include "../Game/PlayScene.hpp"
-#include "../Game/ClearScene.hpp"
-#include "../Game/OverScene.hpp"
+//#include "../Game/TitleScene.hpp"
+//#include "../Game/PlayScene.hpp"
+//#include "../Game/ClearScene.hpp"
+//#include "../Game/OverScene.hpp"
+ #include "../Game/QuickDraw/01PlayScene.hpp"
 
-
+#include <tuple>
 #include <array>
 
 
@@ -30,10 +31,10 @@ public:
     //ゲームに登場するシーン
     enum class SceneID : int
     {
-        TEST = 0,
+        TEST=0,
         //TEST = 0,
         //TITLE,
-        QUICK_DRAW_SCENE=0,
+        QUICK_DRAW_SCENE,
         //CLEAR,
         //OVER,
         MAX_SCENE_ID
@@ -47,12 +48,13 @@ private:
 
     // 型の配列として扱う
     using SceneList = std::tuple<
+        TestScene,
         //TestScene,
         //TitleScene,
         QuickDrawScene
         //ClearScene,
         //OverScene
-        TestScene
+        
     >;
 
     // SceneIDとSceneListの対応付け
@@ -73,12 +75,7 @@ private:
     static inline const size_t sceneNum{static_cast<size_t>(SceneID::MAX_SCENE_ID)};
     static const inline std::array<SceneFactoryFn, sceneNum> sceneTable =
     {
-        &SceneManager::InstantiateByID<SceneID::TEST>
-        //&SceneManager::InstantiateByID<SceneID::TEST>,
-        //&SceneManager::InstantiateByID<SceneID::TITLE>,
-        //&SceneManager::InstantiateByID<SceneID::PLAY>,
-        //&SceneManager::InstantiateByID<SceneID::CLEAR>,
-        //&SceneManager::InstantiateByID<SceneID::OVER>
+        &SceneManager::InstantiateByID<SceneID::TEST>,
         &SceneManager::InstantiateByID<SceneID::QUICK_DRAW_SCENE>
     };
 
