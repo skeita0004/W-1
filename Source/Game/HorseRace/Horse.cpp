@@ -29,7 +29,7 @@ void Horse::Initialize()
 void Horse::Update()
 {
 	static float dt;
-	dt += deltaTime;
+	dt += ;
 
 	if (knockbackTime_ > 0.0f)
 	{
