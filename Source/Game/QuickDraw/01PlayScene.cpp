@@ -9,6 +9,8 @@
 #include "FontText.hpp"
 #include "GUIbutton.hpp"
 #include <Imgui.h>
+#include <cassert>
+#include <CameraSet.hpp>
 
 //コンストラクタ
 QuickDrawScene::QuickDrawScene(GameObject * parent)
@@ -19,6 +21,11 @@ QuickDrawScene::QuickDrawScene(GameObject * parent)
 //初期化
 void QuickDrawScene::Initialize()
 {
+    //カメラ設定
+    auto camera = CameraSet::GetCurrent();
+    camera->GetTransform().position = XMFLOAT3(0.0f, 0.8f, -4.0f);
+    camera->GetTargetTransform().position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+
     bgmHandle_ = Audio::Load("Audio/QuickDraw/Game01Bgm00.wav", true);
     Audio::Play(bgmHandle_);
     //左プレイヤー
@@ -55,6 +62,7 @@ void QuickDrawScene::Initialize()
         &japaneseText_,
         &timer_
     );
+
 }
 
 //更新

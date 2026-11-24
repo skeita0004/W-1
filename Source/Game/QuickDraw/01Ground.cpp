@@ -19,6 +19,7 @@ void Ground::Initialize()
 	//モデルデータのロード
 	hModel_ = Model::Load("Models/QuickDraw/Game01_Bg00.fbx");
 	transform_.scale = XMFLOAT3(5.0f, 0.01f, 2.0f);
+    transform_.rotate = XMFLOAT3(0.0f, 0.0f, 0.0f);	
 	assert(hModel_ >= 0);
 }
 
