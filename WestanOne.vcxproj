@@ -274,6 +274,7 @@
     <ClInclude Include="Source\Game\ChickenRace\WaterFlowOrigin.hpp" />
     <ClInclude Include="Source\Game\ChickenRace\WaterLevelHider.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
+    <ClInclude Include="Source\Game\TestScene.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
