@@ -27,21 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\game\ClearScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\OverScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\PlayScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\TestScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\game\TitleScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="source\engine\Audio.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -117,9 +102,6 @@
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Timer.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Library\ImGui\cpp\imgui.cpp">
       <Filter>Library\ImGui</Filter>
     </ClCompile>
@@ -168,20 +150,10 @@
     <ClCompile Include="Library\effekseerlib\EffekseerVFX.cpp">
       <Filter>Library\effekseer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\FontText.cpp" />
+    <ClCompile Include="Source\Engine\DeltaTime.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\game\TitleScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\TestScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\PlayScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\game\OverScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="source\engine\Audio.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -263,12 +235,6 @@
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="source\game\ClearScene.hpp">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Timer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\Vertex.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -347,6 +313,8 @@
     <ClInclude Include="Source\Engine\InputBinding.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\FontText.hpp" />
+    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

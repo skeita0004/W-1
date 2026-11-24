@@ -64,7 +64,7 @@ HRESULT FbxParts::Init(FbxNode* pNode)
     polygonVertexCount_ = mesh->GetPolygonVertexCount();	//ポリゴン頂点インデックス数 
 
 
-    InitVertex(mesh);		//頂点バッファ準備
+    InitVertex(mesh, pNode);		//頂点バッファ準備
     InitMaterial(pNode);	//マテリアル準備
     InitIndex(mesh);		//インデックスバッファ準備
     InitSkelton(mesh);		//骨の情報を準備
@@ -74,8 +74,18 @@ HRESULT FbxParts::Init(FbxNode* pNode)
 
 
 //頂点バッファ準備
-void FbxParts::InitVertex(fbxsdk::FbxMesh* mesh)
+void FbxParts::InitVertex(fbxsdk::FbxMesh* mesh, fbxsdk::FbxNode* node)
 {
+    const bool hasSkin = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
+    FbxAMatrix nodeTransform;
+    FbxAMatrix normalTransform;
+    if (!hasSkin)
+    {
+        nodeTransform = node->EvaluateGlobalTransform();
+        normalTransform = nodeTransform.Inverse().Transpose();
+    }
+
+
     pVertexData_ = new Vertex[vertexCount_]{};
 
     for (uint32_t poly = 0; poly < polygonCount_; poly++)
@@ -87,11 +97,19 @@ void FbxParts::InitVertex(fbxsdk::FbxMesh* mesh)
 
             /////////////////////////頂点の位置/////////////////////////////////////
             FbxVector4 pos = mesh->GetControlPointAt(index);
+            if (!hasSkin)
+                pos = nodeTransform.MultT(pos);
             pVertexData_[index].position = XMFLOAT3((float)pos[0], (float)pos[1], (float)pos[2]);
 
             /////////////////////////頂点の法線/////////////////////////////////////
             FbxVector4 Normal;
-            mesh->GetPolygonVertexNormal(poly, vertex, Normal);	//ｉ番目のポリゴンの、ｊ番目の頂点の法線をゲット
+            mesh->GetPolygonVertexNormal(poly, vertex, Normal);
+            if (!hasSkin)
+            {
+                Normal[3] = 0.0;
+                Normal = normalTransform.MultT(Normal);
+                Normal.Normalize();
+            }
             pVertexData_[index].normal = XMFLOAT3((float)Normal[0], (float)Normal[1], (float)Normal[2]);
 
             ///////////////////////////頂点のＵＶ/////////////////////////////////////
@@ -452,7 +470,7 @@ void FbxParts::Skinning(FbxTime _time, SkinPartInstance& _inst) const
         const auto& w = pWeightArray_[i];
 
         // 各頂点ごとに、「影響するボーン×ウェイト値」を反映させた関節行列を作成する
-        XMMATRIX matrix{XMMatrixSet(0, 0, 0, 0, 
+        XMMATRIX matrix{XMMatrixSet(0, 0, 0, 0,
                                     0, 0, 0, 0,
                                     0, 0, 0, 0,
                                     0, 0, 0, 0)};
@@ -488,7 +506,7 @@ void FbxParts::Skinning(FbxTime _time, SkinPartInstance& _inst) const
 
     D3D11_MAPPED_SUBRESOURCE msr{};
     if (SUCCEEDED(Direct3D::pContext_->Map(_inst.pVertexBuffer, 0,
-                                 D3D11_MAP_WRITE_DISCARD, 0, &msr)))
+                                           D3D11_MAP_WRITE_DISCARD, 0, &msr)))
     {
         memcpy(msr.pData, _inst.vertices.data(), sizeof(Vertex) * vertexCount_);
         Direct3D::pContext_->Unmap(_inst.pVertexBuffer, 0);

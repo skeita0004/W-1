@@ -190,9 +190,9 @@ public:
     {
         SetRotate(transform_.rotate.x, transform_.rotate.y, z);
     }
-    void SetScale(XMFLOAT3 scale)
+    void SetScale(XMFLOAT3 _scale)
     {
-        scale = scale;
+        transform_.scale = _scale;
     }
     void SetScale(float _scale)
     {
