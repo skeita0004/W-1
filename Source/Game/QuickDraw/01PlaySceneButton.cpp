@@ -21,11 +21,11 @@ bool PlaySceneButton::Initialize(
     font_ = font;
     japaneseFont_ = japaneseFont;
     timer_ = timer;
-    buttonSeHandle_ = Audio::Load("Audio/Game01Se04.wav", false, 3);
-    winnerSeHandle_ = Audio::Load("Audio/Game01Se00.wav");
-    winnerFollowupSeHandle_ = Audio::Load("Audio/Game01Se02.wav");
-    falseStartSeHandle_ = Audio::Load("Audio/Game01Se06.wav");
-    countdownSeHandle_ = Audio::Load("Audio/Game01Se07.wav");
+    buttonSeHandle_ = Audio::Load("Audio/QuickDraw/Game01Se04.wav", false, 3);
+    winnerSeHandle_ = Audio::Load("Audio/QuickDraw/Game01Se00.wav");
+    winnerFollowupSeHandle_ = Audio::Load("Audio/QuickDraw/Game01Se02.wav");
+    falseStartSeHandle_ = Audio::Load("Audio/QuickDraw/Game01Se06.wav");
+    countdownSeHandle_ = Audio::Load("Audio/QuickDraw/Game01Se07.wav");
     SetScreenSize(screenWidth, screenHeight);
 
     startButton_.reset(new GuiButton(0, 0, 180, 56, "START"));

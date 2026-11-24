@@ -21,7 +21,6 @@ void Game01Player::Initialize()
 {
     //モデル読み込み
     hModel_ = Model::Load(modelPath_);
-
     assert(hModel_ >= 0);
 }
 

@@ -11,24 +11,24 @@
 #include <Imgui.h>
 
 //コンストラクタ
-PlayScene::PlayScene(GameObject * parent)
+QuickDrawScene::QuickDrawScene(GameObject * parent)
 	: GameObject(parent, "PlayScene")
 {
 }
 
 //初期化
-void PlayScene::Initialize()
+void QuickDrawScene::Initialize()
 {
-    bgmHandle_ = Audio::Load("Audio/Game01Bgm00.wav", true);
+    bgmHandle_ = Audio::Load("Audio/QuickDraw/Game01Bgm00.wav", true);
     Audio::Play(bgmHandle_);
     //左プレイヤー
-    leftPlayer_ = new Game01Player(this,"Model/Cowboy01.fbx",-4.0f,90.0f);
+    leftPlayer_ = new Game01Player(this,"Models/QuickDraw/Cowboy01.fbx",-4.0f,90.0f);
 
     PushBackChild(leftPlayer_);
     leftPlayer_->Initialize();
 
     //右プレイヤー
-    rightPlayer_ = new Game01Player(this,"Model/Cowboy02.fbx",4.0f,270.0f);
+    rightPlayer_ = new Game01Player(this,"Models/QuickDraw/Cowboy02.fbx",4.0f,270.0f);
 
     PushBackChild(rightPlayer_);
     rightPlayer_->Initialize();
@@ -58,12 +58,12 @@ void PlayScene::Initialize()
 }
 
 //更新
-void PlayScene::Update()
+void QuickDrawScene::Update()
 {
 }
 
 //描画
-void PlayScene::Draw()
+void QuickDrawScene::Draw()
 {
     const ImVec2 size = ImGui::GetIO().DisplaySize;
     playSceneButton_.SetScreenSize(size.x, size.y);
@@ -102,7 +102,7 @@ void PlayScene::Draw()
 }
 
 //開放
-void PlayScene::Release()
+void QuickDrawScene::Release()
 {
     if (bgmHandle_ >= 0)
         Audio::Stop(bgmHandle_);

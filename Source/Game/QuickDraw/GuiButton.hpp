@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <functional>
 #include <string>
@@ -47,7 +47,7 @@ public:
     std::string label;
 
 private:
-    bool IsMouseOver() const;
+    //bool IsMouseOver() const;
 
     bool active_ = true;
     bool focused_ = false;

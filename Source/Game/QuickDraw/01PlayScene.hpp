@@ -7,7 +7,7 @@
 #include "Game01Player.hpp"
 
 //プレイシーンを管理するクラス
-class PlayScene : public GameObject
+class QuickDrawScene : public GameObject
 {
 	//const int ENEMY_NUM;	//敵の数
 	FontText text_;		//テキスト描画用のオブジェクト
@@ -19,7 +19,7 @@ class PlayScene : public GameObject
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	PlayScene(GameObject* parent);
+	QuickDrawScene(GameObject* parent);
 
 	//初期化
 	void Initialize() override;
