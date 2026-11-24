@@ -16,7 +16,7 @@ void Horse::Initialize()
 	hModel_ = Model::Load("Model/HorseRace/HorsePlush.fbx");
 	assert(hModel_ >= 0);
 	transform_.position = XMFLOAT3(0, 0, 0);
-    transform_.scale = XMFLOAT3(10, 10, 10);
+    transform_.scale = XMFLOAT3(5, 5, 5);
 
 	speed_ = 0.5f;
 
@@ -69,8 +69,8 @@ void Horse::Update()
 	}
 
 	const auto& camera{CameraSet::GetVirtualCamera(CameraSet::hNormalCamera)};
-    camera->GetTransform().position = XMFLOAT3(transform_.position.x, transform_.position.y + 200.0f, transform_.position.z - 500.0f);
-    camera->GetTargetTransform().position = XMFLOAT3(transform_.position.x, transform_.position.y + 100.0f, transform_.position.z + 500.0f);
+    camera->GetTransform().position = XMFLOAT3(transform_.position.x, 500.0f, transform_.position.z - 100.0f);
+    camera->GetTargetTransform().position = XMFLOAT3(transform_.position.x, 100.0f, transform_.position.z + 200.0f);
 
 	ImGui::Begin("Horse Info");
 	ImGui::InputFloat("Position X", &transform_.position.x);
