@@ -159,6 +159,7 @@
     <ClCompile Include="Library\ImGui\cpp\imgui_ja_gryph_ranges.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_tables.cpp" />
     <ClCompile Include="Library\ImGui\cpp\imgui_widgets.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="Source\Engine\FontText.cpp" />
     <ClCompile Include="Source\Engine\RayCast.cpp" />
     <ClCompile Include="Source\Engine\SkinInstance.cpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="Source\Game\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Server.hpp" />
     <ClInclude Include="Source\Engine\FontText.hpp" />
     <ClInclude Include="Source\Engine\glTF.hpp" />
     <ClInclude Include="Source\Engine\glTFParts.hpp" />

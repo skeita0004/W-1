@@ -28,7 +28,6 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
         boxB->pGameObject_->GetTransform()->position,
         boxB->center_);
 
-
 	if ((boxPosA.x + boxA->size_.x / 2) > (boxPosB.x - boxB->size_.x / 2) &&
 		(boxPosA.x - boxA->size_.x / 2) < (boxPosB.x + boxB->size_.x / 2) &&
 		(boxPosA.y + boxA->size_.y / 2) > (boxPosB.y - boxB->size_.y / 2) &&
@@ -53,8 +52,6 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 	XMFLOAT3 boxPos = Transform::Float3Add(
         box->pGameObject_->GetTransform()->position,
         box->center_);
-
-
 
 	if (circlePos.x > boxPos.x - box->size_.x - sphere->size_.x &&
 		circlePos.x < boxPos.x + box->size_.x + sphere->size_.x &&
