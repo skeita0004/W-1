@@ -180,7 +180,7 @@ void Audio::Stop(int ID)
 	}
 }
 
-//シーンごとの解放
+//シーンごとの解放＿
 void Audio::Release()
 {
 	for (int i = 0; i < audioDatas.size(); i++)
