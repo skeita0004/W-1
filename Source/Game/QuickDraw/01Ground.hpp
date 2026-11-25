@@ -6,7 +6,7 @@ class Ground : public GameObject
 {
 
 	int hModel_;    //モデル番号
-
+	int hTumbleweed_;
 
 public:
 	//コンストラクタ
@@ -32,4 +32,5 @@ public:
 	int GetModelHandle() { return hModel_; }
 	//int hBuilding_[1];              //建物モデル番号
 	//Transform buildingTransform_[1]; //建物のTransform
+	Transform tumbleweedTransform_;
 };
