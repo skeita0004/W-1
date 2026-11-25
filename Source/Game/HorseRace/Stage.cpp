@@ -6,6 +6,7 @@
 #include "Rock.hpp"
 #include "cactus1.hpp"
 #include "cactus2.hpp"
+#include "Tumbleweed.hpp"
 
 
 Stage::Stage(GameObject* parent)
@@ -110,6 +111,9 @@ void Stage::LoadStageCsv()
 
             case 4:
                 //obstacle = Instantiate<cactus2>(GetParent());
+                break;
+            case 5:
+                obstacle = Instantiate<Tumbleweed>(GetParent());
                 break;
             }
 
