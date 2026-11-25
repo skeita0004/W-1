@@ -22,6 +22,7 @@ namespace Renderer
     void Release();
 
     void Draw(int _modelHandle);
+    void DrawDebug(int _modelHandle);
     void DrawShadowMap(int _modelHandle);
     void DrawReflectionMap(int _modelHandle);
 
@@ -107,6 +108,13 @@ namespace Renderer
               std::span<int32_t>           _indexCountArr,
               const std::vector<Material>& _materialList);
 
+    void DrawDebug(Transform&                   _transform,
+                   int32_t                      _materialCount,
+                   ID3D11Buffer*                _pVertexBuffer,
+                   std::span<ID3D11Buffer*>     _pIndexBuffer,
+                   std::span<int32_t>           _indexCountArr,
+                   const std::vector<Material>& _materialList);
+
     void DrawShadowMap(Transform& _transform,
                        int32_t                           _materialCount,
                        ID3D11Buffer* _pVertexBuffer,
@@ -116,9 +124,9 @@ namespace Renderer
 
     void DrawReflectionMap(Transform& _transform,
                            int32_t                           _materialCount,
-                           ID3D11Buffer* _pVertexBuffer,
-                           std::span<ID3D11Buffer*>          _pIndexBuffer,
-                           std::span<int32_t>                _indexCountArr,
+                           ID3D11Buffer*         _pVertexBuffer,
+                           std::span<ID3D11Buffer*>     _pIndexBuffer,
+                           std::span<int32_t>           _indexCountArr,
                            const std::vector<Material>& _materialList);
 
     //void DrawReflect(Transform& _transform,

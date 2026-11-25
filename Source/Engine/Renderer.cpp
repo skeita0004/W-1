@@ -18,7 +18,7 @@ namespace Renderer
 
     Texture* pNormalMap_;
 
-    void Init()
+    void Initialize()
     {
         HRESULT result = InitConstantBuffer();
         if (FAILED(result))
@@ -37,10 +37,26 @@ namespace Renderer
             Draw(modelData->transform,
                  parts[i]->GetMaterialCount(),
                  Model::GetVertexBuffer(_modelHandle, i),
-                 //parts[i]->GetVertexBuffer(),
                  parts[i]->GetIndexBuffer(),
                  parts[i]->GetIndexCountArray(),
                  parts[i]->GetMaterialList());
+        }
+    }
+
+    void DrawDebug(int _modelHandle)
+    {
+        Direct3D::SetBlendMode(Direct3D::BLEND_DEFAULT);
+        Model::ModelData* modelData{Model::GetModelData(_modelHandle)};
+        auto              parts{modelData->pFbx->GetParts()};
+
+        for (size_t i = 0; i < parts.size(); i++)
+        {
+            DrawDebug(modelData->transform,
+                      parts[i]->GetMaterialCount(),
+                      Model::GetVertexBuffer(_modelHandle, i),
+                      parts[i]->GetIndexBuffer(),
+                      parts[i]->GetIndexCountArray(),
+                      parts[i]->GetMaterialList());
         }
     }
 
@@ -245,6 +261,52 @@ namespace Renderer
                 Direct3D::pContext_->PSSetSamplers(3, 1, &pRefSampler);
                 Direct3D::pContext_->PSSetShaderResources(3, 1, &pRefSRV);
             }
+
+            Direct3D::pContext_->DrawIndexed(_indexCountArr[i], 0, 0);
+        }
+    }
+
+    void DrawDebug(Transform& _transform, int32_t _materialCount, ID3D11Buffer* _pVertexBuffer, std::span<ID3D11Buffer*> _pIndexBuffer, std::span<int32_t> _indexCountArr, const std::vector<Material>& _materialList)
+    {
+        Direct3D::SetShader(Direct3D::SHADER_UNLIT);
+
+        //頂点バッファ
+        UINT stride = sizeof(Vertex);
+        UINT offset = 0;
+        Direct3D::pContext_->IASetVertexBuffers(0, 1, &_pVertexBuffer, &stride, &offset);
+
+        //コンスタントバッファ
+        Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pMatrixBuffer_);
+
+        for (int i = 0; i < _materialCount; i++) // materialCountのゲッタを用意すること。
+        {
+            // インデックスバッファー
+            stride = sizeof(UINT);
+            offset = 0;
+            Direct3D::pContext_->IASetIndexBuffer(_pIndexBuffer[i], DXGI_FORMAT_R32_UINT, 0);
+
+            XMMATRIX worldMat = _transform.GetWorldMatrix(); // ここで計算されるのですわ～
+
+            // 行列用コンスタントバッファ
+            D3D11_MAPPED_SUBRESOURCE pdata{};
+
+            size_t bufferSize = sizeof(MatrixBuffer);
+
+            const auto& normalCamera = CameraSet::GetVirtualCamera(CameraSet::hNormalCamera);
+
+            MatrixBuffer mCb{};
+
+            mCb.matWVP = worldMat * normalCamera->GetViewMat() * normalCamera->GetProjectionMat();
+            mCb.matP = XMMatrixIdentity();
+            mCb.matVP = XMMatrixIdentity();
+            mCb.matNormal = XMMatrixIdentity();
+            mCb.matW = XMMatrixIdentity();
+            mCb.matInvW = XMMatrixIdentity();
+            mCb.matRefView = XMMatrixIdentity();
+
+            Direct3D::pContext_->Map(pMatrixBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
+            memcpy_s(pdata.pData, bufferSize, (void*)(&mCb), bufferSize);	// データの値を送る
+            Direct3D::pContext_->Unmap(pMatrixBuffer_, 0);	//再開
 
             Direct3D::pContext_->DrawIndexed(_indexCountArr[i], 0, 0);
         }

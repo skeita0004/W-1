@@ -172,6 +172,8 @@
     <ClCompile Include="Source\Game\ClayShooting\UI.cpp">
       <Filter>Game\ClayShooting</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\FontText.cpp" />
+    <ClCompile Include="Source\Engine\DeltaTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\engine\Audio.hpp">
@@ -355,6 +357,8 @@
     <ClInclude Include="Source\Game\ClayShooting\UI.hpp">
       <Filter>Game\ClayShooting</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\FontText.hpp" />
+    <ClInclude Include="Source\Engine\DeltaTime.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
