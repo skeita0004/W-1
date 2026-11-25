@@ -1,25 +1,36 @@
-﻿#include "UI.h"
-#include "Engine/Input.h"
-#include "Engine/Image.h"
-#include "Engine/Audio.h"
-#include "Engine/SceneManager.h"
-#include "Clay.h"
+﻿// Engine
+#include "../Engine/Input.hpp"
+#include "../Engine/Image.hpp"
+#include "../Engine/Audio.hpp"
+#include "../Engine/SceneManager.hpp"
+#include "../Engine/CameraSet.hpp"
 
+// Game
+#include "UI.hpp"
+#include "Clay.hpp"
+
+// その他
 #include <DirectXMath.h>
-
 #include "../include/imgui.h"
 
 using namespace DirectX;
+using namespace Config;
 using namespace std;
+
+namespace
+{
+}
 
 // コンストラクタ
 UI::UI(GameObject* parent)
     : GameObject(parent, "Reticle"),
-    position_{ { 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f },{ 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f } },
-    rotate_{ { 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f },{ 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f } },
-    scale_{ { 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f },{ 0.0f,0.0f,0.0f }, { 0.0f,0.0f,0.0f } },
-    hImage_{ -1, -1 }, hSound_(-1),
-    Bullet_num{ 999, 999 }, /*Score(0),*/ Game_Timer(13.0f)
+    position_  {{ 0.0f,0.0f,0.0f }}, // 位置
+    rotate_    {{ 0.0f,0.0f,0.0f }}, // 回転
+    scale_     {{ 0.0f,0.0f,0.0f }}, // 拡大率
+    hImage_    {(-1)},   // 画像読み込み
+    hSound_    {(-1)},   // サウンド読み込み
+    Bullet_num {{999}},  // 弾の弾数
+    Game_Timer (31.0f)   // 試合時間
 {
 }
 
@@ -32,31 +43,35 @@ UI::~UI()
 void UI::Initialize()
 {
     // UIの画像のロード
-    hImage_[0] = Image::Load("Image/Bullet.png"); // 弾
-    assert(hImage_[0] >= 0);
-    hImage_[1] = Image::Load("Image/UI_1.png");   // 木材
-    assert(hImage_[1] >= 0);
+    hImage_[Bullet_UI1p && Bullet_UI2p]
+        = Image::Load("Image/Bullet.png"); // 弾
+    hImage_[Board_1p && Board_2p]
+        = Image::Load("Image/UI_1.png");   // 木材
+
+    assert(hImage_[Bullet_UI1p && Bullet_UI2p] >= 0);
+    assert(hImage_[Board_1p && Board_2p] >= 0);
 
     // サウンドデータのロード
-    hSound_ = Audio::Load("Audio/拳銃を撃つ.wav"); // 弾
+    hSound_
+        = Audio::Load("Audio/拳銃を撃つ.wav"); // 弾
     assert(hSound_ >= 0);
 
     // 一応あると楽だからここに
-    position_[0] = { -0.92f, -0.75f, 0.0f }; // 位置
-    rotate_[0]   = {   0.0f,   0.0f, 0.0f }; // 回転
-    scale_[0]    = {   0.3f,   0.3f, 0.0f }; // 拡大率
+    position_[Bullet_UI1p] = { -0.92f, -0.75f, 0.0f }; // 位置
+    rotate_[Bullet_UI1p]   = {   0.0f,   0.0f, 0.0f }; // 回転
+    scale_[Bullet_UI1p]    = {   0.3f,   0.3f, 0.0f }; // 拡大率
 
-    position_[1] = {  0.63f, -0.75f,  0.0f }; // 位置
-    rotate_[1]   = {  0.0f,    0.0f,  0.0f }; // 回転
-    scale_[1]    = {  0.3f,    0.3f, 0.00f }; // 拡大率
+    position_[Bullet_UI2p] = {  0.63f, -0.75f,  0.0f }; // 位置
+    rotate_[Bullet_UI2p]   = {  0.0f,    0.0f,  0.0f }; // 回転
+    scale_[Bullet_UI2p]    = {  0.3f,    0.3f, 0.00f }; // 拡大率
 
-    position_[2] = { -0.6f,  0.85f,  0.0f }; // 位置
-    rotate_[2]   = {  0.0f,   0.0f,  0.0f }; // 回転
-    scale_[2]    = {  0.7f,   0.4f, 0.00f }; // 拡大率
+    position_[Board_1p] = { -0.6f,  0.85f,  0.0f }; // 位置
+    rotate_[Board_1p]   = {  0.0f,   0.0f,  0.0f }; // 回転
+    scale_[Board_1p]    = {  0.7f,   0.4f, 0.00f }; // 拡大率
 
-    position_[3] = { 0.6f,   0.85f,  0.0f }; // 位置
-    rotate_[3]   = { 0.0f,    0.0f,  0.0f }; // 回転
-    scale_[3]    = { 0.7f,    0.4f, 0.00f }; // 拡大率
+    position_[Board_2p] = { 0.6f,   0.85f,  0.0f }; // 位置
+    rotate_[Board_2p]   = { 0.0f,    0.0f,  0.0f }; // 回転
+    scale_[Board_2p]    = { 0.7f,    0.4f, 0.00f }; // 拡大率
 
     textB_num_.Initialize("Fonts/Rye-Regular.ttf", 64.0f);
     textScore_.Initialize("Fonts/Rye-Regular.ttf", 64.0f);
@@ -80,24 +95,30 @@ void UI::Update()
 
     // 発砲ごとに残弾数消費
     {
-        bool triggerNow[2] = { Input::GetPadTrrigerR(0) > 0.5f, Input::GetPadTrrigerR(1) > 0.5f };
+        bool triggerNow[PLAYER_NUM]
+            = { Input::GetPadTrrigerR(PLAYER_1) > 0.5f,
+                Input::GetPadTrrigerR(PLAYER_2) > 0.5f };
 
-        if ((Input::IsMouseButtonDown(0)
-            || Input::IsPadButtonDown(XINPUT_GAMEPAD_B, 0)
-            || triggerNow[0] && !triggerOld_[0])) {
-            Audio::Play(hSound_);
-            Bullet_num[0]--;
-            //Score += 20;
-        }
-        if ((Input::IsMouseButtonDown(1)
-            || Input::IsPadButtonDown(XINPUT_GAMEPAD_B, 1)
-            || triggerNow[1] && !triggerOld_[1])) {
-            Audio::Play(hSound_);
-            Bullet_num[1]--;
+        // 発砲するごとに弾を消費
+        {
+            if ((Input::IsMouseButtonDown(PLAYER_1)
+                 || Input::IsPadButtonDown(XINPUT_GAMEPAD_B, PLAYER_1)
+                 || triggerNow[PLAYER_1] && !triggerOld_[PLAYER_1]))
+            {
+                Audio::Play(hSound_);
+                Bullet_num[PLAYER_1]--;
+            }
+            if ((Input::IsMouseButtonDown(PLAYER_2)
+                 || Input::IsPadButtonDown(XINPUT_GAMEPAD_B, PLAYER_2)
+                 || triggerNow[PLAYER_2] && !triggerOld_[PLAYER_2]))
+            {
+                Audio::Play(hSound_);
+                Bullet_num[PLAYER_2]--;
+            }
         }
 
-        triggerOld_[0] = triggerNow[0];
-        triggerOld_[1] = triggerNow[1];
+        triggerOld_[PLAYER_1] = triggerNow[PLAYER_1];
+        triggerOld_[PLAYER_2] = triggerNow[PLAYER_2];
     }
 }
 
@@ -107,37 +128,42 @@ void UI::Draw()
     // UI表示（弾）
     {
         // 1P
-        transform_.position_ = { position_[0].x,position_[0].y,position_[0].z };  // 位置
-        transform_.scale_ = { scale_[0].x,scale_[0].y,scale_[0].z };  // 拡大率
-        Image::SetTransform(hImage_[0], transform_);
-        Image::Draw(hImage_[0]);
+        {
+            transform_.position_ = {position_[0].x,position_[0].y,position_[0].z};  // 位置
+            transform_.scale_ = {scale_[0].x,scale_[0].y,scale_[0].z};  // 拡大率
+            Image::SetTransform(hImage_[0], transform_);
+            Image::Draw(hImage_[0]);
 
-        transform_.position_ = { position_[2].x,position_[2].y,position_[2].z };  // 位置
-        transform_.scale_ = { scale_[2].x,scale_[2].y,scale_[2].z };  // 拡大率
-        Image::SetTransform(hImage_[1], transform_);
-        Image::Draw(hImage_[1]);
+            transform_.position_ = {position_[2].x,position_[2].y,position_[2].z};  // 位置
+            transform_.scale_ = {scale_[2].x,scale_[2].y,scale_[2].z};  // 拡大率
+            Image::SetTransform(hImage_[1], transform_);
+            Image::Draw(hImage_[1]);
+
+            // 弾の残数
+            char str[64];
+            sprintf_s(str, "x %d", Bullet_num[PLAYER_1]);
+            // sprintf_s(str, "x ---");
+            textB_num_.Draw(90, 600, str);
+        }
 
         // 2P
-        transform_.position_ = { position_[1].x,position_[1].y,position_[1].z };  // 位置
-        transform_.scale_ = { scale_[1].x,scale_[1].y,scale_[1].z };  // 拡大率
-        Image::SetTransform(hImage_[0], transform_);
-        Image::Draw(hImage_[0]);
+        {
+            transform_.position_ = {position_[1].x,position_[1].y,position_[1].z};  // 位置
+            transform_.scale_ = {scale_[1].x,scale_[1].y,scale_[1].z};  // 拡大率
+            Image::SetTransform(hImage_[0], transform_);
+            Image::Draw(hImage_[0]);
 
-        transform_.position_ = { position_[3].x,position_[3].y,position_[3].z };  // 位置
-        transform_.scale_ = { scale_[3].x,scale_[3].y,scale_[3].z };  // 拡大率
-        Image::SetTransform(hImage_[1], transform_);
-        Image::Draw(hImage_[1]);
+            transform_.position_ = {position_[3].x,position_[3].y,position_[3].z};  // 位置
+            transform_.scale_ = {scale_[3].x,scale_[3].y,scale_[3].z};  // 拡大率
+            Image::SetTransform(hImage_[1], transform_);
+            Image::Draw(hImage_[1]);
 
-        // 弾の残数
-        char str[64];
-        sprintf_s(str, "x %d", Bullet_num[0]);
-        // sprintf_s(str, "x ---");
-        textB_num_.Draw(90, 600, str);
-
-        // 弾の残数
-        sprintf_s(str, "x %d", Bullet_num[1]);
-        // sprintf_s(str, "x ---");
-        textB_num_.Draw(1080, 600, str);
+            // 弾の残数
+            char str[64];
+            sprintf_s(str, "x %d", Bullet_num[PLAYER_2]);
+            // sprintf_s(str, "x ---");
+            textB_num_.Draw(1080, 600, str);
+        }
     }
 
     // タイマー表示

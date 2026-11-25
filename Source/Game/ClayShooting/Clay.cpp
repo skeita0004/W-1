@@ -51,7 +51,7 @@ Clay::Clay(GameObject* parent)
     hSound_   {(-1)},   // サウンド読み込み
     OnDown_   {true},   // 下がるか上がるかのフラグ　    ※ true：下がる / false：上がる
     IsDead_   {false},  // クレーの死亡しているかフラグ  ※ true：死亡 / false：生存
-    Score_    {(0)}     // スコア
+    Score_    {(15,15,15,25,25,-50, 0)}  // 各種スコア
 {
 }
 
@@ -66,38 +66,73 @@ void Clay::Initialize()
     // ここで合計スコアをリセット
     ScoreReset();
 
-    //モデルデータのロード
-    /*
-    hModel_[0] = Model::Load("/Model/Dish00.fbx");
-    assert(hModel_[0] >= 0);
-    //モデルデータのロード
-    hModel_[1] = Model::Load("/Model/Dish00.fbx");
-    assert(hModel_[1] >= 0);
-    //モデルデータのロード
-    hModel_[2] = Model::Load("/Model/Dish00.fbx");
-    assert(hModel_[2] >= 0);
-    */
-    for (int i = 0; i < Clay_Max; i++)
+    // モデルデータのロード
     {
-        hModel_[i] = Model::Load("/Model/Dish00.fbx");
-        assert(hModel_[i] >= 0);
+        hModel_[Clay_A]   
+            = Model::Load("../Model/Dish00.fbx");
+        hModel_[Clay_B]   
+            = Model::Load("../Model/Dish00.fbx");
+        hModel_[Clay_C]   
+            = Model::Load("../Model/Dish00.fbx");
+        hModel_[Bottle_A] 
+            = Model::Load("../Model/bin_mock.fbx");
+        hModel_[Bottle_B] 
+            = Model::Load("../Model/bin_mock.fbx");
+        hModel_[Bomb]     
+            = Model::Load("../Model/Bomb00.fbx");
+
+        assert(hModel_[Clay_A] >= 0);
+        assert(hModel_[Clay_B] >= 0);
+        assert(hModel_[Clay_C] >= 0);
+        assert(hModel_[Bottle_A] >= 0);
+        assert(hModel_[Bottle_B] >= 0);
+        assert(hModel_[Bomb] >= 0);
+
+        /*
+        for (int i = 0; i < Clay_Max; i++)
+        {
+            hModel_[i] = Model::Load("/Model/Dish00.fbx");
+            assert(hModel_[i] >= 0);
+        }
+        */
     }
 
     // サウンドデータのロード
-    /*
-    hSound_[0] = Audio::Load("Audio/ガラスが割れる3.wav"); // クレーが壊れる音
-    assert(hSound_[0] >= 0);
-    hSound_[1] = Audio::Load("Audio/空き瓶が砕ける.wav");  // 空き瓶が割れる音
-    assert(hSound_[1] >= 0);
-    hSound_[2] = Audio::Load("Audio/爆発1.wav");           // 爆弾の爆発音
-    assert(hSound_[2] >= 0);
-    */
-    for (int i = 0; i < Clay_Max; i++)
     {
-        hSound_[i] = Audio::Load("Audio/ガラスが割れる3.wav"); // クレーが壊れる音
-        assert(hSound_[i] >= 0);
+        hSound_[Clay_A]
+            = Audio::Load("../Audio/ガラスが割れる3.wav"); // クレーが壊れる音
+        hSound_[Clay_B]
+            = Audio::Load("../Audio/ガラスが割れる3.wav"); // クレーが壊れる音
+        hSound_[Clay_C]
+            = Audio::Load("../Audio/ガラスが割れる3.wav"); // クレーが壊れる音
+        hSound_[Bottle_A]
+            = Audio::Load("../Audio/空き瓶が砕ける.wav");  // 空き瓶が割れる音
+        hSound_[Bottle_B]
+            = Audio::Load("../Audio/空き瓶が砕ける.wav");  // 空き瓶が割れる音
+        hSound_[Bomb]
+            = Audio::Load("../Audio/爆発1.wav");           // 爆弾の爆発音
+
+        assert(hSound_[Clay_A] >= 0);
+        assert(hSound_[Clay_B] >= 0);
+        assert(hSound_[Clay_C] >= 0);
+        assert(hSound_[Bottle_A] >= 0);
+        assert(hSound_[Bottle_B] >= 0);
+        assert(hSound_[Bomb] >= 0);
+
+        /*
+        for (int i = 0; i < Clay_Max; i++)
+        {
+            hSound_[i] = Audio::Load("Audio/ガラスが割れる3.wav"); // クレーが壊れる音
+            assert(hSound_[i] >= 0);
+        }
+        */
     }
 
+    // 
+    {
+
+    }
+    
     // 一応あると楽だからここに
     // === 位置のメモ ===
     // (float)(rand() % 10 - 5)
@@ -105,6 +140,7 @@ void Clay::Initialize()
     // Y 2.0～3.0
     // Z - 6.5～ - 8.0
 
+    /*
     position_[0] = { 0.0f, 3.0f, 1.0f }; // 位置
     rotate_[0] = { 0.0f, 0.0f, 0.0f }; // 回転
     scale_[0] = { 0.2f, 0.2f, 0.2f }; // 拡大率
@@ -119,9 +155,11 @@ void Clay::Initialize()
     rotate_[2] = { 0.0f, 0.0f, 0.0f }; // 回転
     scale_[2] = { 0.2f, 0.2f, 0.2f }; // 拡大率
     Score_[2] = 50; // スコア
-
+    */
+    
     // デバック用
     {
+        /*
         for (int i = 3; i < Clay_Max; i++)
         {
             position_[i] = { 1.0f + ((float)(i - 3) * 1.0f), -2.5f + ((float)(i - 3) * 1.0f), 0.0f }; // 位置
@@ -129,6 +167,7 @@ void Clay::Initialize()
             scale_[i] = { 0.2f, 0.2f, 0.2f }; // 拡大率
             Score_[i] = 50; // スコア
         }
+        */
 
         /*
         position_[3] = { 0.0f, 1.0f, 0.0f }; // 位置
@@ -172,7 +211,7 @@ void Clay::Initialize()
     //SphereCollider* collision = new SphereCollider(XMFLOAT3(0.0f, 0.1f, 0.0f), 0.8f);
     //AddCollider(collision);
 
-    textClay_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
+    textClay_.Initialize("../Fonts/Rye-Regular.ttf", 28.0f);
 }
 
 //更新
@@ -182,6 +221,7 @@ void Clay::Update()
 
     // 銃の回転の上限指定
     {
+        /*
         // クレー１
         {
             if (position_[0].x < Field_Left) position_[0].x = Field_Right; // 左から右
@@ -214,7 +254,9 @@ void Clay::Update()
                 OnDown_[2] = false; // 上昇
                 position_[2].y = Field_Down; // 下から上
             }
+         
         }
+        */
 
         // デバック用クレー
         {
@@ -271,6 +313,8 @@ void Clay::Move()
         rotate_[i].x += 2.5f;
         rotate_[i].y += 5.0f;
     }
+
+
 }
 
 //描画

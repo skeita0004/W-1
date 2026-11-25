@@ -1,7 +1,7 @@
 ﻿#pragma once
 // Engine
 #include "../Engine/GameObject.hpp"
-//#include "../Engine/FontText.hpp"
+#include "../Engine/FontText.hpp"
 
 // Game
 #include "Config.hpp"
@@ -50,16 +50,46 @@ public:
     static const int Clay_Max = 10;
 
 private:
+    // 飛行物のモデルタイプ
+    enum ClayType
+    {
+        Clay_A,       // 皿A
+        Clay_B,       // 皿B
+        Clay_C,       // 皿C
+        Bottle_A,     // 空き瓶A
+        Bottle_B,     // 空き瓶B
+        Bomb,         // 爆弾
+        ClayType_Max  // クレーの限界値
+    };
+
+    // 飛行物の軌道パターン
+    enum OrbitType
+    {
+        Right_Straight, // 右真直ぐ
+        Left_Straight,  // 左真直ぐ
+        Right_Curve,    // 右曲がり
+        Left_Curve      // 左曲がり
+    };
+
+    // 速度タイプ
+    enum SpeedType
+    {
+        Slow,     // 遅い
+        Normal,   // 普通
+        Fast      // 速い
+    };
+
     // テキスト描画用のオブジェクト
-    //FontText textClay_;
+    FontText textClay_;
 
     // クレーの座標
     XMFLOAT3 position_[Clay_Max]; // 位置
     XMFLOAT3 rotate_[Clay_Max];   // 回転
     XMFLOAT3 scale_[Clay_Max];    // 拡大率
 
-    int hModel_[Clay_Max];  // モデル番号
-    int hSound_[Clay_Max];  // サウンド読み込み
+    int hModel_[ClayType_Max];  // モデル番号
+    int hSound_[ClayType_Max];  // サウンド読み込み
+    int Score_[ClayType_Max];   // 各クレーごとにスコア
 
     bool OnDown_[Clay_Max]; // 下がるか上がるかのフラグ　    ※ true：下がる / false：上がる
     bool IsDead_[Clay_Max]; // クレーの死亡しているかフラグ  ※ true：死亡 / false：生存
@@ -67,8 +97,6 @@ private:
     // 当たり判定の大きさ
     const float HitRange;
 
-    // 各クレーごとにスコア
-    int Score_[Clay_Max];
     // 合計のスコア
     static int TotalScore_[Config::PLAYER_NUM];
 

@@ -1,52 +1,68 @@
-#pragma once
-#include "Engine/GameObject.h"
-#include "Engine/FontText.hpp"
+ï»¿#pragma once
+// Engine
+#include "../Engine/GameObject.hpp"
+#include "../Engine/FontText.hpp"
+
+// Game
+#include "Config.hpp"
 
 class Clay;
 
-// UI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// UIã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class UI : public GameObject
 {
-    FontText textB_num_;    //ƒeƒLƒXƒg•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒg
-    FontText textScore_;    //ƒeƒLƒXƒg•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒg
-    FontText textTimer_;    //ƒeƒLƒXƒg•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒg
-
-    // UI‚ÌÀ•W
-    XMFLOAT3 position_[4]; // ˆÊ’u
-    XMFLOAT3 rotate_[4];   // ‰ñ“]
-    XMFLOAT3 scale_[4];    // Šg‘å—¦
-
-    // ‰æ‘œ“Ç‚İ‚İ
-    int hImage_[2];
-
-    // ƒTƒEƒ“ƒh“Ç‚İ‚İ
-    int hSound_;
-
-    int Bullet_num[2];  // c’e”
-    //int Score;        // ƒXƒRƒA
-    float Game_Timer;   // ‡ŠÔ
-
-    bool triggerOld_[2] = { false,false };
-    
-    // ƒNƒŒ[‚Ìƒ|ƒCƒ“ƒ^‚ğQÆ
-    Clay* sc = nullptr;
-
 public:
-    // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     UI(GameObject* parent);
 
-    // ƒfƒXƒgƒ‰ƒNƒ^
+    // ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     ~UI();
 
-    // ‰Šú‰»
+    // åˆæœŸåŒ–
     void Initialize() override;
 
-    // XV
+    // æ›´æ–°
     void Update() override;
 
-    // •`‰æ
+    // æç”»
     void Draw() override;
 
-    // ŠJ•ú
+    // é–‹æ”¾
     void Release() override;
+
+private:
+    // UIã®ç”»åƒã‚¿ã‚¤ãƒ—
+    enum UIModel
+    {
+        Bullet_UI1p,  // å¼¾ã®ç”»åƒ(1Pç”¨)
+        Bullet_UI2p,  // å¼¾ã®ç”»åƒ(2Pç”¨)
+        Board_1p,     // æœ¨æ¿ã®ç”»åƒ(1Pç”¨)
+        Board_2p,     // æœ¨æ¿ã®ç”»åƒ(2Pç”¨)
+        UI_Max        // UIã®é™ç•Œå€¤
+    };
+
+    //ã€€ãƒ†ã‚­ã‚¹ãƒˆæç”»ç”¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    FontText textB_num_;
+    FontText textScore_;
+    FontText textTimer_;
+
+    // UIã®åº§æ¨™
+    XMFLOAT3 position_[UI_Max]; // ä½ç½®
+    XMFLOAT3 rotate_[UI_Max];   // å›è»¢
+    XMFLOAT3 scale_[UI_Max];    // æ‹¡å¤§ç‡
+
+    // ç”»åƒèª­ã¿è¾¼ã¿
+    int hImage_[UI_Max];
+    // ã‚µã‚¦ãƒ³ãƒ‰èª­ã¿è¾¼ã¿
+    int hSound_;
+    // æ®‹å¼¾æ•°
+    int Bullet_num[Config::PLAYER_NUM];
+    // è©¦åˆæ™‚é–“
+    float Game_Timer;
+
+    bool triggerOld_[Config::PLAYER_NUM] = {false,false};
+
+    // ã‚¯ãƒ¬ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å‚ç…§
+    Clay* sc = nullptr;
+
 };
