@@ -6,7 +6,7 @@
 #include <imgui.h>
 
 Horse::Horse(GameObject* parent)
-	:GameObject(parent, "Horse"), hModel_(-1), speed_(0.0f), jumpPower_(600.0f), 
+	:GameObject(parent, "Horse"), hModel_(-1), sModel_(-1), speed_(0.0f), jumpPower_(600.0f),
 	velocity_(-9.8f), gravity_(-980.0f), isGround_(true), isHit_(false)
 {
 }
@@ -15,6 +15,7 @@ void Horse::Initialize()
 {
 	hModel_ = Model::Load("Model/HorseRace/HorsePlush.fbx");
 	assert(hModel_ >= 0);
+	sModel_ = Model::Load("Model/HorseRace/Shadow.fbx");
 	transform_.position = XMFLOAT3(0, 0, 0);
     transform_.scale = XMFLOAT3(5, 5, 5);
 
@@ -44,9 +45,9 @@ void Horse::Update()
 		Jump();
 
 		// 左右移動
-		if (transform_.position.x < -400.0f)
+		if (transform_.position.x < -1000.0f)
 		{
-			transform_.position.x = -400.0f;
+			transform_.position.x = -1000.0f;
 		}
 		else if (transform_.position.x > 400.0f)
 		{
@@ -69,8 +70,8 @@ void Horse::Update()
 	}
 
 	const auto& camera{CameraSet::GetVirtualCamera(CameraSet::hNormalCamera)};
-    camera->GetTransform().position = XMFLOAT3(0.0f,  500.0f, transform_.position.z - 100.0f);
-    camera->GetTargetTransform().position = XMFLOAT3(0.0f, 100.0f, transform_.position.z + 200.0f);
+    camera->GetTransform().position = XMFLOAT3(0.0f,  800.0f, transform_.position.z - 100.0f);
+    camera->GetTargetTransform().position = XMFLOAT3(0.0f, 0.0f, transform_.position.z + 500.0f);
 
 	ImGui::Begin("Horse Info");
 	ImGui::InputFloat("Position X", &transform_.position.x);
@@ -88,10 +89,25 @@ void Horse::Update()
 
 void Horse::Draw()
 {
+	// 馬本体
 	Model::SetTransform(hModel_, transform_);
 	Renderer::Draw(hModel_);
 
-	CollisionDraw();
+	// 影専用Transform
+	Transform shadowTransform;
+
+	shadowTransform.position = XMFLOAT3(
+		transform_.position.x,
+		1.0f,
+		transform_.position.z
+	);
+
+	shadowTransform.scale = XMFLOAT3(5, 5, 5);
+
+	Model::SetTransform(sModel_, shadowTransform);
+	Renderer::Draw(sModel_);
+
+	//CollisionDraw();
 }
 
 void Horse::Release()

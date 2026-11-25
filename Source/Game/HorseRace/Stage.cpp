@@ -15,12 +15,25 @@ Stage::Stage(GameObject* parent)
 
 void Stage::Initialize()
 {
-	hModel_ = Model::Load("Model/HorseRace/Game04_StageFloor00.fbx");
+	hModel_ = Model::Load("Model/HorseRace/floor.fbx");
 	//assert(hModel_ >= 0);
 	transform_.position = XMFLOAT3(0, 0, 0);
-	transform_.scale = XMFLOAT3(1, 1, 50);
+	transform_.scale = XMFLOAT3(2, 1, 2);
 
 	horse = Instantiate<Horse>(GetParent());
+
+    for (int z = 0; z < lengthCount_; z++)
+    {
+        for (int x = 0; x < widthCount_; x++)
+        {
+            float posX = (x - (widthCount_ - 1) / 2.0f) * tileSize_;
+            float posZ = z * tileSize_;
+
+            floors.push_back(
+                XMFLOAT3(posX, 0.0f, posZ)
+            );
+        }
+    }
 
 	LoadStageCsv();
 }
@@ -38,8 +51,19 @@ void Stage::Update()
 
 void Stage::Draw()
 {
-	Model::SetTransform(hModel_, transform_);
-	Renderer::Draw(hModel_);
+    float horseZ = horse->GetPosition().z;
+
+    for (const auto& pos : floors)
+    {
+        // 馬から前後3000以上離れていたら描画しない
+        if (fabs(pos.z - horseZ) > 6000.0f)
+            continue;
+
+        transform_.position = pos;
+        Model::SetTransform(hModel_,transform_);
+
+        Renderer::Draw(hModel_);
+    }
 }
 
 void Stage::Release()

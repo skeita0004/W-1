@@ -14,6 +14,13 @@ public:
 private:
 	int hModel_;
 
+	int widthCount_ = 10;
+	int lengthCount_ = 200;
+
+	float tileSize_ = 200.0f;
+
+	std::vector<XMFLOAT3> floors;
+
 	Horse* horse;
 
 	std::vector<Obstacle*> obs;
