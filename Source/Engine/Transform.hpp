@@ -14,7 +14,6 @@ public:
     Transform* pParent; // 親
 
     Transform();
-
     ~Transform();
 
     //各行列の計算
@@ -44,4 +43,3 @@ private:
     XMMATRIX matRotate;
     XMMATRIX matScale;
 };
-

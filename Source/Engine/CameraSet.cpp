@@ -26,7 +26,7 @@ void CameraSet::Initialize()
                                 1000.f);
     hReflectionCamera = Create(REFLECTION,
                                XMFLOAT3(0, 1, 0),
-                               120.f,
+                               XMConvertToDegrees(XM_PIDIV4),
                                0.1f,
                                1000.f);
 

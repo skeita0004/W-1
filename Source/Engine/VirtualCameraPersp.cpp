@@ -41,27 +41,43 @@ void VirtualCameraPersp::Update()
                                               nearClip_,
                                               farClip_);
 
+    XMVECTOR vPos{XMLoadFloat3(&transform_.position)};
+    XMVECTOR vUp{XMLoadFloat3(&upDir_)};
     XMVECTOR vTargetPos{XMLoadFloat3(&targetTransform_.position)};
-    vTargetPos = XMVector3TransformCoord(vTargetPos, targetTransform_.GetCameraMatrix());
-    XMStoreFloat3(&targetTransform_.position, vTargetPos);
-    matView_       = XMMatrixLookAtLH(XMLoadFloat3(&transform_.position),
-                                      XMLoadFloat3(&targetTransform_.position),
-                                      XMLoadFloat3(&upDir_));
+    //vTargetPos = XMVector3TransformCoord(vTargetPos, targetTransform_.GetCameraMatrix());
+   
+    matView_       = XMMatrixLookAtLH(vPos,
+                                      vTargetPos,
+                                      vUp);
 
     //ビルボード行列
     //（常にカメラの方を向くように回転させる行列。パーティクルでしか使わない）
     // http://marupeke296.com/DXG_No11_ComeOnBillboard.html
     matBillboard_ = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0),
-                                     XMLoadFloat3(&targetTransform_.position) - XMLoadFloat3(&transform_.position),
-                                     XMLoadFloat3(&upDir_));
+                                     vTargetPos - vPos,
+                                     vUp);
     matBillboard_ = XMMatrixInverse(nullptr, matBillboard_);
 
 #ifdef _DEBUG
     ImGui::Begin("CameraProperty");
 
-    ImGui::InputFloat("X: ", &transform_.position.x);
-    ImGui::InputFloat("Y: ", &transform_.position.y);
-    ImGui::InputFloat("Z: ", &transform_.position.z);
+    ImGui::InputFloat("TposX: ", &transform_.position.x);
+    ImGui::InputFloat("TposY: ", &transform_.position.y);
+    ImGui::InputFloat("TposZ: ", &transform_.position.z);
+
+
+    ImGui::InputFloat("TrotX: ", &transform_.rotate.x);
+    ImGui::InputFloat("TrotY: ", &transform_.rotate.y);
+    ImGui::InputFloat("TrotZ: ", &transform_.rotate.z);
+
+    ImGui::InputFloat("TTposX: ", &targetTransform_.position.x);
+    ImGui::InputFloat("TTposY: ", &targetTransform_.position.y);
+    ImGui::InputFloat("TTposZ: ", &targetTransform_.position.z);
+
+    ImGui::InputFloat("TTrotX: ", &targetTransform_.rotate.x);
+    ImGui::InputFloat("TTrotY: ", &targetTransform_.rotate.y);
+    ImGui::InputFloat("TTrotZ: ", &targetTransform_.rotate.z);
+
     ImGui::InputFloat("Near Clip:", &nearClip_);
     ImGui::InputFloat("Far Clip:", &farClip_);
 

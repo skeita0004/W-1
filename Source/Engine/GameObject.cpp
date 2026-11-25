@@ -297,6 +297,7 @@ void GameObject::UpdateSub()
 	Update();
 	//transform_();
 
+	//for (auto it = childList_.begin(); it != childList_.end(); it++)
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
         if ((*it)->IsEnableUpdate())

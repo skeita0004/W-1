@@ -14,7 +14,7 @@ void TestScene::Initialize()
 {
 	hModel_ = Model::Load("model/oden.fbx");
 
-	transform_.position.y = -2.f;
+	//transform_.position.y = -2.f;
 }
 
 void TestScene::Update()

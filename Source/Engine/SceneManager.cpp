@@ -4,6 +4,7 @@
 #include "Image.hpp"
 #include "Audio.hpp"
 
+#include <imgui.h>
 
 //コンストラクタ
 SceneManager::SceneManager(GameObject * parent)

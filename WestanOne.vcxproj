@@ -202,6 +202,7 @@
     <ClCompile Include="Source\Game\ChickenRace\WaterFlow.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterFlowOrigin.cpp" />
     <ClCompile Include="Source\Game\ChickenRace\WaterLevelHider.cpp" />
+    <ClCompile Include="Source\Game\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\FontText.hpp" />
