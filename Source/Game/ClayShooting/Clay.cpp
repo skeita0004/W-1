@@ -1,16 +1,16 @@
 ﻿// Engine
-#include "../Engine/Input.hpp"
-#include "../Engine/Model.hpp"
-#include "../Engine/Audio.hpp"
-#include "../Engine/SceneManager.hpp"
-#include "../Engine/CameraSet.hpp"
+#include "Input.hpp"
+#include "Model.hpp"
+#include "Audio.hpp"
+#include "SceneManager.hpp"
+#include "CameraSet.hpp"
 
 // Game
 #include "Clay.hpp"
 
 // その他
 #include <DirectXMath.h>
-#include "../include/imgui.h"
+#include "imgui.h"
 
 using namespace DirectX;
 using namespace Config;
@@ -32,6 +32,19 @@ namespace
         { -0.4f, 0.0f, 0.2f }
     };
     */
+    // クレーの初期値（仮）
+    const XMFLOAT3 Init_Pos[6] 
+        = {{0.0f,3.0f,1.0f},{0.8f,1.0f,0.0f},{-0.4f,0.0f,0.2f},
+           {0.2f,2.0f,0.0f},{-0.2f,0.0f,0.2f},
+           {0.4f,1.0f,-1.0f}};
+    const XMFLOAT3 Init_Rot[6]
+        = {{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f},
+           {0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f},
+           {0.0f,0.0f,0.0f}};
+    const XMFLOAT3 Init_Sca[6]
+        = {{0.2f,0.2f,0.2f},{0.2f,0.2f,0.2f},{0.2f,0.2f,0.2f},
+           {0.2f,0.2f,0.2f},{0.2f,0.2f,0.2f},
+           {0.2f,0.2f,0.2f}};
 
     // 移動範囲
     const float Field_Left  = -12.0f;  // これより左へ行くと右端へ戻る
@@ -221,7 +234,6 @@ void Clay::Update()
 
     // 銃の回転の上限指定
     {
-        /*
         // クレー１
         {
             if (position_[0].x < Field_Left) position_[0].x = Field_Right; // 左から右
@@ -256,15 +268,16 @@ void Clay::Update()
             }
          
         }
-        */
 
         // デバック用クレー
         {
+            /*
             for (int i = 3; i < Clay_Max; i++)
             {
                 if (position_[i].x < Field_Left) position_[i].x = Field_Right; // 左から右
                 if (position_[i].x > Field_Right) position_[i].x = Field_Left; // 右から左
             }
+            */
             /*
             if (position_[3].x < Field_Left) position_[3].x = Field_Right; // 左から右
             if (position_[3].x > Field_Right) position_[3].x = Field_Left; // 右から左
@@ -294,26 +307,41 @@ void Clay::Update()
 
 void Clay::Move()
 {
-    position_[0].x += 0.08f;
-    rotate_[0].x += 2.5f;
-    rotate_[0].y += 5.0f;
 
-    position_[1].x -= 0.10f;
-    rotate_[1].x -= 1.0f;
-    if (OnDown_[1]) position_[1].y -= 0.02f;
-    else position_[1].y += 0.02f;
+    position_[Clay_A].x += 0.08f;
+    rotate_[Clay_A].x += 2.5f;
+    rotate_[Clay_A].y += 5.0f;
 
-    position_[2].x += 0.15f;
-    if (OnDown_[2]) position_[2].y -= 0.08f;
-    else position_[2].y += 0.08f;
+    position_[Clay_B].x += 0.08f;
+    rotate_[Clay_B].x += 2.5f;
+    rotate_[Clay_B].y += 5.0f;
 
+    position_[Clay_C].x += 0.08f;
+    rotate_[Clay_C].x += 2.5f;
+    rotate_[Clay_C].y += 5.0f;
+
+    position_[Bottle_A].x -= 0.10f;
+    rotate_[Bottle_A].x -= 1.0f;
+    if (OnDown_[Bottle_A]) position_[Bottle_A].y -= 0.02f;
+    else position_[Bottle_A].y += 0.02f;
+
+    position_[Bottle_B].x -= 0.10f;
+    rotate_[Bottle_B].x -= 1.0f;
+    if (OnDown_[Bottle_B]) position_[Bottle_B].y -= 0.02f;
+    else position_[Bottle_B].y += 0.02f;
+
+    position_[Bomb].x += 0.15f;
+    if (OnDown_[Bomb]) position_[Bomb].y -= 0.08f;
+    else position_[Bomb].y += 0.08f;
+
+    /*
     for (int i = 3; i < Clay_Max; i++)
     {
         position_[i].x += 0.08f;
         rotate_[i].x += 2.5f;
         rotate_[i].y += 5.0f;
     }
-
+    */
 
 }
 
@@ -321,15 +349,16 @@ void Clay::Move()
 void Clay::Draw()
 {
     // クレー表示
-    for (int i = 0; i < Clay_Max; i++)
+    for (int i = 0; i < ClayType_Max; i++)
     {
         // 各クレーが破壊されていなければ描画
         if (IsDead_[i]) continue;
-        transform_.position_ = position_[i];  // 位置
-        transform_.rotate_   = rotate_[i];    // 回転
-        transform_.scale_    = scale_[i];     // 拡大率
+        transform_.position = position_[i]; // 位置
+        transform_.rotate = rotate_[i];   // 回転
+        transform_.scale = scale_[i];    // 拡大率
+
         Model::SetTransform(hModel_[i], transform_);
-        Model::Draw(hModel_[i]);
+        Model::Update(hModel_[i]);
     }
 
     // ImGui (デバック用)
@@ -376,8 +405,16 @@ bool Clay::AllBroken() const
 
 int Clay::FindOverlap(const XMFLOAT2& reticleNdc) const
 {
-    XMMATRIX view = Camera::GetViewMatrix();
-    XMMATRIX proj = Camera::GetProjectionMatrix();
+    //const auto& camera{CameraSet::GetVirtualCamera(CameraSet::hNormalCamera)};
+
+    //XMMATRIX view = CameraSet::GetViewMatrix();
+    //XMMATRIX proj = CameraSet::GetProjectionMatrix();
+    
+    //ビュー行列を取得(前の遠藤エンジンから持ってきた)
+    XMMATRIX GetViewMatrix();
+
+    //プロジェクション行列を取得(前の遠藤エンジンから持ってきた)
+    XMMATRIX GetProjectionMatrix();
 
     //const float hitSize = 0.05f;
     int   hit = -1;
@@ -388,14 +425,14 @@ int Clay::FindOverlap(const XMFLOAT2& reticleNdc) const
         if (IsDead_[i]) continue;
 
         // ワールド座標をビュー座標に変換
-        XMVECTOR world = XMVector3TransformCoord(XMLoadFloat3(&position_[i]), view);
+        XMVECTOR world = XMVector3TransformCoord(XMLoadFloat3(&position_[i]), GetViewMatrix());
         float depth = XMVectorGetZ(world);
         if (depth <= 0.01f) continue; // カメラの後ろは対象外
 
         // ビュー座標から画面座標に変換
-        XMVECTOR center = XMVector3TransformCoord(world, proj);
-        XMVECTOR edgeX = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(HitRange, 0.0f, 0.0f, 0.0f)), proj);
-        XMVECTOR edgeY = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(0.0f, HitRange, 0.0f, 0.0f)), proj);
+        XMVECTOR center = XMVector3TransformCoord(world, GetProjectionMatrix());
+        XMVECTOR edgeX = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(HitRange, 0.0f, 0.0f, 0.0f)), GetProjectionMatrix());
+        XMVECTOR edgeY = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(0.0f, HitRange, 0.0f, 0.0f)), GetProjectionMatrix());
 
         float cx = XMVectorGetX(center);
         float cy = XMVectorGetY(center);

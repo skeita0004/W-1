@@ -1,7 +1,7 @@
 ﻿#pragma once
 // Engine
-#include "../Engine/GameObject.hpp"
-#include "../Engine/FontText.hpp"
+#include "GameObject.hpp"
+#include "FontText.hpp"
 
 // Game
 #include "Config.hpp"

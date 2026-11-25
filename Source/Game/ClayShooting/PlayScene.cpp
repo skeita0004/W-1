@@ -1,20 +1,49 @@
-﻿#include "PlayScene.h"
-#include "Reticle.hpp"
-#include "Clay.h"
-#include "UI.h"
-//#include "Tank.h"
-//#include "Ground.h"
-//#include "Enemy.h"
-//#include "Infomation.h"
-#include "Engine\\FontText.hpp"
-#include "Gun.h"
-#include "Engine/Image.h"
+﻿// Engine
+#include "Input.hpp"
+#include "Image.hpp"
+#include "Audio.hpp"
+#include "SceneManager.hpp"
+#include "CameraSet.hpp"
+#include "FontText.hpp"
 
-#include "../include/imgui.h"
+// Game
+#include "PlayScene.hpp"
+#include "Reticle.hpp"
+#include "UI.hpp"
+#include "Gun.hpp"
+#include "Clay.hpp"
+
+// その他
+#include <DirectXMath.h>
+#include "imgui.h"
+
+using namespace DirectX;
+using namespace Config;
+using namespace std;
+
+namespace
+{
+    const int str_num = 64;
+
+    // UIの初期値(一応あると楽だからここに)
+    const XMFLOAT3 Init_Pos[2] // 位置
+        = {{0.0f,0.0f,0.0f}};
+    const XMFLOAT3 Init_Rot[2] // 回転
+        = {{0.0f,0.0f,0.0f}};
+    const XMFLOAT3 Init_Sca[2] // 拡大率
+        = {{1.0f,1.0f,1.0f}};
+}
 
 // コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
-    : GameObject(parent, "PlayScene"), hBackGround_(-1)//, ENEMY_NUM(5)
+    : GameObject(parent, "PlayScene"),
+    position_{{ 0.0f,0.0f,0.0f }}, // 位置
+    rotate_  {{ 0.0f,0.0f,0.0f }}, // 回転
+    scale_   {{ 0.0f,0.0f,0.0f }}, // 拡大率
+    hModel_  {(-1)}, // モデル読み込み
+    hSound_  {(-1)}, // サウンド読み込み
+    hBackGround_(-1) // 背景画像
+    //, ENEMY_NUM(5)
 {
 }
 
@@ -22,25 +51,36 @@ PlayScene::PlayScene(GameObject * parent)
 void PlayScene::Initialize()
 {
     // レティクルの画像のロード
-    hBackGround_ = Image::Load("Image/BG.jpg");
-    assert(hBackGround_ >= 0);
-    Image::SetRect(hBackGround_, 0, 0, 1280, 720);
+    {
+        hBackGround_
+            = Image::Load("Image/BG.jpg");
 
-    //Instantiate<Tank>(this);
-    //Instantiate<Ground>(this);
+        assert(hBackGround_ >= 0);
+
+        Image::SetRect(hBackGround_, 0, 0, 1280, 720);
+    }
+
+    // 背景用モデルのロード
+    {
+        hModel_[Ground]
+            = Model::Load("../Model/oden.fbx");
+
+        assert(hModel_[Ground] >= 0);
+    }
+
+    // サウンドデータのロード
+    {
+        hSound_[Wind]
+            = Audio::Load("Audio/風が吹く1.wav"); // 風の音
+
+        assert(hSound_[Wind] >= 0);
+    }
+
     Instantiate<Clay>(this);
     Instantiate<Reticle>(this);
-
-    // 銃表示（銃はレティクルの子クラス）
     Instantiate<Gun>(this);
-
     Instantiate<UI>(this);
 
-    //for (int i = 0; i < ENEMY_NUM; i++) {
-    //    Instantiate<Enemy>(this);
-    //}
-
-    // Instantiate<Infomation>(this);
 
     textPlay_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
 }
@@ -48,13 +88,23 @@ void PlayScene::Initialize()
 // 更新
 void PlayScene::Update()
 {
+    // SEを常時流す
+    Audio::Play(hSound_[Wind]);
 }
 
 // 描画
 void PlayScene::Draw()
 {
+    // 背景画像の配置
     Image::SetTransform(hBackGround_, transform_);
     Image::Draw(hBackGround_);
+
+    // 地面設置
+    transform_.position = {Init_Pos[Ground]};  // 位置
+    transform_.scale    = {Init_Sca[Ground]};  // 拡大率
+    Model::SetTransform(hModel_[Ground], transform_);
+    Model::Update(hModel_[Ground]);
+
 
     // text_.Draw(32, 32, "Yes!TakasuClinic");
     // textPlay_.Draw(32, 32, "Clay shooting");

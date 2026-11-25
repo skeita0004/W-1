@@ -1,9 +1,9 @@
 ﻿// Engine
-#include "../Engine/Input.hpp"
-#include "../Engine/Image.hpp"
-#include "../Engine/Audio.hpp"
-#include "../Engine/SceneManager.hpp"
-#include "../Engine/CameraSet.hpp"
+#include "Input.hpp"
+#include "Image.hpp"
+#include "Audio.hpp"
+#include "SceneManager.hpp"
+#include "CameraSet.hpp"
 
 // Game
 #include "UI.hpp"
@@ -11,7 +11,7 @@
 
 // その他
 #include <DirectXMath.h>
-#include "../include/imgui.h"
+#include "imgui.h"
 
 using namespace DirectX;
 using namespace Config;
@@ -19,6 +19,15 @@ using namespace std;
 
 namespace
 {
+    const int str_num = 64;
+
+    // UIの初期値(一応あると楽だからここに)
+    const XMFLOAT3 Init_Pos[5] // 位置
+        = {{-0.92f,-0.75f,0.0f}, {0.63f,-0.75f,0.0f},{-0.6f,0.85f,0.0f}, {0.6f,0.85f,0.0f}};
+    const XMFLOAT3 Init_Rot[5] // 回転
+        = {{0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f}};
+    const XMFLOAT3 Init_Sca[5] // 拡大率
+        = {{0.3f,0.3f,0.0f}, {0.3f,0.3f,0.0f},{0.7f,0.4f,0.0f}, {0.7f,0.4f,0.0f}}; 
 }
 
 // コンストラクタ
@@ -43,35 +52,30 @@ UI::~UI()
 void UI::Initialize()
 {
     // UIの画像のロード
-    hImage_[Bullet_UI1p && Bullet_UI2p]
-        = Image::Load("Image/Bullet.png"); // 弾
-    hImage_[Board_1p && Board_2p]
-        = Image::Load("Image/UI_1.png");   // 木材
+    {
+        hImage_[Bullet_UI1p && Bullet_UI2p]
+            = Image::Load("Image/Bullet.png"); // 弾
+        hImage_[Board_1p && Board_2p]
+            = Image::Load("Image/UI_1.png");   // 木材
 
-    assert(hImage_[Bullet_UI1p && Bullet_UI2p] >= 0);
-    assert(hImage_[Board_1p && Board_2p] >= 0);
+        assert(hImage_[Bullet_UI1p && Bullet_UI2p] >= 0);
+        assert(hImage_[Board_1p && Board_2p] >= 0);
+    }
 
     // サウンドデータのロード
-    hSound_
-        = Audio::Load("Audio/拳銃を撃つ.wav"); // 弾
-    assert(hSound_ >= 0);
+    {
+        hSound_
+            = Audio::Load("Audio/拳銃を撃つ.wav"); // 弾
+        assert(hSound_ >= 0);
+    }
 
     // 一応あると楽だからここに
-    position_[Bullet_UI1p] = { -0.92f, -0.75f, 0.0f }; // 位置
-    rotate_[Bullet_UI1p]   = {   0.0f,   0.0f, 0.0f }; // 回転
-    scale_[Bullet_UI1p]    = {   0.3f,   0.3f, 0.0f }; // 拡大率
-
-    position_[Bullet_UI2p] = {  0.63f, -0.75f,  0.0f }; // 位置
-    rotate_[Bullet_UI2p]   = {  0.0f,    0.0f,  0.0f }; // 回転
-    scale_[Bullet_UI2p]    = {  0.3f,    0.3f, 0.00f }; // 拡大率
-
-    position_[Board_1p] = { -0.6f,  0.85f,  0.0f }; // 位置
-    rotate_[Board_1p]   = {  0.0f,   0.0f,  0.0f }; // 回転
-    scale_[Board_1p]    = {  0.7f,   0.4f, 0.00f }; // 拡大率
-
-    position_[Board_2p] = { 0.6f,   0.85f,  0.0f }; // 位置
-    rotate_[Board_2p]   = { 0.0f,    0.0f,  0.0f }; // 回転
-    scale_[Board_2p]    = { 0.7f,    0.4f, 0.00f }; // 拡大率
+    for (int i = 0; i < UI_Max; i++)
+    {
+        position_[i] = Init_Pos[i];
+        rotate_[i] = Init_Rot[i];
+        scale_[i] = Init_Sca[i];
+    }
 
     textB_num_.Initialize("Fonts/Rye-Regular.ttf", 64.0f);
     textScore_.Initialize("Fonts/Rye-Regular.ttf", 64.0f);
@@ -88,8 +92,8 @@ void UI::Update()
 
         //敵がもういなかったらクリア画面へ
         if (Game_Timer <= 0.0f) {
-            SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-            pSceneManager->ChangeScene(SCENE_ID_CLEAR);
+            SceneManager* pSceneManager = (SceneManager*)/*FindObject*/FindChildObject("SceneManager");
+            pSceneManager->ChangeScene(SceneManager::SceneID::MAX_SCENE_ID);
         }
     }
 
@@ -129,18 +133,18 @@ void UI::Draw()
     {
         // 1P
         {
-            transform_.position_ = {position_[0].x,position_[0].y,position_[0].z};  // 位置
-            transform_.scale_ = {scale_[0].x,scale_[0].y,scale_[0].z};  // 拡大率
-            Image::SetTransform(hImage_[0], transform_);
-            Image::Draw(hImage_[0]);
+            //transform_.position = {Init_Pos[Bullet_UI1p]};  // 位置
+            //transform_.scale    = {Init_Sca[Bullet_UI1p]};  // 拡大率
+            Image::SetTransform(hImage_[Bullet_UI1p], transform_);
+            Image::Draw(hImage_[Bullet_UI1p]);
 
-            transform_.position_ = {position_[2].x,position_[2].y,position_[2].z};  // 位置
-            transform_.scale_ = {scale_[2].x,scale_[2].y,scale_[2].z};  // 拡大率
-            Image::SetTransform(hImage_[1], transform_);
-            Image::Draw(hImage_[1]);
+            //transform_.position = {Init_Pos[Board_1p]};  // 位置
+            //transform_.scale    = {Init_Sca[Board_1p]};  // 拡大率
+            Image::SetTransform(hImage_[Board_1p], transform_);
+            Image::Draw(hImage_[Board_1p]);
 
             // 弾の残数
-            char str[64];
+            char str[str_num];
             sprintf_s(str, "x %d", Bullet_num[PLAYER_1]);
             // sprintf_s(str, "x ---");
             textB_num_.Draw(90, 600, str);
@@ -148,18 +152,18 @@ void UI::Draw()
 
         // 2P
         {
-            transform_.position_ = {position_[1].x,position_[1].y,position_[1].z};  // 位置
-            transform_.scale_ = {scale_[1].x,scale_[1].y,scale_[1].z};  // 拡大率
-            Image::SetTransform(hImage_[0], transform_);
-            Image::Draw(hImage_[0]);
+            //transform_.position = {Init_Pos[Bullet_UI2p]};  // 位置
+            //transform_.scale = {Init_Sca[Bullet_UI2p]};     // 拡大率
+            Image::SetTransform(hImage_[Bullet_UI2p], transform_);
+            Image::Draw(hImage_[Bullet_UI2p]);
 
-            transform_.position_ = {position_[3].x,position_[3].y,position_[3].z};  // 位置
-            transform_.scale_ = {scale_[3].x,scale_[3].y,scale_[3].z};  // 拡大率
-            Image::SetTransform(hImage_[1], transform_);
-            Image::Draw(hImage_[1]);
+            //transform_.position = {Init_Pos[Board_2p]};  // 位置
+            //transform_.scale = {Init_Sca[Board_2p]};     // 拡大率
+            Image::SetTransform(hImage_[Board_2p], transform_);
+            Image::Draw(hImage_[Board_2p]);
 
             // 弾の残数
-            char str[64];
+            char str[str_num];
             sprintf_s(str, "x %d", Bullet_num[PLAYER_2]);
             // sprintf_s(str, "x ---");
             textB_num_.Draw(1080, 600, str);
@@ -168,7 +172,7 @@ void UI::Draw()
 
     // タイマー表示
     {
-        char str[64];
+        char str[str_num];
         sprintf_s(str, "%.1f", Game_Timer);
         if (Game_Timer > 10.0f) {
             textTimer_.Draw(540, 10, str);
@@ -182,7 +186,7 @@ void UI::Draw()
 
     // スコア表示
     {
-        char str[64];
+        char str[str_num];
         sprintf_s(str, "1P :%.5d", sc->GetTotalScore_1P());
         textScore_.Draw(120, 20, str);
 

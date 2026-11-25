@@ -190,7 +190,6 @@
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
     <ClCompile Include="Source\Game\TestScene.cpp" />
     <ClCompile Include="Source\Game\ClayShooting\Clay.cpp" />
-    <ClCompile Include="Source\Game\ClayShooting\ClearScene.cpp" />
     <ClCompile Include="Source\Game\ClayShooting\Gun.cpp" />
     <ClCompile Include="Source\Game\ClayShooting\PlayScene.cpp" />
     <ClCompile Include="Source\Game\ClayShooting\Reticle.cpp" />
@@ -253,7 +252,6 @@
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
     <ClInclude Include="Source\Game\ClayShooting\Clay.hpp" />
-    <ClInclude Include="Source\Game\ClayShooting\ClearScene.hpp" />
     <ClInclude Include="Source\Game\ClayShooting\Config.hpp" />
     <ClInclude Include="Source\Game\ClayShooting\Gun.hpp" />
     <ClInclude Include="Source\Game\ClayShooting\PlayScene.hpp" />

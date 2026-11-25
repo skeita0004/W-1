@@ -1,7 +1,7 @@
-﻿#include "ClearScene.h"
-#include "Engine/Image.h"
-#include "Engine//FontText.hpp"
-#include "Clay.h"
+﻿
+#include "Image.hpp"
+#include "FontText.hpp"
+#include "Clay.hpp"
 
 #include "../include/imgui.h"
 

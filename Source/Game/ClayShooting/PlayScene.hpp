@@ -1,29 +1,58 @@
-#pragma once
-#include "Engine/GameObject.h"
-#include "Engine/FontText.hpp"
+ï»¿#pragma once
+// Engine
+#include "GameObject.hpp"
+#include "FontText.hpp"
 
-//ƒvƒŒƒCƒV[ƒ“‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// Game
+#include "Config.hpp"
+
+//ãƒ—ãƒ¬ã‚¤ã‚·ãƒ¼ãƒ³ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class PlayScene : public GameObject
 {
-    //const int ENEMY_NUM;  //“G‚Ì”
-    FontText textPlay_;       //ƒeƒLƒXƒg•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒg
-
-    int hBackGround_; // ”wŒi
-
 public:
-    //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-    //ˆø”Fparent  eƒIƒuƒWƒFƒNƒgiSceneManagerj
+    //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+    //å¼•æ•°ï¼šparent  è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆï¼ˆSceneManagerï¼‰
     PlayScene(GameObject* parent);
 
-    //‰Šú‰»
+    //åˆæœŸåŒ–
     void Initialize() override;
 
-    //XV
+    //æ›´æ–°
     void Update() override;
 
-    //•`‰æ
+    //æç”»
     void Draw() override;
 
-    //ŠJ•ú
+    //é–‹æ”¾
     void Release() override;
+
+private:
+    // èƒŒæ™¯ã®ãƒ¢ãƒ‡ãƒ«ã‚¿ã‚¤ãƒ—
+    enum BDModel
+    {
+        Ground,      // åœ°é¢
+        Model_Max    // ãƒ¢ãƒ‡ãƒ«ã®é™ç•Œå€¤
+    };
+
+    // ã‚µã‚¦ãƒ³ãƒ‰ã®ç¨®é¡
+    enum SoundType
+    {
+        Wind,      // é¢¨
+        Sound_Max  // ã‚µã‚¦ãƒ³ãƒ‰ã®é™ç•Œå€¤
+    };
+
+    // ãƒ†ã‚­ã‚¹ãƒˆæç”»ç”¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    FontText textPlay_;
+
+    // èƒŒæ™¯ãƒ¢ãƒ‡ãƒ«ã®åº§æ¨™
+    XMFLOAT3 position_[Model_Max]; // ä½ç½®
+    XMFLOAT3 rotate_[Model_Max];   // å›è»¢
+    XMFLOAT3 scale_[Model_Max];    // æ‹¡å¤§ç‡
+
+    // ãƒ¢ãƒ‡ãƒ«ç•ªå·
+    int hModel_[Model_Max]; 
+    // ã‚µã‚¦ãƒ³ãƒ‰èª­ã¿è¾¼ã¿
+    int hSound_[Sound_Max];
+    // èƒŒæ™¯ã®ç”»åƒèª­ã¿è¾¼ã¿
+    int hBackGround_;
 };

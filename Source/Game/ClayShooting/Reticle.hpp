@@ -1,45 +1,53 @@
-#pragma once
-#include "Engine/GameObject.h"
-#include "Engine/FontText.hpp"
-#include "Config.h"
+ï»¿#pragma once
+// Engine
+#include "GameObject.hpp"
+#include "FontText.hpp"
 
-// e‚ÌƒŒƒeƒBƒNƒ‹‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// Game
+#include "Config.hpp"
+
+// éŠƒã®ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class Reticle : public GameObject
 {
-    FontText textReticle_;       //ƒeƒLƒXƒg•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒg
-
-    // ƒŒƒeƒBƒNƒ‹‚ÌÀ•W
-    XMFLOAT3 position_[Config::PLAYER_NUM];
-    XMFLOAT3 rotate_;   // ‰ñ“]
-    XMFLOAT3 scale_;    // Šg‘å—¦
-
-    // ‰æ‘œ“Ç‚İ‚İ
-    int hImage_[Config::PLAYER_NUM];
-
-    // •W€ˆÚ“®
-    void Move();
-
-    // ”­Ë(“ñl•ª)
-    void Shoot(int player);
-
-    bool triggerOld_[Config::PLAYER_NUM] = { false, false };
-
 public:
-    // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     Reticle(GameObject* parent);
 
-    // ƒfƒXƒgƒ‰ƒNƒ^
+    // ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     ~Reticle();
 
-    // ‰Šú‰»
+    // åˆæœŸåŒ–
     void Initialize() override;
 
-    // XV
+    // æ›´æ–°
     void Update() override;
 
-    // •`‰æ
+    // æç”»
     void Draw() override;
 
-    // ŠJ•ú
+    // é–‹æ”¾
     void Release() override;
+
+private:
+    //ãƒ†ã‚­ã‚¹ãƒˆæç”»ç”¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    FontText textReticle_;
+
+    // ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®åº§æ¨™
+    XMFLOAT3 position_[Config::PLAYER_NUM]; // ä½ç½®
+    XMFLOAT3 rotate_[Config::PLAYER_NUM];   // å›è»¢
+    XMFLOAT3 scale_[Config::PLAYER_NUM];    // æ‹¡å¤§ç‡
+
+    // ç”»åƒèª­ã¿è¾¼ã¿
+    int hImage_[Config::PLAYER_NUM];
+    // ã‚µã‚¦ãƒ³ãƒ‰èª­ã¿è¾¼ã¿
+    int hSound_;
+
+    // æ¨™æº–ç§»å‹•
+    void Move();
+
+    // ç™ºå°„(äºŒäººåˆ†)
+    void Shoot(int player);
+
+    bool triggerOld_[Config::PLAYER_NUM] = {false, false};
+
 };

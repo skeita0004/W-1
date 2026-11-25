@@ -1,44 +1,54 @@
-﻿#include "Reticle.hpp"
-#include "Engine/Input.h"
-#include "Engine/Image.h"
-#include "Engine/SceneManager.h"
+﻿// Engine
+#include "Input.hpp"
+#include "Image.hpp"
+#include "Audio.hpp"
+#include "SceneManager.hpp"
 
+// Game
+#include "Reticle.hpp"
+#include "Clay.hpp"
+#include "Gun.hpp"
+#include "UI.hpp"
+
+// その他
 #include <DirectXMath.h>
-//#include "Bullet.h"
-#include "Engine/Model.h"
-#include "Gun.h"
-#include "UI.h"
-#include "Clay.h"
-
-#include "../include/imgui.h"
+#include "imgui.h"
 
 using namespace DirectX;
-using namespace std;
 using namespace Config;
+using namespace std;
 
 namespace
 {
+    const int str_num = 64;
+
     // レティクルの初期値
-    const XMFLOAT3 Init_Pos[PLAYER_NUM] = { { -0.3f, 0.0f, 0.0f }, { 0.3f, 0.0f, 0.0f } };
-    const float    Reticle_scale = 0.2f; // 拡大率
+    const XMFLOAT3 Init_Pos[PLAYER_NUM] // 位置
+        = {{-0.3f,0.0f,0.0f}, {0.3f,0.0f,0.0f}};
+    const XMFLOAT3 Init_Rot[PLAYER_NUM] // 回転
+        = {{0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f}};
+    const XMFLOAT3 Init_Sca[PLAYER_NUM] // 拡大率
+        = {{0.2f,0.2f,0.0f}, {0.2f,0.2f,0.0f}};
 
     // レティクルの移動速度
     const float Speed = 0.02f;
 
-    // 移動の範囲
-    const float Limit_X_Left  = -0.9f;
-    const float Limit_X_Right =  0.9f;
-    const float Limit_Y_Up    =  0.82f;
-    const float Limit_Y_Down  = -0.5f;
+    // 移動範囲
+    const float Limit_X_Left  =  -0.9f; // 画面左端に行くと止まる
+    const float Limit_X_Right =   0.9f; // 画面右端に行くと止まる
+    const float Limit_Y_Up    =  0.82f; // 画面上側に行くと止まる
+    const float Limit_Y_Down  =  -0.5f; // 画面下側に行くと止まる
 }
+
 
 // コンストラクタ
 Reticle::Reticle(GameObject* parent)
     :GameObject(parent, "Reticle"),
-    position_{ {0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} },
-    rotate_{ 0.0f,0.0f,0.0f },
-    scale_{ 0.0f, 0.0f,0.0f },
-    hImage_{ -1,-1 }
+    position_  {{ 0.0f,0.0f,0.0f }}, // 位置
+    rotate_    {{ 0.0f,0.0f,0.0f }}, // 回転
+    scale_     {{ 0.0f,0.0f,0.0f }}, // 拡大率
+    hImage_{(-1)},   // 画像読み込み
+    hSound_{(-1)}    // サウンド読み込み
 {
 }
 
@@ -51,14 +61,31 @@ Reticle::~Reticle()
 void Reticle::Initialize()
 {
     // レティクルの画像のロード
-    hImage_[0] = Image::Load("Image/Reticle_1P.png");
-    assert(hImage_[0] >= 0);
-    hImage_[1] = Image::Load("Image/Reticle_2P.png");
-    assert(hImage_[1] >= 0);
+    {
+        hImage_[PLAYER_1]
+            = Image::Load("Image/Reticle_1P.png"); // レティクル(1P用)
+        hImage_[PLAYER_2]
+            = Image::Load("Image/Reticle_2P.png"); // レティクル(2P用)
+
+        assert(hImage_[PLAYER_1] >= 0);
+        assert(hImage_[PLAYER_2] >= 0);
+    }
+
+    // サウンドデータのロード
+    {
+        hSound_
+            = Audio::Load("Audio/拳銃を撃つ.wav"); // 発砲音
+
+        assert(hSound_ >= 0);
+    }
 
     // 一応あると楽だからここに
-    rotate_ = { 0.0f, 0.0f, 0.0f };                            // 回転
-    scale_  = { Reticle_scale, Reticle_scale, Reticle_scale }; // 拡大率
+    for (int i = 0; i < PLAYER_NUM; i++)
+    {
+        position_[i] = Init_Pos[i];
+        rotate_[i]   = Init_Rot[i];
+        scale_[i]    = Init_Sca[i];
+    }
 
     textReticle_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
 }
@@ -85,12 +112,11 @@ void Reticle::Update()
 // 描画
 void Reticle::Draw()
 {
-    transform_.rotate_ = rotate_;   // 回転
-    transform_.scale_  = scale_;    // 拡大率
+    //transform_.position = {Init_Pos[PLAYER_NUM]};  // 位置
+    //transform_.scale    = {Init_Sca[PLAYER_NUM]};  // 拡大率
 
     // レティクル表示
     for (int i = 0; i < PLAYER_NUM; i++) {
-        transform_.position_ = position_[i];  // 位置
         Image::SetTransform(hImage_[i], transform_);
         Image::Draw(hImage_[i]);
     }
@@ -179,8 +205,11 @@ void Reticle::Shoot(int player)
         || Input::IsPadButtonDown(XINPUT_GAMEPAD_B, player)
         || triggerNow && !triggerOld_[player])
     {
+        // 発射
+        Audio::Play(hSound_);
+
         // クレーとの当たり判定
-        Clay* pClay = static_cast<Clay*>(FindObject("Clay"));
+        Clay* pClay = static_cast<Clay*>(FindChildObject("Clay"));
         if (pClay != nullptr) {
             pClay->TryBreak(player,XMFLOAT2(position_[player].x, position_[player].y));
         }

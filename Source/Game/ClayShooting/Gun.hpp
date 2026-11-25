@@ -1,39 +1,45 @@
-#pragma once
-#include "Engine/GameObject.h"
-#include "Engine/FontText.hpp"
-#include "Config.h"
+ï»¿#pragma once
+// Engine
+#include "GameObject.hpp"
+#include "FontText.hpp"
 
-//e‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// Game
+#include "Config.hpp"
+
+//éŠƒã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class Gun : public GameObject
 {
-    FontText textGun_;       //ƒeƒLƒXƒg•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒg
-
-    XMFLOAT3 position_[Config::PLAYER_NUM]; // ˆÊ’u
-    XMFLOAT3 rotate_[Config::PLAYER_NUM];   // ‰ñ“]
-    XMFLOAT3 scale_[Config::PLAYER_NUM];    // Šg‘å—¦
-
-    int hModel_;        // ƒ‚ƒfƒ‹”Ô†
-    //int hImage_;      // ‰æ‘œ“Ç‚İ‚İ
-
-    //ˆÚ“®
-    void Move();
-
 public:
-    //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     Gun(GameObject* parent);
 
-    //ƒfƒXƒgƒ‰ƒNƒ^
+    //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     ~Gun();
 
-    //‰Šú‰»
+    //åˆæœŸåŒ–
     void Initialize() override;
 
-    //XV
+    //æ›´æ–°
     void Update() override;
 
-    //•`‰æ
+    //æç”»
     void Draw() override;
 
-    //ŠJ•ú
+    //é–‹æ”¾
     void Release() override;
+
+private:
+    //ãƒ†ã‚­ã‚¹ãƒˆæç”»ç”¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    FontText textGun_;
+
+    XMFLOAT3 position_[Config::PLAYER_NUM]; // ä½ç½®
+    XMFLOAT3 rotate_[Config::PLAYER_NUM];   // å›è»¢
+    XMFLOAT3 scale_[Config::PLAYER_NUM];    // æ‹¡å¤§ç‡
+
+    int hModel_;        // ãƒ¢ãƒ‡ãƒ«ç•ªå·
+    //int hImage_;      // ç”»åƒèª­ã¿è¾¼ã¿
+
+    //ç§»å‹•
+    void Move();
+
 };

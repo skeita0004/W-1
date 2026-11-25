@@ -1,21 +1,24 @@
-﻿#include "Gun.h"
+﻿// Engine
+#include "Input.hpp"
+#include "Model.hpp"
 
+// Game
+#include "Gun.hpp"
+
+// その他
 #include <DirectXMath.h>
-#include "Engine/Model.h"
-#include "Engine/Input.h"
-
-#include "../include/imgui.h"
+#include "imgui.h"
 
 using namespace DirectX;
-using namespace std;
 using namespace Config;
+using namespace std;
 
 namespace
 {
     // 銃の初期値
-    const XMFLOAT3 Init_Pos[PLAYER_NUM] = { { -3.5f, -7.0f, -6.0f }, { 3.8f, -7.0f, -6.0f } };
-    const XMFLOAT3 Init_Rot[PLAYER_NUM] = { { 0.0f, -103.0f, -12.0f }, { 0.0f, -77.0f, -12.0f } };
-    const float    Gun_scale = 0.5f; // 拡大率
+    const XMFLOAT3 Init_Pos[PLAYER_NUM] = {{-3.5f,-7.0f,-6.0f}, {3.8f,-7.0f,-6.0f}};
+    const XMFLOAT3 Init_Rot[PLAYER_NUM] = {{0.0f,-103.0f,-12.0f}, {0.0f,-77.0f,-12.0f}};
+    const XMFLOAT3 Init_Sca[PLAYER_NUM] = {{0.5f,0.5f,0.5f}, {0.5f,0.5f,0.5f}};
 
     // 回転の範囲
     const float Rot_Y_Left_Limit  = -124.0f; // 左へ向ける限界
@@ -31,10 +34,10 @@ namespace
 // コンストラクタ
 Gun::Gun(GameObject* parent)
     :GameObject(parent, "Reticle"),
-    position_{ {0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} },
-    rotate_  { {0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} },
-    scale_   { {0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} },
-    hModel_(-1)
+    position_{{ 0.0f,0.0f,0.0f }}, // 位置
+    rotate_  {{ 0.0f,0.0f,0.0f }}, // 回転
+    scale_   {{ 0.0f,0.0f,0.0f }}, // 拡大率
+    hModel_  (-1) // モデル読み込み
 {
 }
 
@@ -47,15 +50,19 @@ Gun::~Gun()
 void Gun::Initialize()
 {
     //モデルデータのロード
-    hModel_ = Model::Load("/Model/Gun00.fbx");
-    assert(hModel_ >= 0);
-    
+    {
+        hModel_
+            = Model::Load("/Model/Gun00.fbx");
+
+        assert(hModel_ >= 0);
+    }
+
     // 一応あると楽だからここに
     for (int i = 0; i < PLAYER_NUM; i++)
     {
         position_[i] = Init_Pos[i];
         rotate_[i]   = Init_Rot[i];
-        scale_[i]    = { Gun_scale, Gun_scale, Gun_scale };
+        scale_[i]    = Init_Sca[i];
     }
 
     textGun_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
@@ -82,12 +89,12 @@ void Gun::Draw()
 {
     for (int i = 0; i < PLAYER_NUM; i++)
     {
-        transform_.position_ = position_[i]; // 位置
-        transform_.rotate_   = rotate_[i];   // 回転
-        transform_.scale_    = scale_[i];    // 拡大率
+        transform_.position = position_[i]; // 位置
+        transform_.rotate   = rotate_[i];   // 回転
+        transform_.scale    = scale_[i];    // 拡大率
 
         Model::SetTransform(hModel_, transform_);
-        Model::Draw(hModel_);
+        Model::Update(hModel_);
     }
 
     // ImGui (デバック用)
