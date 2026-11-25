@@ -123,7 +123,7 @@ void PlaySceneButton::OnStartClicked()
     resultText_.clear();
 
     static std::mt19937 engine((std::random_device())());
-    std::uniform_int_distribution<int> distribution(10, 20);
+    std::uniform_int_distribution<int> distribution(10, 15);//<-待機時間をランダムに設定（10～n秒）
 
     timer_->Start(distribution(engine));
     countdownStartTime_ = std::chrono::steady_clock::now();

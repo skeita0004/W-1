@@ -11,6 +11,7 @@
 #include <Imgui.h>
 #include <cassert>
 #include <CameraSet.hpp>
+#include "QuickDrawSky.hpp"
 
 //コンストラクタ
 QuickDrawScene::QuickDrawScene(GameObject * parent)
@@ -25,6 +26,11 @@ void QuickDrawScene::Initialize()
     auto camera = CameraSet::GetCurrent();
     camera->GetTransform().position = XMFLOAT3(0.0f, 0.8f, -4.0f);
     camera->GetTargetTransform().position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+
+    //背景
+    sky_ = new QuickDrawSky(this);
+    PushBackChild(sky_);
+    sky_->Initialize();
 
     bgmHandle_ = Audio::Load("Audio/QuickDraw/Game01Bgm00.wav", true);
     Audio::Play(bgmHandle_);
@@ -51,7 +57,7 @@ void QuickDrawScene::Initialize()
 
     //日本語用フォント
     japaneseText_.Initialize(
-        "Fonts/aoyagireisyosimo_ttf_2_01.ttf", 62.0f);
+        "Fonts/aoyagireisyosimo_ttf_2_01.ttf", 42.0f);
 
     const ImVec2 size = ImGui::GetIO().DisplaySize;
     

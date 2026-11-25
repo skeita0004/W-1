@@ -27,4 +27,5 @@ private:
     std::string modelPath_;
     float defaultRotateY_ = 0.0f;
     bool isFallen_ = false;
+
 };

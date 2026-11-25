@@ -5,6 +5,7 @@
 #include "01GameTimer.hpp"
 #include "01PlaySceneButton.hpp"
 #include "Game01Player.hpp"
+#include "QuickDrawSky.hpp"
 
 //プレイシーンを管理するクラス
 class QuickDrawScene : public GameObject
@@ -37,4 +38,5 @@ private:
 	GuiButton* startButton = nullptr;
 	Game01Player* leftPlayer_ = nullptr;
 	Game01Player* rightPlayer_ = nullptr;
+    QuickDrawSky* sky_ = nullptr;//背景
 };
