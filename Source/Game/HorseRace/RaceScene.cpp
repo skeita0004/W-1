@@ -1,4 +1,5 @@
 ﻿#include "RaceScene.hpp"
+#include "Audio.hpp"
 #include "Stage.hpp"
 #include "Image.hpp"
 #include "SceneManager.hpp"
@@ -11,6 +12,7 @@ RaceScene::RaceScene(GameObject* parent)
 void RaceScene::Initialize()
 {
 	hImage_ = Image::Load("Picture/HorseRace/yuuhi.jpg");
+	hBgm_ = Audio::Load("Audio/HorseBgm.wav");
 
 	Instantiate<Stage>(this);
 
@@ -19,6 +21,8 @@ void RaceScene::Initialize()
 
 void RaceScene::Update()
 {
+	Audio::Play(hBgm_);
+
 	if (horse == nullptr)
 		return;
 

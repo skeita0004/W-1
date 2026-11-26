@@ -12,5 +12,7 @@ public:
 	void Release() override;
 private:
 	int hImage_;
+	int hBgm_;
+
 	Horse* horse;
 };

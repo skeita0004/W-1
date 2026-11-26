@@ -1,8 +1,10 @@
 ﻿#include "Horse.hpp"
 #include "Model.hpp"
+#include "Audio.hpp"
 #include "CameraSet.hpp"
 #include "Input.hpp"
 #include "DeltaTime.hpp"
+#include "Speedline.hpp"
 #include <imgui.h>
 
 Horse::Horse(GameObject* parent)
@@ -16,6 +18,7 @@ void Horse::Initialize()
 	hModel_ = Model::Load("Model/HorseRace/HorsePlush.fbx");
 	assert(hModel_ >= 0);
 	sModel_ = Model::Load("Model/HorseRace/Shadow.fbx");
+	
 	transform_.position = XMFLOAT3(0, 0, 0);
     transform_.scale = XMFLOAT3(5, 5, 5);
 
@@ -69,7 +72,13 @@ void Horse::Update()
 		}
 	}
 
+	if (speed_ >= 1.0f)
+	{
+		Input::SetPadVibration(0, 0, 0);
+	}
+
 	const auto& camera{CameraSet::GetVirtualCamera(CameraSet::hNormalCamera)};
+	camera->GetFarClip() = 5000;
     camera->GetTransform().position = XMFLOAT3(0.0f,  800.0f, transform_.position.z - 100.0f);
     camera->GetTargetTransform().position = XMFLOAT3(0.0f, 0.0f, transform_.position.z + 500.0f);
 
@@ -102,10 +111,16 @@ void Horse::Draw()
 		transform_.position.z
 	);
 
+	shadowTransform.rotate = transform_.rotate;
 	shadowTransform.scale = XMFLOAT3(5, 5, 5);
 
 	Model::SetTransform(sModel_, shadowTransform);
 	Renderer::Draw(sModel_);
+
+	if (speed_ >= 12.0f)
+	{
+		Instantiate<SpeedLine>;
+	}
 
 	//CollisionDraw();
 }
@@ -201,4 +216,7 @@ void Horse::OnCollision(GameObject* pTarget)
 	knockbackTime_ = 0.5f;
 
 	speed_ = 0.5f;
+
+	// コントローラー振動
+	Input::SetPadVibration(65000, 65000, 0);
 }

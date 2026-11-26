@@ -36,7 +36,7 @@ void Stage::Initialize()
         }
     }
 
-	LoadStageCsv();
+    LoadStageCsv();
 }
 
 void Stage::Update()
@@ -65,6 +65,7 @@ void Stage::Draw()
 
         Renderer::Draw(hModel_);
     }
+
 }
 
 void Stage::Release()
@@ -110,10 +111,14 @@ void Stage::LoadStageCsv()
                 break;
 
             case 4:
-                //obstacle = Instantiate<cactus2>(GetParent());
+                obstacle = Instantiate<cactus2>(GetParent());
                 break;
+
             case 5:
-                obstacle = Instantiate<Tumbleweed>(GetParent());
+                //obstacle = Instantiate<Tumbleweed>(GetParent());
+                break;
+
+            default:
                 break;
             }
 

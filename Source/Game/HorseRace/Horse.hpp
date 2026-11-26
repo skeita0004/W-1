@@ -21,6 +21,8 @@ public:
 private:
 	int hModel_;
 	int sModel_;
+
+	
 	float speed_;
 
 	XMFLOAT3 colPos_;

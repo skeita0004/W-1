@@ -31,7 +31,7 @@ void VirtualCameraPersp::Initialize()
     targetTransform_.position = XMFLOAT3(0, 0, 0);
 
     nearClip_ = 0.1f;
-    farClip_  = 1000.0f;
+    farClip_  = 3000.0f;
 }
 
 void VirtualCameraPersp::Update()
