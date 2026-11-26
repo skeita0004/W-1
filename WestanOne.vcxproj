@@ -188,7 +188,9 @@
     <ClCompile Include="source\engine\Transform.cpp" />
     <ClCompile Include="source\engine\VirtualCameraOrtho.cpp" />
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
+    <ClCompile Include="Source\Game\GeneralResultScene.cpp" />
     <ClCompile Include="Source\Game\TestScene.cpp" />
+    <ClCompile Include="Source\Game\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\FontText.hpp" />
@@ -246,7 +248,10 @@
     <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
+    <ClInclude Include="Source\Engine\WinCount.hpp" />
+    <ClInclude Include="Source\Game\GeneralResultScene.hpp" />
     <ClInclude Include="Source\Game\TestScene.hpp" />
+    <ClInclude Include="Source\Game\TitleScene.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
