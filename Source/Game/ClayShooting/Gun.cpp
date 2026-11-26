@@ -52,7 +52,7 @@ void Gun::Initialize()
     //モデルデータのロード
     {
         hModel_
-            = Model::Load("/Model/Gun00.fbx");
+            = Model::Load("../Model/ClayShooting/Gun00.fbx");
 
         assert(hModel_ >= 0);
     }
@@ -65,7 +65,7 @@ void Gun::Initialize()
         scale_[i]    = Init_Sca[i];
     }
 
-    textGun_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
+    textGun_.Initialize("../Fonts/Rye-Regular.ttf", 28.0f);
 }
 
 // 更新
@@ -94,7 +94,7 @@ void Gun::Draw()
         transform_.scale    = scale_[i];    // 拡大率
 
         Model::SetTransform(hModel_, transform_);
-        Model::Update(hModel_);
+        Renderer::Draw(hModel_);
     }
 
     // ImGui (デバック用)

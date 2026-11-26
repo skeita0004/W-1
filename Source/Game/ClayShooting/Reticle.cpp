@@ -63,9 +63,9 @@ void Reticle::Initialize()
     // レティクルの画像のロード
     {
         hImage_[PLAYER_1]
-            = Image::Load("Image/Reticle_1P.png"); // レティクル(1P用)
+            = Image::Load("../Image/ClayShooting/Reticle_1P.png"); // レティクル(1P用)
         hImage_[PLAYER_2]
-            = Image::Load("Image/Reticle_2P.png"); // レティクル(2P用)
+            = Image::Load("../Image/ClayShooting/Reticle_2P.png"); // レティクル(2P用)
 
         assert(hImage_[PLAYER_1] >= 0);
         assert(hImage_[PLAYER_2] >= 0);
@@ -74,7 +74,7 @@ void Reticle::Initialize()
     // サウンドデータのロード
     {
         hSound_
-            = Audio::Load("Audio/拳銃を撃つ.wav"); // 発砲音
+            = Audio::Load("../Audio/ClayShooting/拳銃を撃つ.wav"); // 発砲音
 
         assert(hSound_ >= 0);
     }
@@ -87,7 +87,7 @@ void Reticle::Initialize()
         scale_[i]    = Init_Sca[i];
     }
 
-    textReticle_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
+    textReticle_.Initialize("../Fonts/Rye-Regular.ttf", 28.0f);
 }
 
 // 更新

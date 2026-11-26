@@ -20,6 +20,30 @@ int Clay::TotalScore_[PLAYER_NUM] = {};
 
 namespace
 {
+    // ====== これがないとリンカーエラー吐く（AI）==========
+    // ※ 画面のアスペクト比に合わせて変更すること
+    const float CAM_ASPECT = 16.0f / 9.0f;
+
+    // 通常カメラのビュー・プロジェクション行列を作る
+    void GetNormalCameraMatrix(XMMATRIX* pView, XMMATRIX* pProj)
+    {
+        IVirtualCamera* camera = CameraSet::GetVirtualCamera(CameraSet::hNormalCamera);
+        Transform& tr = camera->GetTransform();
+
+        // ビュー行列 = カメラのワールド行列の逆行列
+        XMMATRIX world =
+            XMMatrixRotationRollPitchYaw(XMConvertToRadians(tr.rotate.x),
+                                         XMConvertToRadians(tr.rotate.y),
+                                         XMConvertToRadians(tr.rotate.z))
+            * XMMatrixTranslation(tr.position.x, tr.position.y, tr.position.z);
+        *pView = XMMatrixInverse(nullptr, world);
+
+        // CameraSet::Initialize と同じ値（視野角120度、near 0.1、far 1000）
+        *pProj = XMMatrixPerspectiveFovLH(XMConvertToRadians(120.0f),
+                                          CAM_ASPECT, 0.1f, 1000.0f);
+    }
+    // =====================================================
+
     // クレーの初期値
     const float CLAY_SCALE = 0.2f;   // 拡大率（XYZ共通）
     const int   CLAY_SCORE = 50;     // 1枚あたりのスコア
@@ -82,17 +106,17 @@ void Clay::Initialize()
     // モデルデータのロード
     {
         hModel_[Clay_A]   
-            = Model::Load("../Model/Dish00.fbx");
+            = Model::Load("../Model/ClayShooting/Dish00.fbx");
         hModel_[Clay_B]   
-            = Model::Load("../Model/Dish00.fbx");
+            = Model::Load("../Model/ClayShooting/Dish00.fbx");
         hModel_[Clay_C]   
-            = Model::Load("../Model/Dish00.fbx");
+            = Model::Load("../Model/ClayShooting/Dish00.fbx");
         hModel_[Bottle_A] 
-            = Model::Load("../Model/bin_mock.fbx");
+            = Model::Load("../Model/ClayShooting/bin_mock.fbx");
         hModel_[Bottle_B] 
-            = Model::Load("../Model/bin_mock.fbx");
+            = Model::Load("../Model/ClayShooting/bin_mock.fbx");
         hModel_[Bomb]     
-            = Model::Load("../Model/Bomb00.fbx");
+            = Model::Load("../Model/ClayShooting/Bomb00.fbx");
 
         assert(hModel_[Clay_A] >= 0);
         assert(hModel_[Clay_B] >= 0);
@@ -113,17 +137,17 @@ void Clay::Initialize()
     // サウンドデータのロード
     {
         hSound_[Clay_A]
-            = Audio::Load("../Audio/ガラスが割れる3.wav"); // クレーが壊れる音
+            = Audio::Load("../Audio/ClayShooting/ガラスが割れる3.wav"); // クレーが壊れる音
         hSound_[Clay_B]
-            = Audio::Load("../Audio/ガラスが割れる3.wav"); // クレーが壊れる音
+            = Audio::Load("../Audio/ClayShooting/ガラスが割れる3.wav"); // クレーが壊れる音
         hSound_[Clay_C]
-            = Audio::Load("../Audio/ガラスが割れる3.wav"); // クレーが壊れる音
+            = Audio::Load("../Audio/ClayShooting/ガラスが割れる3.wav"); // クレーが壊れる音
         hSound_[Bottle_A]
-            = Audio::Load("../Audio/空き瓶が砕ける.wav");  // 空き瓶が割れる音
+            = Audio::Load("../Audio/ClayShooting/空き瓶が砕ける.wav");  // 空き瓶が割れる音
         hSound_[Bottle_B]
-            = Audio::Load("../Audio/空き瓶が砕ける.wav");  // 空き瓶が割れる音
+            = Audio::Load("../Audio/ClayShooting/空き瓶が砕ける.wav");  // 空き瓶が割れる音
         hSound_[Bomb]
-            = Audio::Load("../Audio/爆発1.wav");           // 爆弾の爆発音
+            = Audio::Load("../Audio/ClayShooting/爆発1.wav");           // 爆弾の爆発音
 
         assert(hSound_[Clay_A] >= 0);
         assert(hSound_[Clay_B] >= 0);
@@ -234,6 +258,7 @@ void Clay::Update()
 
     // 銃の回転の上限指定
     {
+        /*
         // クレー１
         {
             if (position_[0].x < Field_Left) position_[0].x = Field_Right; // 左から右
@@ -266,8 +291,8 @@ void Clay::Update()
                 OnDown_[2] = false; // 上昇
                 position_[2].y = Field_Down; // 下から上
             }
-         
         }
+        */
 
         // デバック用クレー
         {
@@ -308,6 +333,7 @@ void Clay::Update()
 void Clay::Move()
 {
 
+    /*
     position_[Clay_A].x += 0.08f;
     rotate_[Clay_A].x += 2.5f;
     rotate_[Clay_A].y += 5.0f;
@@ -333,6 +359,7 @@ void Clay::Move()
     position_[Bomb].x += 0.15f;
     if (OnDown_[Bomb]) position_[Bomb].y -= 0.08f;
     else position_[Bomb].y += 0.08f;
+    */
 
     /*
     for (int i = 3; i < Clay_Max; i++)
@@ -358,7 +385,7 @@ void Clay::Draw()
         transform_.scale = scale_[i];    // 拡大率
 
         Model::SetTransform(hModel_[i], transform_);
-        Model::Update(hModel_[i]);
+        Renderer::Draw(hModel_[i]);
     }
 
     // ImGui (デバック用)
@@ -411,10 +438,13 @@ int Clay::FindOverlap(const XMFLOAT2& reticleNdc) const
     //XMMATRIX proj = CameraSet::GetProjectionMatrix();
     
     //ビュー行列を取得(前の遠藤エンジンから持ってきた)
-    XMMATRIX GetViewMatrix();
+    //XMMATRIX GetViewMatrix();
 
     //プロジェクション行列を取得(前の遠藤エンジンから持ってきた)
-    XMMATRIX GetProjectionMatrix();
+    //XMMATRIX GetProjectionMatrix();
+
+    XMMATRIX view, proj;
+    GetNormalCameraMatrix(&view, &proj);
 
     //const float hitSize = 0.05f;
     int   hit = -1;
@@ -425,14 +455,14 @@ int Clay::FindOverlap(const XMFLOAT2& reticleNdc) const
         if (IsDead_[i]) continue;
 
         // ワールド座標をビュー座標に変換
-        XMVECTOR world = XMVector3TransformCoord(XMLoadFloat3(&position_[i]), GetViewMatrix());
+        XMVECTOR world = XMVector3TransformCoord(XMLoadFloat3(&position_[i]), view);
         float depth = XMVectorGetZ(world);
         if (depth <= 0.01f) continue; // カメラの後ろは対象外
 
         // ビュー座標から画面座標に変換
-        XMVECTOR center = XMVector3TransformCoord(world, GetProjectionMatrix());
-        XMVECTOR edgeX = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(HitRange, 0.0f, 0.0f, 0.0f)), GetProjectionMatrix());
-        XMVECTOR edgeY = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(0.0f, HitRange, 0.0f, 0.0f)), GetProjectionMatrix());
+        XMVECTOR center = XMVector3TransformCoord(world, proj);
+        XMVECTOR edgeX = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(HitRange, 0.0f, 0.0f, 0.0f)), proj);
+        XMVECTOR edgeY = XMVector3TransformCoord(XMVectorAdd(world, XMVectorSet(0.0f, HitRange, 0.0f, 0.0f)), proj);
 
         float cx = XMVectorGetX(center);
         float cy = XMVectorGetY(center);

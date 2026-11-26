@@ -53,7 +53,7 @@ void PlayScene::Initialize()
     // レティクルの画像のロード
     {
         hBackGround_
-            = Image::Load("Image/BG.jpg");
+            = Image::Load("../Image/ClayShooting/BG.jpg");
 
         assert(hBackGround_ >= 0);
 
@@ -63,7 +63,7 @@ void PlayScene::Initialize()
     // 背景用モデルのロード
     {
         hModel_[Ground]
-            = Model::Load("../Model/oden.fbx");
+            = Model::Load("../Model/ClayShooting/oden.fbx");
 
         assert(hModel_[Ground] >= 0);
     }
@@ -71,7 +71,7 @@ void PlayScene::Initialize()
     // サウンドデータのロード
     {
         hSound_[Wind]
-            = Audio::Load("Audio/風が吹く1.wav"); // 風の音
+            = Audio::Load("../Audio/ClayShooting/風が吹く1.wav"); // 風の音
 
         assert(hSound_[Wind] >= 0);
     }
@@ -82,7 +82,7 @@ void PlayScene::Initialize()
     Instantiate<UI>(this);
 
 
-    textPlay_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
+    textPlay_.Initialize("../Fonts/Rye-Regular.ttf", 28.0f);
 }
 
 // 更新
@@ -103,7 +103,7 @@ void PlayScene::Draw()
     transform_.position = {Init_Pos[Ground]};  // 位置
     transform_.scale    = {Init_Sca[Ground]};  // 拡大率
     Model::SetTransform(hModel_[Ground], transform_);
-    Model::Update(hModel_[Ground]);
+    Renderer::Draw(hModel_[Ground]);
 
 
     // text_.Draw(32, 32, "Yes!TakasuClinic");
