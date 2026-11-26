@@ -6,6 +6,7 @@
 #include "01PlaySceneButton.hpp"
 #include "Game01Player.hpp"
 #include "QuickDrawSky.hpp"
+#include "DebugCamera.hpp"
 
 //プレイシーンを管理するクラス
 class QuickDrawScene : public GameObject
@@ -16,7 +17,8 @@ class QuickDrawScene : public GameObject
 	GameTimer timer_;
 	int bgmHandle_ = -1;
 	PlaySceneButton playSceneButton_;
-
+	DebugCamera debugCamera_;
+	bool debugCameraEnabled_ = false;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

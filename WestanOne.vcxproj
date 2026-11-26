@@ -190,6 +190,7 @@
     <ClCompile Include="source\engine\Transform.cpp" />
     <ClCompile Include="source\engine\VirtualCameraOrtho.cpp" />
     <ClCompile Include="source\engine\VirtualCameraPersp.cpp" />
+    <ClCompile Include="Source\Game\QuickDraw\DebugCamera.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\QuickDrawSky.cpp" />
     <ClCompile Include="Source\Game\TestScene.cpp" />
     <ClCompile Include="Source\Game\QuickDraw\ClearScene.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="source\engine\VirtualCameraOrtho.hpp" />
     <ClInclude Include="source\engine\VirtualCameraPersp.hpp" />
     <ClInclude Include="Source\Engine\Vertex.hpp" />
+    <ClInclude Include="Source\Game\QuickDraw\DebugCamera.hpp" />
     <ClInclude Include="Source\Game\QuickDraw\QuickDrawSky.hpp" />
     <ClInclude Include="Source\Game\TestScene.hpp" />
     <ClInclude Include="Source\Game\QuickDraw\ClearScene.hpp" />

@@ -23,11 +23,10 @@ void Ground::Initialize()
 	assert(hModel_ >= 0);
 
 	//タンブルウィード
-	hTumbleweed_ = Model::Load("Models/QuickDraw/Tumbleweed02.fbx");
+	hTumbleweed_ = Model::Load("Models/QuickDraw/Tumbleweed01.fbx");
 	assert(hTumbleweed_ >= 0);
-
-	tumbleweedTransform_.scale = XMFLOAT3(10000.0f, 10000.0f, 10000.0f);
-	tumbleweedTransform_.position = XMFLOAT3(0.0f, 0.0f, -1.0f);
+	tumbleweedTransform_.scale = XMFLOAT3(5.0f, 5.0f, 5.0f);
+	tumbleweedTransform_.position = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	tumbleweedTransform_.rotate = XMFLOAT3(0.0f, 0.0f, 0.0f);
 }
 

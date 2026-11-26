@@ -12,6 +12,7 @@
 #include <cassert>
 #include <CameraSet.hpp>
 #include "QuickDrawSky.hpp"
+#include "DebugCamera.hpp"
 
 //コンストラクタ
 QuickDrawScene::QuickDrawScene(GameObject * parent)
@@ -69,11 +70,14 @@ void QuickDrawScene::Initialize()
         &timer_
     );
 
+    //でばっくかめら
+    debugCamera_.Initialize();
 }
 
 //更新
 void QuickDrawScene::Update()
 {
+    debugCamera_.Update();
 }
 
 //描画
@@ -82,6 +86,43 @@ void QuickDrawScene::Draw()
     const ImVec2 size = ImGui::GetIO().DisplaySize;
     playSceneButton_.SetScreenSize(size.x, size.y);
     playSceneButton_.Draw();
+
+    //F1でデバッグウィンドウをリセット
+    static bool resetWindow = false;
+
+    if (ImGui::IsKeyPressed(ImGuiKey_F1))
+        resetWindow = true;
+
+    //デバッグカメラのON/OFFボタン
+#ifdef _DEBUG
+    if (resetWindow)
+    {
+        ImGui::SetNextWindowPos(
+            ImGui::GetMainViewport()->Pos,
+            ImGuiCond_Always
+        );
+
+        ImGui::SetNextWindowSize(
+            ImVec2(300.0f, 150.0f),
+            ImGuiCond_Always
+        );
+    }
+    ImGui::Begin("Debag Camera");
+
+    if (ImGui::Button(debugCameraEnabled_ ? "DebugCamera OFF" : "DebugCamera ON"))
+    {
+        debugCameraEnabled_ = !debugCameraEnabled_;
+
+        if (debugCameraEnabled_)
+            debugCamera_.Enable();
+        else
+            debugCamera_.Disable();
+    }
+
+    ImGui::End();
+
+    resetWindow = false;
+#endif
 
     //試合終了時の処理
     if (playSceneButton_.IsGameFinished())
