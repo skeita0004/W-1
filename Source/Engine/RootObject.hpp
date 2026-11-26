@@ -23,5 +23,7 @@ public:
 
 	//開放
 	void Release() override;
+
+	void DrawAll(int _viewportNum);
 };
 

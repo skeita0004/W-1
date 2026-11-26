@@ -28,3 +28,11 @@ void RootObject::Draw()
 void RootObject::Release()
 {
 }
+
+void RootObject::DrawAll(int _viewportNum)
+{
+	for (int i = 0; i < _viewportNum; i++)
+	{
+
+	}
+}

@@ -120,6 +120,19 @@ namespace Direct3D
 
     //Zバッファへの書き込みON/OFF
     //引数：isWrite	  true=書き込みON／false=書き込みOFF
-    void SetDepthBafferWriteEnable(bool isWrite);
+    void SetZBufferWriteEnable(bool isWrite);
+
+
+    D3D11_VIEWPORT GetSplitViewport(int _id);
+
+    /// @brief 任意のビューポートを設定する
+    /// @param _x ビューポートの始点(左上)横位置
+    /// @param _y ビューポートの始点(左上)縦位置
+    /// @param _w ビューポートの幅
+    /// @param _h ビューポートの高さ
+    void SetViewport(D3D11_VIEWPORT _vp);
+
+    /// @brief ウィンドウのサイズと同じサイズのビューポートを設定する
+    void SetFullViewport();
 };
 

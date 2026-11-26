@@ -36,7 +36,7 @@ HRESULT Text::Initialize(const char* fileName, const unsigned int charWidth, con
 //描画（文字列）
 void Text::Draw(int x, int y, const char* str)
 {
-    Direct3D::SetDepthBafferWriteEnable(false);
+    Direct3D::SetZBufferWriteEnable(false);
 	//表示位置（左上）を計算
 	//Spriteクラスは中心が(0,0)、右上が(1,1)という座標だが、ここの引数は左上を(0,0)、ドット単位で指定している
 	float px, py;
@@ -75,7 +75,7 @@ void Text::Draw(int x, int y, const char* str)
 		//次の位置にずらす
 		px += width_ / (float)(Direct3D::screenWidth_ / 2.0f);
 	}
-    Direct3D::SetDepthBafferWriteEnable(true);
+    Direct3D::SetZBufferWriteEnable(true);
 }
 
 //描画（整数値）

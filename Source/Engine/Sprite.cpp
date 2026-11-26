@@ -112,7 +112,7 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);
-	Direct3D::SetDepthBafferWriteEnable(false);
+	Direct3D::SetZBufferWriteEnable(false);
 
 
 	// インデックスバッファーをセット
@@ -168,6 +168,6 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 
 	Direct3D::SetShader(Direct3D::SHADER_3D);
 
-	Direct3D::SetDepthBafferWriteEnable(true);
+	Direct3D::SetZBufferWriteEnable(true);
 
 }

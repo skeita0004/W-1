@@ -883,7 +883,7 @@ namespace Direct3D
     }
 
     //Zバッファへの書き込みON/OFF
-    void SetDepthBafferWriteEnable(bool isWrite)
+    void SetZBufferWriteEnable(bool isWrite)
     {
         //ON
         if (isWrite)
@@ -897,6 +897,30 @@ namespace Direct3D
         {
             pContext_->OMSetRenderTargets(1, &pRenderTargetView_, nullptr);
         }
+    }
+
+    D3D11_VIEWPORT GetSplitViewport(int _id)
+    {
+        const float W = (float)screenWidth_;
+        const float H = (float)screenHeight_;
+
+        // _id = 0 -> 0, _id = 1 -> W / 2
+        return {(W * 0.5f) * _id, 0.f, W / 2.f, H / 2.f ,0.f, 1.f};
+
+    }
+
+    void SetViewport(D3D11_VIEWPORT _vp)
+    {
+        pContext_->RSSetViewports(1, &_vp);
+    }
+
+    void SetFullViewport()
+    {
+        D3D11_VIEWPORT vp{};
+        vp.TopLeftX = 0;
+        vp.TopLeftY = 0;
+        vp.Width = (float)screenWidth_;
+        SetViewport()
     }
 
 }
