@@ -36,6 +36,7 @@ private:
 	int binID_;
 
 	int  hModel_;
+	int  hPouringSound_;
 
 	// 注ぎ操作を行った時間（フレーム単位）
 	int  pouringTime_;

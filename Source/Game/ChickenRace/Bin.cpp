@@ -1,6 +1,7 @@
 ﻿#include "Bin.hpp"
 
 #include "Model.hpp"
+#include "Audio.hpp"
 
 #include "Beermug.hpp"
 
@@ -20,6 +21,7 @@ namespace
 Bin::Bin(GameObject *_pParent) :
 	GameObject(_pParent, "Bin"),
 	hModel_(-1),
+	hPouringSound_(-1),
 	pouringTime_(),
 	isPouring_(false),
 	isConfirmed_(false),
@@ -33,6 +35,7 @@ void Bin::Initialize()
 	binID_ = binCount_ + 1;
 
 	hModel_ = Model::Load("Model/ChickenRace/bin_mock.fbx");
+	hPouringSound_ = Audio::Load("Sound/ChickenRace/.wav", true);
 
 	pWFO_ = Instantiate<WaterFlowOrigin>(this);
 	XMFLOAT3 wfoPos = Model::GetBonePosition(hModel_, "BottleMouse");
@@ -60,6 +63,8 @@ void Bin::Update()
 		{
 			pouringTime_++;
 			
+			Audio::Play(hPouringSound_);
+
 			isPouring_ = true;
 			static float bias{ 0.5 };
 			if (transform_.rotate.z > IDLE_ANGLE_Z + POURING_ANGLE_Z)
@@ -89,6 +94,8 @@ void Bin::Update()
 		}
 		else
 		{
+			Audio::Stop(hPouringSound_);
+
 			pWFO_->WFVisible(false);
 			// 注ぎコマンドが入力されていない場合、待機時の角度に戻る
 			if (transform_.rotate.z < IDLE_ANGLE_Z)
@@ -153,6 +160,8 @@ void Bin::Conform()
 	isConfirmed_ = true;
 	transform_.rotate.z = 0;
 	transform_.position.x += -0.25f;
+
+	Audio::Stop(hPouringSound_);
 
 	if (pWFO_)
 	{

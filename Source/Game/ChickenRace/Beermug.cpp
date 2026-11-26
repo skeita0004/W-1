@@ -18,8 +18,8 @@ namespace
 
 Beermug::Beermug(GameObject *_pParent) :
 	GameObject(_pParent, "Beermug"),
-	hModels_(),
 	beerMugID_(0),
+	hModels_(),
 	waterLevel_(0),
 	pWLH_(),
 	pBeverage_(),
@@ -38,7 +38,7 @@ void Beermug::Initialize()
 	hModels_[BEERMUG_CROSS_SECTION_L] = Model::Load("Model/ChickenRace/beermug_L.fbx");
 	hModels_[BEERMUG_CROSS_SECTION_R] = Model::Load("Model/ChickenRace/beermug_R.fbx");
 	hModels_[BEERMUG]                 = Model::Load("Model/ChickenRace/wood_beermug_mock.fbx");
-
+	
 	beerMugCount_ += 1;
 }
 
