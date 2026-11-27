@@ -1,14 +1,17 @@
 ﻿#include "GameObject.hpp"
+
 #include <cassert>
+
 #include "SafeCleaning.hpp"
 #include "Direct3D.hpp"
 
 using namespace SafeCleaning;
 
 GameObject::GameObject(GameObject * parent, const std::string& name)
-	: pParent_(parent),
-
-	objectName_(name)
+	: 
+	pParent_(parent),
+	objectName_(name),
+	drawOrder_(0)
 {
 	childList_.clear();
 	state_ = { 0, 1, 1, 0 };
@@ -338,7 +341,7 @@ void GameObject::DrawSub()
 		CollisionDraw();
 	}
 #endif
-
+	
 	//その子オブジェクトの描画処理
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
