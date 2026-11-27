@@ -239,6 +239,16 @@ private:
     //引数：obj　削除するオブジェクト
     void KillObjectSub(GameObject* obj);
 
+    void SetDrawOrder(size_t _drawOrder)
+    {
+        drawOrder_ = _drawOrder;
+        childList_.sort(
+            [](const GameObject* _a, const GameObject* _b)
+            {
+                return _a->drawOrder_ < _b->drawOrder_;
+            });
+    }
+
 private:
     //フラグ(bitfield)
     struct OBJECT_STATE

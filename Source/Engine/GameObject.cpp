@@ -1,7 +1,6 @@
 ﻿#include "GameObject.hpp"
 
 #include <cassert>
-#include <algorithm>
 
 #include "SafeCleaning.hpp"
 #include "Direct3D.hpp"
@@ -342,14 +341,6 @@ void GameObject::DrawSub()
 		CollisionDraw();
 	}
 #endif
-
-	std::sort(
-		childList_.begin(),
-		childList_.end(),
-		[](const GameObject& _a, const GameObject& _b)
-		{
-			return _a.drawOrder_ < _b.drawOrder_;
-		});
 	
 	//その子オブジェクトの描画処理
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
