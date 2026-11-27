@@ -34,15 +34,38 @@ namespace Audio
 //初期化
 void Audio::Initialize()
 {
-	HRESULT result{};
-	result = CoInitializeEx(0, COINIT_MULTITHREADED);
+	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
-	XAudio2Create(&pXAudio);
-	pXAudio->CreateMasteringVoice(&pMasteringVoice);
+	OutputDebugStringA("Audio: CoInitializeEx\n");
 
-	//return result;
+	if (FAILED(hr) && hr != RPC_E_CHANGED_MODE)
+	{
+		OutputDebugStringA("Audio: COM Initialize Failed\n");
+		return;
+	}
+
+	hr = XAudio2Create(&pXAudio);
+
+	OutputDebugStringA("Audio: XAudio2Create\n");
+
+	if (FAILED(hr))
+	{
+		OutputDebugStringA("Audio: XAudio2Create Failed\n");
+		return;
+	}
+
+	hr = pXAudio->CreateMasteringVoice(&pMasteringVoice);
+
+	OutputDebugStringA("Audio: CreateMasteringVoice\n");
+
+	if (FAILED(hr))
+	{
+		OutputDebugStringA("Audio: CreateMasteringVoice Failed\n");
+		return;
+	}
+
+	OutputDebugStringA("Audio: Initialize Complete\n");
 }
-
 //サウンドファイル(.wav）をロード
 int Audio::Load(std::string _fileName, bool isLoop, int svNum)
 {
@@ -58,27 +81,37 @@ int Audio::Load(std::string _fileName, bool isLoop, int svNum)
 	//チャンク構造体
 	struct Chunk
 	{
-		char	id[5] =""; 			// ID
-		unsigned int	size = 0;	// サイズ
+		char	id[5] = ""; 			// I    D
+		unsigned int 	size = 0;	// サイズ
 	};
 
 	//ファイルを開く
-	std::wstring fileName{ _fileName.begin(), _fileName.end() };
-	
+	std::wstring fileName{_fileName.begin(), _fileName.end()};
+
 	HANDLE hFile;
+
+
+
 	hFile = CreateFile(fileName.c_str(), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		OutputDebugStringA("Audio: WAV file not found\n");
+		return -1;
+	}
 
 	DWORD dwBytes = 0;
 
-	Chunk riffChunk = { 0 };
+	Chunk riffChunk = {0};
 	ReadFile(hFile, &riffChunk.id, 4, &dwBytes, NULL);
 	ReadFile(hFile, &riffChunk.size, 4, &dwBytes, NULL);
 
 	char wave[4] = "";
 	ReadFile(hFile, &wave, 4, &dwBytes, NULL);
 
-	Chunk formatChunk = { 0 };
-	while (formatChunk.id[0] != 'f') {
+	Chunk formatChunk = {0};
+	while (formatChunk.id[0] != 'f')
+	{
 		ReadFile(hFile, &formatChunk.id, 4, &dwBytes, NULL);
 	}
 	ReadFile(hFile, &formatChunk.size, 4, &dwBytes, NULL);
@@ -96,7 +129,7 @@ int Audio::Load(std::string _fileName, bool isLoop, int svNum)
 
 
 	//波形データの読み込み
-	Chunk data = { 0 };
+	Chunk data = {0};
 	while (true)
 	{
 		//次のデータのIDを調べる
