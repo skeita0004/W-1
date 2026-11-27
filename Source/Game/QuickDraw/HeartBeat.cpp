@@ -40,7 +40,16 @@ void HeartBeat::SetVibration(int power)
 //鼓動開始
 void HeartBeat::Pulse()
 {
-    SetVibration(power_);
+    //強度にランダムな揺らぎを加える（±10%）
+    std::uniform_real_distribution<float> powerVariation(0.9f, 1.1f);
+
+    int randomPower = static_cast<int>(
+        power_ * powerVariation(rng_)
+    );
+
+    randomPower = (std::min)(randomPower, maxPower_);
+
+    SetVibration(randomPower);
 
     pulsing_ = true;
     pulseTimer_ = pulseDuration_;
@@ -81,6 +90,13 @@ void HeartBeat::Update(float deltaTime)
     if (beatTimer_ <= 0.0f && !pulsing_)
     {
         Pulse();
-        beatTimer_ = beatInterval_;
+
+        //鼓動間隔にランダムな揺らぎ（±0.12秒）
+        std::uniform_real_distribution<float> intervalVariation(-0.12f, 0.12f);
+
+        beatTimer_ = (std::max)(
+            0.3f,
+            beatInterval_ + intervalVariation(rng_)
+        );
     }
 }

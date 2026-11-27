@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <random>
 
 class HeartBeat
 {
@@ -29,4 +30,5 @@ private:
     int maxPower_ = 60000;
 
     bool pulsing_ = false;
+    std::mt19937 rng_{std::random_device{}()};//ランダム性を
 };
