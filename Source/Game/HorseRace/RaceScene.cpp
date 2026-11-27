@@ -13,7 +13,7 @@ void RaceScene::Initialize()
 {
 	hImage_ = Image::Load("Picture/HorseRace/yuuhi.jpg");
 	hImageS_ = Image::Load("Picture/HorseRace/SpeedLine.png");
-	hBgm_ = Audio::Load("Audio/HorseBgm.wav");
+	hBgm_ = Audio::Load("Audio/HorseRace/HorseBgm.wav");
 
 	Instantiate<Stage>(this);
 
@@ -22,7 +22,7 @@ void RaceScene::Initialize()
 
 void RaceScene::Update()
 {
-	//Audio::Play(hBgm_);
+	Audio::Play(hBgm_);
 	
 	if (horse == nullptr)
 		return;
