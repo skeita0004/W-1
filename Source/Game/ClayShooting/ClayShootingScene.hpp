@@ -7,12 +7,12 @@
 #include "Config.hpp"
 
 //プレイシーンを管理するクラス
-class PlayScene : public GameObject
+class ClayShootingScene : public GameObject
 {
 public:
     //コンストラクタ
     //引数：parent  親オブジェクト（SceneManager）
-    PlayScene(GameObject* parent);
+    ClayShootingScene(GameObject* parent);
 
     //初期化
     void Initialize() override;

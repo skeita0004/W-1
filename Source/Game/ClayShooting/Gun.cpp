@@ -52,7 +52,7 @@ void Gun::Initialize()
     //モデルデータのロード
     {
         hModel_
-            = Model::Load("../Model/ClayShooting/Gun00.fbx");
+            = Model::Load("Model/ClayShooting/Gun00.fbx");
 
         assert(hModel_ >= 0);
     }
@@ -65,7 +65,7 @@ void Gun::Initialize()
         scale_[i]    = Init_Sca[i];
     }
 
-    textGun_.Initialize("../Fonts/Rye-Regular.ttf", 28.0f);
+    textGun_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
 }
 
 // 更新

@@ -106,17 +106,17 @@ void Clay::Initialize()
     // モデルデータのロード
     {
         hModel_[Clay_A]   
-            = Model::Load("../Model/ClayShooting/Dish00.fbx");
+            = Model::Load("Model/ClayShooting/Dish00.fbx");
         hModel_[Clay_B]   
-            = Model::Load("../Model/ClayShooting/Dish00.fbx");
+            = Model::Load("Model/ClayShooting/Dish00.fbx");
         hModel_[Clay_C]   
-            = Model::Load("../Model/ClayShooting/Dish00.fbx");
+            = Model::Load("Model/ClayShooting/Dish00.fbx");
         hModel_[Bottle_A] 
-            = Model::Load("../Model/ClayShooting/bin_mock.fbx");
+            = Model::Load("Model/ClayShooting/bin_mock.fbx");
         hModel_[Bottle_B] 
-            = Model::Load("../Model/ClayShooting/bin_mock.fbx");
+            = Model::Load("Model/ClayShooting/bin_mock.fbx");
         hModel_[Bomb]     
-            = Model::Load("../Model/ClayShooting/Bomb00.fbx");
+            = Model::Load("Model/ClayShooting/Bomb00.fbx");
 
         assert(hModel_[Clay_A] >= 0);
         assert(hModel_[Clay_B] >= 0);
@@ -137,17 +137,17 @@ void Clay::Initialize()
     // サウンドデータのロード
     {
         hSound_[Clay_A]
-            = Audio::Load("../Audio/ClayShooting/ガラスが割れる3.wav"); // クレーが壊れる音
+            = Audio::Load("Audio/ClayShooting/ガラスが割れる3.wav"); // クレーが壊れる音
         hSound_[Clay_B]
-            = Audio::Load("../Audio/ClayShooting/ガラスが割れる3.wav"); // クレーが壊れる音
+            = Audio::Load("Audio/ClayShooting/ガラスが割れる3.wav"); // クレーが壊れる音
         hSound_[Clay_C]
-            = Audio::Load("../Audio/ClayShooting/ガラスが割れる3.wav"); // クレーが壊れる音
+            = Audio::Load("Audio/ClayShooting/ガラスが割れる3.wav"); // クレーが壊れる音
         hSound_[Bottle_A]
-            = Audio::Load("../Audio/ClayShooting/空き瓶が砕ける.wav");  // 空き瓶が割れる音
+            = Audio::Load("Audio/ClayShooting/空き瓶が砕ける.wav");  // 空き瓶が割れる音
         hSound_[Bottle_B]
-            = Audio::Load("../Audio/ClayShooting/空き瓶が砕ける.wav");  // 空き瓶が割れる音
+            = Audio::Load("Audio/ClayShooting/空き瓶が砕ける.wav");  // 空き瓶が割れる音
         hSound_[Bomb]
-            = Audio::Load("../Audio/ClayShooting/爆発1.wav");           // 爆弾の爆発音
+            = Audio::Load("Audio/ClayShooting/爆発1.wav");           // 爆弾の爆発音
 
         assert(hSound_[Clay_A] >= 0);
         assert(hSound_[Clay_B] >= 0);

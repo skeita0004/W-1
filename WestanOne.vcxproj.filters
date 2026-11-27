@@ -160,7 +160,7 @@
     <ClCompile Include="Source\Game\ClayShooting\Gun.cpp">
       <Filter>Game\ClayShooting</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\ClayShooting\PlayScene.cpp">
+    <ClCompile Include="Source\Game\ClayShooting\ClayShootingScene.cpp">
       <Filter>Game\ClayShooting</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\ClayShooting\Reticle.cpp">
@@ -344,7 +344,7 @@
     <ClInclude Include="Source\Game\ClayShooting\Gun.hpp">
       <Filter>Game\ClayShooting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\ClayShooting\PlayScene.hpp">
+    <ClInclude Include="Source\Game\ClayShooting\ClayShootingScene.hpp">
       <Filter>Game\ClayShooting</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\ClayShooting\Reticle.hpp">

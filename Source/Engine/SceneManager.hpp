@@ -2,11 +2,11 @@
 #include "GameObject.hpp"
 
 #include "../Game/TestScene.hpp"
-#include "../Game/ClayShooting/PlayScene.hpp"
+#include "../Game/ClayShooting/ClayShootingScene.hpp"
 #include "../Game/ClayShooting/ClearScene.hpp"
 
+#include <tuple>
 #include <array>
-
 
 //-----------------------------------------------------------
 //シーン切り替えを担当するオブジェクト
@@ -28,7 +28,7 @@ public:
     enum class SceneID : int
     {
         TEST = 0,
-        PLAY,
+        CLAY_SHOOTING_SCENE,
         CLEAR,
         MAX_SCENE_ID
     };
@@ -42,7 +42,7 @@ private:
     // 型の配列として扱う
     using SceneList = std::tuple<
         TestScene,
-        PlayScene,
+        ClayShootingScene,
         ClearScene
     >;
 
@@ -65,14 +65,14 @@ private:
     static const inline std::array<SceneFactoryFn, sceneNum> sceneTable =
     {
         &SceneManager::InstantiateByID<SceneID::TEST>,
-        &SceneManager::InstantiateByID<SceneID::PLAY>,
+        &SceneManager::InstantiateByID<SceneID::CLAY_SHOOTING_SCENE>,
         &SceneManager::InstantiateByID<SceneID::CLEAR>
     };
 
     GameObject* InstantiateScene(SceneID _sid,
                                  GameObject* _pParent);
 
-    static const inline SceneID INITIAL_SCENE{SceneID::PLAY};
+    static const inline SceneID INITIAL_SCENE{SceneID::CLAY_SHOOTING_SCENE};
 
 	SceneID currentSceneID_;	//現在のシーン
 	SceneID nextSceneID_;		//次のシーン

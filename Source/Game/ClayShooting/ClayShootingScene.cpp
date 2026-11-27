@@ -7,7 +7,7 @@
 #include "FontText.hpp"
 
 // Game
-#include "PlayScene.hpp"
+#include "ClayShootingScene.hpp"
 #include "Reticle.hpp"
 #include "UI.hpp"
 #include "Gun.hpp"
@@ -35,8 +35,8 @@ namespace
 }
 
 // コンストラクタ
-PlayScene::PlayScene(GameObject * parent)
-    : GameObject(parent, "PlayScene"),
+ClayShootingScene::ClayShootingScene(GameObject * parent)
+    : GameObject(parent, "ClayShootingScene"),
     position_{{ 0.0f,0.0f,0.0f }}, // 位置
     rotate_  {{ 0.0f,0.0f,0.0f }}, // 回転
     scale_   {{ 0.0f,0.0f,0.0f }}, // 拡大率
@@ -48,12 +48,12 @@ PlayScene::PlayScene(GameObject * parent)
 }
 
 // 初期化
-void PlayScene::Initialize()
+void ClayShootingScene::Initialize()
 {
     // レティクルの画像のロード
     {
         hBackGround_
-            = Image::Load("../Image/ClayShooting/BG.jpg");
+            = Image::Load("Image/ClayShooting/BG.jpg");
 
         assert(hBackGround_ >= 0);
 
@@ -63,7 +63,7 @@ void PlayScene::Initialize()
     // 背景用モデルのロード
     {
         hModel_[Ground]
-            = Model::Load("../Model/ClayShooting/oden.fbx");
+            = Model::Load("Model/ClayShooting/ground.fbx");
 
         assert(hModel_[Ground] >= 0);
     }
@@ -71,7 +71,7 @@ void PlayScene::Initialize()
     // サウンドデータのロード
     {
         hSound_[Wind]
-            = Audio::Load("../Audio/ClayShooting/風が吹く1.wav"); // 風の音
+            = Audio::Load("Audio/ClayShooting/風が吹く1.wav"); // 風の音
 
         assert(hSound_[Wind] >= 0);
     }
@@ -82,18 +82,18 @@ void PlayScene::Initialize()
     Instantiate<UI>(this);
 
 
-    textPlay_.Initialize("../Fonts/Rye-Regular.ttf", 28.0f);
+    textPlay_.Initialize("Fonts/Rye-Regular.ttf", 28.0f);
 }
 
 // 更新
-void PlayScene::Update()
+void ClayShootingScene::Update()
 {
     // SEを常時流す
     Audio::Play(hSound_[Wind]);
 }
 
 // 描画
-void PlayScene::Draw()
+void ClayShootingScene::Draw()
 {
     // 背景画像の配置
     Image::SetTransform(hBackGround_, transform_);
@@ -114,6 +114,6 @@ void PlayScene::Draw()
 }
 
 // 開放
-void PlayScene::Release()
+void ClayShootingScene::Release()
 {
 }

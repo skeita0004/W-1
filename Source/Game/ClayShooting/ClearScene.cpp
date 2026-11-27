@@ -69,13 +69,13 @@ void ClearScene::Initialize()
     //画像データのロード
     {
         hImage_[BG]
-            = Image::Load("../Image/ClayShooting/BG.jpg");
+            = Image::Load("Image/ClayShooting/BG.jpg");
         hImage_[WIN]
-            = Image::Load("../Image/ClayShooting/WIN.png");
+            = Image::Load("Image/ClayShooting/WIN.png");
         hImage_[LOSE]
-            = Image::Load("../Image/ClayShooting/LOSE.png");
+            = Image::Load("Image/ClayShooting/LOSE.png");
         hImage_[Board]
-            = Image::Load("../Image/ClayShooting/UI_1.png");
+            = Image::Load("Image/ClayShooting/UI_1.png");
 
         assert(hImage_[BG] >= 0);
         assert(hImage_[WIN] >= 0);

@@ -54,9 +54,9 @@ void UI::Initialize()
     // UIの画像のロード
     {
         hImage_[Bullet_UI1p && Bullet_UI2p]
-            = Image::Load("../Image/ClayShooting/Bullet.png"); // 弾
+            = Image::Load("Image/ClayShooting/Bullet.png"); // 弾
         hImage_[Board_1p && Board_2p]
-            = Image::Load("../Image/ClayShooting/UI_1.png");   // 木材
+            = Image::Load("Image/ClayShooting/UI_1.png");   // 木材
 
         assert(hImage_[Bullet_UI1p && Bullet_UI2p] >= 0);
         assert(hImage_[Board_1p && Board_2p] >= 0);
@@ -65,7 +65,7 @@ void UI::Initialize()
     // サウンドデータのロード
     {
         hSound_
-            = Audio::Load("../Audio/ClayShooting/拳銃を撃つ.wav"); // 弾
+            = Audio::Load("Audio/ClayShooting/拳銃を撃つ.wav"); // 弾
         assert(hSound_ >= 0);
     }
 
@@ -79,9 +79,9 @@ void UI::Initialize()
 
     sc = FindObject<Clay>("Clay");
 
-    textB_num_.Initialize("../Fonts/Rye-Regular.ttf", 64.0f);
-    textScore_.Initialize("../Fonts/Rye-Regular.ttf", 64.0f);
-    textTimer_.Initialize("../Fonts/Rye-Regular.ttf", 86.0f);
+    textB_num_.Initialize("Fonts/Rye-Regular.ttf", 64.0f);
+    textScore_.Initialize("Fonts/Rye-Regular.ttf", 64.0f);
+    textTimer_.Initialize("Fonts/Rye-Regular.ttf", 86.0f);
 }
 
 // 更新

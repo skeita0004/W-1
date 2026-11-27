@@ -192,7 +192,7 @@
     <ClCompile Include="Source\Game\TestScene.cpp" />
     <ClCompile Include="Source\Game\ClayShooting\Clay.cpp" />
     <ClCompile Include="Source\Game\ClayShooting\Gun.cpp" />
-    <ClCompile Include="Source\Game\ClayShooting\PlayScene.cpp" />
+    <ClCompile Include="Source\Game\ClayShooting\ClayShootingScene.cpp" />
     <ClCompile Include="Source\Game\ClayShooting\Reticle.cpp" />
     <ClCompile Include="Source\Game\ClayShooting\UI.cpp" />
   </ItemGroup>
@@ -256,7 +256,7 @@
     <ClInclude Include="Source\Game\ClayShooting\ClearScene.hpp" />
     <ClInclude Include="Source\Game\ClayShooting\Config.hpp" />
     <ClInclude Include="Source\Game\ClayShooting\Gun.hpp" />
-    <ClInclude Include="Source\Game\ClayShooting\PlayScene.hpp" />
+    <ClInclude Include="Source\Game\ClayShooting\ClayShootingScene.hpp" />
     <ClInclude Include="Source\Game\ClayShooting\Reticle.hpp" />
     <ClInclude Include="Source\Game\ClayShooting\UI.hpp" />
     <ClInclude Include="Source\Game\TestScene.hpp" />
