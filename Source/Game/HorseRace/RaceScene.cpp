@@ -40,6 +40,11 @@ void RaceScene::Update()
 		SceneManager* sceneManager = (SceneManager*)GetParent();
 		sceneManager->ChangeScene(SceneManager::SceneID::RESULT);
 	}
+
+	if (horse->GetSpeed() <= 10.0f)
+	{
+		speedLine_->DisableDraw();
+	}
 }
 
 void RaceScene::Draw()

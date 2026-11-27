@@ -11,6 +11,8 @@ void SpeedLine::Initialize()
 {
 	hImage_ = Image::Load("Picture/HorseRace/SpeedLine.png");
 	SetDrawOrder(1000);
+
+	SetScale(1.25f, 1.0f, 1.0f);
 }
 
 void SpeedLine::Update()
