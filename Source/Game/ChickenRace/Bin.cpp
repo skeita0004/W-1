@@ -35,7 +35,7 @@ void Bin::Initialize()
 	binID_ = binCount_ + 1;
 
 	hModel_ = Model::Load("Model/ChickenRace/bin_mock.fbx");
-	hPouringSound_ = Audio::Load("Sound/ChickenRace/.wav", true);
+	//hPouringSound_ = Audio::Load("Sound/ChickenRace/.wav", true);
 
 	pWFO_ = Instantiate<WaterFlowOrigin>(this);
 	XMFLOAT3 wfoPos = Model::GetBonePosition(hModel_, "BottleMouse");
@@ -63,7 +63,7 @@ void Bin::Update()
 		{
 			pouringTime_++;
 			
-			Audio::Play(hPouringSound_);
+			//Audio::Play(hPouringSound_);
 
 			isPouring_ = true;
 			static float bias{ 0.5 };
@@ -94,7 +94,7 @@ void Bin::Update()
 		}
 		else
 		{
-			Audio::Stop(hPouringSound_);
+			//Audio::Stop(hPouringSound_);
 
 			pWFO_->WFVisible(false);
 			// 注ぎコマンドが入力されていない場合、待機時の角度に戻る
@@ -161,7 +161,7 @@ void Bin::Conform()
 	transform_.rotate.z = 0;
 	transform_.position.x += -0.25f;
 
-	Audio::Stop(hPouringSound_);
+	//Audio::Stop(hPouringSound_);
 
 	if (pWFO_)
 	{
