@@ -216,6 +216,15 @@ protected:
     // 値が小さいほど先に描画される
     size_t drawOrder_;
 
+    void SetDrawOrder(size_t _drawOrder)
+    {
+        drawOrder_ = _drawOrder;
+        childList_.sort(
+            [](const GameObject* _a, const GameObject* _b)
+            {
+                return _a->drawOrder_ < _b->drawOrder_;
+            });
+    }
     /// @brief ゲームオブジェクトの子クラスをインスタンスするテンプレート
     /// @param T ゲームオブジェクトの子クラス型
     /// @param _pParent インスタンス対象クラスの親（継承元のことではない）
@@ -239,15 +248,6 @@ private:
     //引数：obj　削除するオブジェクト
     void KillObjectSub(GameObject* obj);
 
-    void SetDrawOrder(size_t _drawOrder)
-    {
-        drawOrder_ = _drawOrder;
-        childList_.sort(
-            [](const GameObject* _a, const GameObject* _b)
-            {
-                return _a->drawOrder_ < _b->drawOrder_;
-            });
-    }
 
 private:
     //フラグ(bitfield)
