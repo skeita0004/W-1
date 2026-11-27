@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 #include <FontText.hpp>
+#include "HeartBeat.hpp"
 
 class PlaySceneButton
 {
@@ -80,6 +81,11 @@ private:
     std::string resultText_;
 
     std::chrono::steady_clock::time_point countdownStartTime_{};
+
+    //コントローラー振動停止管理
+    bool vibrationPending_[2] = {false, false};
+    std::chrono::steady_clock::time_point vibrationEndTime_[2]{};
+    HeartBeat heartBeat_;//鼓動みたいなもの
 
     ControllerTest controllerTest_; //コントローラーのテスト用
 };

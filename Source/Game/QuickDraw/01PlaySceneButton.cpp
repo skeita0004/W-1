@@ -128,6 +128,7 @@ void PlaySceneButton::OnStartClicked()
     timer_->Start(distribution(engine));
     countdownStartTime_ = std::chrono::steady_clock::now();
 
+
     startButton_->SetActive(false);
     leftStopButton_->SetActive(true);
     rightStopButton_->SetActive(true);
@@ -162,7 +163,14 @@ void PlaySceneButton::OnStopClicked(int side)
     if (!pressedButton || !pressedButton->IsActive())
         return;
 
+    //ボタン押した音
     Audio::Play(buttonSeHandle_);
+
+    //コントローラー振動
+    const int padID = (side < 0) ? 0 : 1;
+    Input::SetPadVibration(50000, 50000, padID);
+    vibrationPending_[padID] = true;
+    vibrationEndTime_[padID] =std::chrono::steady_clock::now() + std::chrono::milliseconds(150);
 
     if (!timer_ || !timer_->IsRunning() || gameFinished_)
         return;
@@ -274,6 +282,40 @@ void PlaySceneButton::OnStopClicked(int side)
 
 void PlaySceneButton::Draw()
 {
+    //コントローラー振動停止処理
+    for (int i = 0; i < 2; ++i)
+    {
+        if (vibrationPending_[i] &&
+            std::chrono::steady_clock::now() >= vibrationEndTime_[i])
+        {
+            Input::SetPadVibration(0, 0, i);
+            vibrationPending_[i] = false;
+        }
+    }
+
+    //タイマー更新
+    const bool wasWaiting = timer_->IsWaiting();
+    timer_->Update();
+
+    //計測開始時
+    if (wasWaiting && timer_->IsRunning())
+    {
+        Audio::Play(countdownSeHandle_);
+    }
+
+    //心拍振動更新
+    if (timer_->IsRunning())
+    {
+        if (!heartBeat_.IsActive())
+            heartBeat_.Start();
+
+        heartBeat_.Update(ImGui::GetIO().DeltaTime);
+    }
+    else if (heartBeat_.IsActive())
+    {
+        heartBeat_.Stop();
+    }
+
     controllerTest_.Draw();
 
     if (!font_ || !timer_)
