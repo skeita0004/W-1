@@ -213,6 +213,9 @@ protected:
     //衝突判定リスト
     std::vector<Collider*>	colliderList_;
 
+    // 値が小さいほど先に描画される
+    size_t drawOrder_;
+
     /// @brief ゲームオブジェクトの子クラスをインスタンスするテンプレート
     /// @param T ゲームオブジェクトの子クラス型
     /// @param _pParent インスタンス対象クラスの親（継承元のことではない）
