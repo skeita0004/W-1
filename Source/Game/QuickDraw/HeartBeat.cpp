@@ -16,7 +16,7 @@ void HeartBeat::Start()
     beatInterval_ = 1.2f;
     pulseDuration_ = 0.15f;
 
-    power_ = 15000;
+    power_ = 35000;
     pulsing_ = false;
 }
 
@@ -33,8 +33,8 @@ void HeartBeat::Stop()
 //振動設定
 void HeartBeat::SetVibration(int power)
 {
-    Input::SetPadVibration(power, power, 0);
-    Input::SetPadVibration(power, power, 1);
+    Input::SetPadVibration(0, power, 0);
+    Input::SetPadVibration(0, power, 1);
 }
 
 //鼓動開始
