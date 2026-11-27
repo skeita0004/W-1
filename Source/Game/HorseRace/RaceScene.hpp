@@ -2,6 +2,8 @@
 #include "GameObject.hpp"
 #include "Horse.hpp"
 
+class SpeedLine;
+
 class RaceScene : public GameObject
 {
 public:
@@ -16,4 +18,5 @@ private:
 	int hBgm_;
 
 	Horse* horse;
+	SpeedLine* speedLine_;
 };

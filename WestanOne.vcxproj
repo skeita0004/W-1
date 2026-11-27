@@ -200,6 +200,7 @@
     <ClCompile Include="Source\Game\HorseRace\Stage.cpp" />
     <ClCompile Include="Source\Game\HorseRace\Tumbleweed.cpp" />
     <ClCompile Include="Source\Game\TestScene.cpp" />
+    <ClCompile Include="Source\Game\HorseRace\SpeedLine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\DeltaTime.hpp" />
@@ -269,6 +270,7 @@
     <ClInclude Include="Source\Game\HorseRace\Stage.hpp" />
     <ClInclude Include="Source\Game\HorseRace\Tumbleweed.hpp" />
     <ClInclude Include="Source\Game\TestScene.hpp" />
+    <ClInclude Include="Source\Game\HorseRace\SpeedLine.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

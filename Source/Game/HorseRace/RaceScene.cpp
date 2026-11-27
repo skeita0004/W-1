@@ -4,6 +4,8 @@
 #include "Image.hpp"
 #include "SceneManager.hpp"
 
+#include "SpeedLine.hpp"
+
 RaceScene::RaceScene(GameObject* parent)
 	:GameObject(parent, "RaceScene"), hImage_(-1)
 {
@@ -12,10 +14,13 @@ RaceScene::RaceScene(GameObject* parent)
 void RaceScene::Initialize()
 {
 	hImage_ = Image::Load("Picture/HorseRace/yuuhi.jpg");
-	hImageS_ = Image::Load("Picture/HorseRace/SpeedLine.png");
+	//hImageS_ = Image::Load("Picture/HorseRace/SpeedLine.png");
 	hBgm_ = Audio::Load("Audio/HorseRace/HorseBgm.wav");
 
 	Instantiate<Stage>(this);
+
+	speedLine_ = Instantiate<SpeedLine>(this);
+	speedLine_->DisableDraw();
 
 	horse = (Horse*)FindChildObject("Horse");
 }
@@ -41,8 +46,7 @@ void RaceScene::Draw()
 {
 	if (horse->GetSpeed() >= 12.0f)
 	{
-		Image::SetTransform(hImageS_, transform_);
-		Image::Draw(hImageS_);
+		speedLine_->EnableDraw();
 	}
 
 	//Image::SetTransform(hImage_, transform_);
