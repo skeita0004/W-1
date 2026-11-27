@@ -12,6 +12,7 @@ RaceScene::RaceScene(GameObject* parent)
 void RaceScene::Initialize()
 {
 	hImage_ = Image::Load("Picture/HorseRace/yuuhi.jpg");
+	hImageS_ = Image::Load("Picture/HorseRace/SpeedLine.png");
 	hBgm_ = Audio::Load("Audio/HorseBgm.wav");
 
 	Instantiate<Stage>(this);
@@ -21,10 +22,12 @@ void RaceScene::Initialize()
 
 void RaceScene::Update()
 {
-	Audio::Play(hBgm_);
-
+	//Audio::Play(hBgm_);
+	
 	if (horse == nullptr)
 		return;
+
+	
 
 	XMFLOAT3 pPos = horse->GetPosition();
 	if (pPos.z >= 25000.0f)
@@ -36,8 +39,14 @@ void RaceScene::Update()
 
 void RaceScene::Draw()
 {
-	Image::SetTransform(hImage_, transform_);
-	Image::Draw(hImage_);
+	if (horse->GetSpeed() >= 12.0f)
+	{
+		Image::SetTransform(hImageS_, transform_);
+		Image::Draw(hImageS_);
+	}
+
+	//Image::SetTransform(hImage_, transform_);
+	//Image::Draw(hImage_);
 }
 
 void RaceScene::Release()

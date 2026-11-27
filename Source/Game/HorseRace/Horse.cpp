@@ -4,7 +4,6 @@
 #include "CameraSet.hpp"
 #include "Input.hpp"
 #include "DeltaTime.hpp"
-#include "Speedline.hpp"
 #include <imgui.h>
 
 Horse::Horse(GameObject* parent)
@@ -117,11 +116,6 @@ void Horse::Draw()
 	Model::SetTransform(sModel_, shadowTransform);
 	Renderer::Draw(sModel_);
 
-	if (speed_ >= 12.0f)
-	{
-		Instantiate<SpeedLine>;
-	}
-
 	//CollisionDraw();
 }
 
@@ -215,7 +209,7 @@ void Horse::OnCollision(GameObject* pTarget)
 
 	knockbackTime_ = 0.5f;
 
-	speed_ = 0.5f;
+	speed_ = 0.1f;
 
 	// コントローラー振動
 	Input::SetPadVibration(65000, 65000, 0);

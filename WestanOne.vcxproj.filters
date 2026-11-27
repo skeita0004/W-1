@@ -198,6 +198,7 @@
     <ClCompile Include="Source\Game\HorseRace\Tumbleweed.cpp">
       <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\engine\Audio.hpp">
@@ -398,6 +399,7 @@
     <ClInclude Include="Source\Game\HorseRace\Tumbleweed.hpp">
       <Filter>Game\HorseRace\PlayScene\Obstacle</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\TestScene.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

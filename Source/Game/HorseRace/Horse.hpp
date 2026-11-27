@@ -18,6 +18,7 @@ public:
 	void OnCollision(GameObject* pTarget) override;
 
 	XMFLOAT3 GetPosition(){return transform_.position;}
+    float GetSpeed(){return speed_;}
 private:
 	int hModel_;
 	int sModel_;
