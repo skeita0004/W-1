@@ -2,6 +2,8 @@
 #include "GameObject.hpp"
 
 #include "../Game/TestScene.hpp"
+#include "../Game/ClayShooting/PlayScene.hpp"
+#include "../Game/ClayShooting/ClearScene.hpp"
 
 #include <array>
 
@@ -26,6 +28,8 @@ public:
     enum class SceneID : int
     {
         TEST = 0,
+        PLAY,
+        CLEAR,
         MAX_SCENE_ID
     };
 
@@ -37,7 +41,9 @@ private:
 
     // 型の配列として扱う
     using SceneList = std::tuple<
-        TestScene
+        TestScene,
+        PlayScene,
+        ClearScene
     >;
 
     // SceneIDとSceneListの対応付け
@@ -58,13 +64,15 @@ private:
     static inline const size_t sceneNum{static_cast<size_t>(SceneID::MAX_SCENE_ID)};
     static const inline std::array<SceneFactoryFn, sceneNum> sceneTable =
     {
-        &SceneManager::InstantiateByID<SceneID::TEST>
+        &SceneManager::InstantiateByID<SceneID::TEST>,
+        &SceneManager::InstantiateByID<SceneID::PLAY>,
+        &SceneManager::InstantiateByID<SceneID::CLEAR>
     };
 
     GameObject* InstantiateScene(SceneID _sid,
                                  GameObject* _pParent);
 
-    static const inline SceneID INITIAL_SCENE{SceneID::TEST};
+    static const inline SceneID INITIAL_SCENE{SceneID::PLAY};
 
 	SceneID currentSceneID_;	//現在のシーン
 	SceneID nextSceneID_;		//次のシーン

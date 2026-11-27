@@ -1,37 +1,53 @@
-#pragma once
-#include "Engine/GameObject.h"
-#include "Engine/FontText.hpp"
+ï»¿#pragma once
+// Engine
+#include "GameObject.hpp"
+#include "FontText.hpp"
 
 //class Clay;
 
-//ƒvƒŒƒCƒV[ƒ“‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+//ãƒ—ãƒ¬ã‚¤ã‚·ãƒ¼ãƒ³ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class ClearScene : public GameObject
 {
-    FontText textP_num_;     //ƒeƒLƒXƒg•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒg
-    FontText textFinal_S_;   //ƒeƒLƒXƒg•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒg
+public:
+    //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+    //å¼•æ•°ï¼šparent  è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆï¼ˆSceneManagerï¼‰
+    ClearScene(GameObject* parent);
 
-    int hImage_[4];    //‰æ‘œ”Ô†
+    //åˆæœŸåŒ–
+    void Initialize() override;
 
-    // UI‚ÌÀ•W
-    XMFLOAT3 position_[4]; // ˆÊ’u
-    XMFLOAT3 scale_[3];    // Šg‘å—¦
+    //æ›´æ–°
+    void Update() override;
+
+    //æç”»
+    void Draw() override;
+
+    //é–‹æ”¾
+    void Release() override;
+
+private:
+    // æ–‡å­—è¡¨ç¤ºã‚¿ã‚¤ãƒ—
+    enum ClearImage
+    {
+        BG,        // èƒŒæ™¯
+        WIN,       // ã€ŒWINã€ã®è¡¨ç¤º
+        LOSE,      // ã€ŒLOSEã€ã®è¡¨ç¤º
+        Board,     // æœ¨æ¿ã®ç”»åƒ
+        CImage_Max // ã‚¯ãƒªã‚¢ç”»åƒã®é™ç•Œå€¤
+    };
+
+    //ãƒ†ã‚­ã‚¹ãƒˆæç”»ç”¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    FontText textP_num_;
+    FontText textFinal_S_;
+
+    // æ–‡å­—è¡¨ç¤ºã®åº§æ¨™
+    XMFLOAT3 position_[CImage_Max]; // ä½ç½®
+    XMFLOAT3 rotate_[CImage_Max];   // å›è»¢
+    XMFLOAT3 scale_[CImage_Max];    // æ‹¡å¤§ç‡
+
+    //ç”»åƒç•ªå·
+    int hImage_[CImage_Max];
 
     //Clay* sc = nullptr;
 
-public:
-    //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-    //ˆø”Fparent  eƒIƒuƒWƒFƒNƒgiSceneManagerj
-    ClearScene(GameObject* parent);
-
-    //‰Šú‰»
-    void Initialize() override;
-
-    //XV
-    void Update() override;
-
-    //•`‰æ
-    void Draw() override;
-
-    //ŠJ•ú
-    void Release() override;
 };

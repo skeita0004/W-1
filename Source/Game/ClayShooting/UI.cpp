@@ -77,6 +77,8 @@ void UI::Initialize()
         scale_[i] = Init_Sca[i];
     }
 
+    sc = FindObject<Clay>("Clay");
+
     textB_num_.Initialize("../Fonts/Rye-Regular.ttf", 64.0f);
     textScore_.Initialize("../Fonts/Rye-Regular.ttf", 64.0f);
     textTimer_.Initialize("../Fonts/Rye-Regular.ttf", 86.0f);
@@ -92,16 +94,19 @@ void UI::Update()
 
         //敵がもういなかったらクリア画面へ
         if (Game_Timer <= 0.0f) {
-            SceneManager* pSceneManager = (SceneManager*)/*FindObject*/FindChildObject("SceneManager");
-            pSceneManager->ChangeScene(SceneManager::SceneID::MAX_SCENE_ID);
+            SceneManager* pSceneManager = FindObject<SceneManager>("SceneManager");
+            if (pSceneManager)
+            {
+                pSceneManager->ChangeScene(SceneManager::SceneID::CLEAR);
+            }
         }
     }
 
     // 発砲ごとに残弾数消費
     {
         bool triggerNow[PLAYER_NUM]
-            = { Input::GetPadTrrigerR(PLAYER_1) > 0.5f,
-                Input::GetPadTrrigerR(PLAYER_2) > 0.5f };
+            = { Input::GetPadTrrigerR(PLAYER_1) > TRIGGER_THRESHOLD,
+                Input::GetPadTrrigerR(PLAYER_2) > TRIGGER_THRESHOLD};
 
         // 発砲するごとに弾を消費
         {

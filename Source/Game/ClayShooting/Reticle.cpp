@@ -199,7 +199,7 @@ void Reticle::Shoot(int player)
     if (player < 0 || player >= PLAYER_NUM) return;
 
     // 右トリガーを一瞬だけ押したときに使う、メンバ変数
-    bool triggerNow = Input::GetPadTrrigerR(player) > 0.5f;
+    bool triggerNow = Input::GetPadTrrigerR(player) > TRIGGER_THRESHOLD;
 
     if (Input::IsMouseButtonDown(player)
         || Input::IsPadButtonDown(XINPUT_GAMEPAD_B, player)
